@@ -1,0 +1,147 @@
+@Copyright y referencias
+:Copyright
+
+^PROMETEO 2.2.1
+^Generador de aventuras conversacionales
+^Copyright (c) 1995-2001 Alpha Aventuras
+^Sanl£car de Barrameda (C diz)
+^Todos los derechos reservados
+
+^HelpPC 2.10
+^Quick Reference Utility
+^Copyright (c) 1991 David Jurgens
+
+^SMIXC 1.21
+^Biblioteca de funciones de sonido
+^Copyright (c) 1995 Ethan Brodsky
+^All rights reserved
+
+:Han colaborado
+^Han colaborado
+
+ Este proyecto, fruto de m s de dos a¤os de esfuerzo y labor de desarrollo,
+ nunca se podr¡a haber terminado sin la ayuda desinteresada de las siguientes
+ personas:
+
+%    Manuel Mill n
+
+         por aportar cr¡ticas y sugerencias, probar las herramientas,
+         detectar errores e intentar hacer uso de ellas para escribir una
+         aventura.
+
+%    Ignacio Monge
+
+         por mantener vivo el esp¡ritu de la aventura durante tantos a¤os,
+         y por prestar su copia original de PAW.
+
+%    Jos‚ Antonio Jimenez
+
+         por ser el tutor del proyecto original de PROMETEO, y por ense¤arme
+         todo lo necesario para escribir compiladores.
+
+%    Francisco Picazo
+
+         por las ideas aportadas al desarrollar la demostraci¢n
+
+%    ... y otros m s, que no recuerdo
+
+:Alpha Aventuras
+^Alpha Aventuras
+
+ Alpha Aventuras somos un grupo de tres apasionados a las aventuras conver-
+ sacionales. Dedicamos mucho tiempo a escribir aventuras para los ordenadores
+ dom‚sticos de 8 bits, y usando para ello las herramientas m s variadas:
+ lenguaje BASIC, Pascal, y los programas comerciales GAC y PAW (tambi‚n
+ llamados "parsers"). Ahora... usamos nuestro propio "parser"...
+
+ Alpha Aventuras somos:
+
+%        Ricardo P‚rez L¢pez
+
+             desarrollador
+
+%        Manuel Mill n Ruiz
+
+             grafista, betatester y co-desarrollador
+
+%        Ignacio Monge Garc¡a
+
+             escritor
+
+:Historia
+^Historia
+
+     Ya sea porque yo era el £nico con un ordenador AMSTRAD (para el que por
+ entonces no exist¡a una herramienta de similares caracter¡sticas), o porque
+ siempre me hab¡a fascinado la programaci¢n, desde un principio intent‚
+ desarrollar para m¡ un "parser" potente y flexible. Aunque fracas‚ estrepi-
+ tosamente, ya ten¡a en m¡ el germen de la aventura y sab¡a que un d¡a u
+ otro crecer¡a y se haria real.
+
+     Tuve que esperar cinco largos a¤os hasta que adquir¡ los conocimientos
+ suficientes para escribir compiladores (ya en PCs). Jos‚ Antonio, mi profe-
+ sor de la asignatura Traductores en tercer curso de la Diplomatura de
+ Inform tica, me ense¤¢ todo lo necesario para poder hacer mi sue¤o realidad.
+ Propuse como proyecto fin de carrera la creaci¢n de mi herramienta, y el
+ 5 de octubre de 1995 fue presentado ante el tribunal de proyectos la
+ primera versi¢n de mi creaci¢n: el Generador de Aplicaciones Conversa-
+ cionales, mas conocido como GAC (comp rese con el GAC antiguo para los
+ Spectrum).
+
+     Posteriormente, y mientras cursaba 4§ de Inform tica en Sevilla, fui
+ mejorando y depurando paulatinamente a GAC. Y he aqu¡ el resultado: mi
+ nueva creaci¢n se llama PROMETEO, en su versi¢n 2.2.1. Espero que guste...
+
+:Condiciones de uso
+^Condiciones de uso de PROMETEO 2.2.1
+
+     1. La versi¢n 2.2.1 pasa a ser GPL. Por tanto, las condiciones generales
+        de uso del programa tanto en su forma compilada como en su c¢digo
+        fuente ser n las que se especifiquen en la Licencia P£blica General
+        de GNU, versi¢n 2.0 o superior. Puede obtenerse la £ltima versi¢n de
+        este documento en la web de GNU (http://www.gnu.org).
+
+     2. Las versiones anteriores del producto (2.2, 2.1 y anteriores) quedan
+        afectadas por las mismas condiciones expresadas en el punto anterior.
+
+     3. Alpha Aventuras no se hace responsable de los da¤os ocasionados por
+        el programa a causa de un mal uso de ‚ste por parte del usuario.
+
+     4. El m¢dulo run-time y los c¢digos objeto generados por el compilador
+        pueden y DEBEN ser distribu¡dos libre y gratu¡tamente.
+
+     5. Alpha Aventuras se reserva el derecho de cambiar las especificaciones
+        sin previo aviso, notific ndolo convenientemente en un fichero de
+        texto tipo "README" o similar. Asimismo, se reserva el derecho de
+        lanzar o no nuevas versiones de PROMETEO.
+
+     6. Las aventuras producidas con PROMETEO quedan libres de toda restric-
+        ci¢n, agradeci‚ndose se cite la fuente.
+
+
+:Errores y "bugs"
+^Errores de programaci¢n en PROMETEO 2.2.1
+
+     No existe el programa perfecto, y PROMETEO 2.2.1 no es una excepci¢n. El
+ autor agradecer¡a que todo fallo, problema, "bug", carencia, deficiencia,
+ etc., le sea puesto en conocimiento a la siguiente direcci¢n:
+
+^Ricardo P‚rez L¢pez
+^C/. Carmen Viejo 12, 1§-E
+^11540 Sanl£car de Barrameda
+^(C diz)
+
+^e-mail: ricpelo@eresmas.com
+
+     indicando el tipo de error encontrado, posible(s) mensaje(s) de error
+ que se produzca(n), pasos necesarios para reproducir el error (si es
+ posible reproducirlo), y en qu‚ herramienta se produce, de entre todas las
+ que componen PROMETEO 2.2.1. Si el error se produce con un determinado pro-
+ grama fuente u objeto, ser¡a preferible que tambi‚n se incluyese dentro
+ de un diskette junto a la carta de "protesta". No se cursar n las cartas
+ que hagan referencia a versiones de PROMETEO anteriores a la 2.2, versiones
+ que en principio no deber¡an estar en la calle.
+
+     De igual forma, toda sugerencia encaminada a mejorar el producto tambi‚n
+ ser  bien recibida, prometi‚ndose el autor a responder a todas las cartas
+ que reciba.

@@ -1,0 +1,54 @@
+                        NOVEDADES DE LA VERSION 2.2.1
+                        -----------------------------
+
+- La licencia del producto pasa de ser freeware a ser GPL. Por tanto, el
+  c¢digo fuente queda oficialmente liberado, permiti‚ndose la distribuci¢n
+  y modificaci¢n del mismo en los t‚rminos especificados en la Licencia
+  P£blica General (GNU GPL), versi¢n 2.0 o superior.
+
+- Arreglado un bug por el que las situaciones se guardaban en ficheros en
+  modo texto, en lugar de binario. Espero que esto resuelva todos los
+  problemas que Gonzo tiene en sus aventuras.
+
+- Arreglado un bug por el que la bandera 1 (la que indica el n§ de objetos
+  llevados por el jugador) val¡a 0 aunque el jugador ya empezara la partida
+  con alg£n objeto en sus manos.
+
+- Al grabar una situaci¢n, el m¢dulo run-time comprueba previamente si ya
+  existe un fichero con el mismo nombre, y pregunta al usuario si quiere
+  reemplazarlo.
+
+- Modificada la funci¢n MueveObjeto(), de tal forma que previamente
+  se comprueba si la localidad de origen y la de destino coinciden (y en
+  tal caso, no se hace nada).
+
+- Mejorado el ejemplo "EL BILLETE", permitiendo al jugador las acciones
+  globales "COGER TODO MENOS <objeto>" y "DEJAR TODO MENOS <objeto>".
+  Puede probarse al principio del juego, haciendo: "DEJAR TODO MENOS LA
+  MANZANA". Creo que son buenos ejemplos de manejo de las funciones
+  primero(), objeto() y siguiente(), as¡ como del segundo nombre y adjetivo
+  de una entrada del jugador (almacenado en las banderas b44 y b45).
+
+- A¤adido una aventura de demostraci¢n. Est  sin terminar y sin depurar,
+  pero la incluyo por si alguien pueda sacar provecho de su c¢digo. Se
+  encuentra en el fichero "DEMO.PRO".
+
+
+                         NOVEDADES DE LA VERSION 2.2
+                         ---------------------------
+
+- Posibilidad de cambiar el tipo de letra por defecto en cualquier momento,
+  mediante la orden "fuente". Se ofrecen varios ficheros con fuentes de
+  ejemplo, en el directorio FUENTES.
+
+- Un efecto de borrado de pantalla m s atractivo cuando se comienza o se
+  recomienza la aventura.
+
+- Cambios en el m¢dulo de recuperaci¢n de errores, para hacerlo m s preciso
+  e informativo.
+
+- Correcci¢n de m s "bugs" menores (cada vez m s peque¤os).
+
+
+
+                                   Ricardo P‚rez L¢pez - Alpha Aventuras

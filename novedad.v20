@@ -1,0 +1,37 @@
+
+        NOVEDADES DE LA VERSION 2.0
+        ---------------------------
+
+La versi¢n 2.0 de PROMETEO - Generador de Aventuras Conversacionales trae
+muchas m s ventajas con respecto a la anterior, entre las que cabe destacar:
+
+- Presentaci¢n de im genes y animaciones gr ficas en formato FLI.
+- Hasta ocho canales independientes de sonido en formato WAV, con un formato
+  compacto y eficiente.
+- Nuevos comandos y funciones, que hacen m s completo el lenguaje de PROMETEO.
+- Un formateador de texto, que hace imposible que una palabra aparezca
+  cortada en la pantalla, independientemente de c¢mo est‚n escritas en el
+  c¢digo fuente.
+- C¢digos de control de salida de caracteres, entre las que cabe destacar los
+  relacionados con el manejo de los colores del texto.
+- Compilaci¢n de m s de un m¢dulo fuente, con la aparici¢n del concepto de
+  "lista de fuentes".
+- Compilaci¢n m s r pida.
+- Mejor aprovechamiento de la memoria y c¢digo generado m s compacto.
+- Rutina de "input" mejorada.
+- Control de "timeouts".
+- Encriptaci¢n de los mensajes en el c¢digo objeto.
+- Lenguaje m s c¢modo y potente, con una sintaxis m s clara y sencilla.
+- Infinitas palabras, infinitos mensajes, infinitas localidades (s¢lo limita-
+  dos por la memoria disponible).
+- Int‚rprete de lenguaje natural mejorado, con manejo de pronombres y
+  entradas complejas del tipo "COGE LA MANZANA Y COMETELA" (reconocimiento de
+  terminaciones -"LA" y similares tras los verbos).
+- Soporte funcional para el control de operaciones globales (del estilo de
+  "DEJA TODO EXCEPTO LA BOLSA").
+- Control autom tico de las salidas para cada localidad. El comando "salidas"
+  imprime en pantalla las posibles conexiones con otras localidades, usando
+  para ello nuevos mensajes del sistema.
+- Mejor manejo de la pantalla, con los nuevos comandos "borrar" (borrar la
+  pantalla) y "cursor" (posici¢n del cursor de texto).
+- Eliminaci¢n de algunos "bugs" (unos peque¤os y otros no tan peque¤os).

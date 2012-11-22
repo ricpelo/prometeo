@@ -1,0 +1,13 @@
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³- Para instalar PROMETEO 2.2.1, copiar el fichero "PROME221.ZIP" en disco   ³
+³  duro y descomprimirlo con la orden "PKUNZIP -d PROME221.ZIP".             ³
+³- Para cualquier ayuda una vez instalado, teclear "HELP" desde el           ³
+³  directorio de destino (una sola vez por sesi¢n), y posteriormente teclear ³
+³  "AYUDA".                                                                  ³
+³- Para un comienzo r pido, compilar la aventura de ejemplo con "PC BILLETE" ³
+³  y ejecutarlo con "PR BILLETE" (una vez que PROMETEO haya sido instalado). ³
+³                                                                            ³
+³                                                                            ³
+³                                                      Alpha Aventuras       ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+

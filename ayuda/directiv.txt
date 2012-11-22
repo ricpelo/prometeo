@@ -1,0 +1,28 @@
+@Directivas del preprocesador
+:#define
+%    #define IDENTIFICADOR cadena
+
+         desde su aparici¢n en el c¢digo fuente hacia delante, sustituye
+         toda aparici¢n de IDENTIFICADOR por "cadena". IDENTIFICADOR no
+         puede contener espacios, pero "cadena" s¡.
+
+%    Ej: #define LOC_ACTUAL     b38
+
+
+         Ver tambi‚n: ~#local~  ~#finlocal~  ~El Preprocesador~
+:#local:#finlocal
+%    #local IDENT1 IDENT2 ... IDENTn #finlocal
+
+         asigna un n£mero distinto a cada identificador descrito, y lo
+         sustituye en el c¢digo fuente los identificadores por sus
+         correspondientes n£meros. Se usa sobre todo para dar nombres
+         simb¢licos a las ~localidades~, y por eso se la directiva se llama
+         "#local", de "localidad".
+
+%    Ej: #local HABITACION PASILLO ESCALERAS CALLE #finlocal
+
+
+         Ver tambi‚n: ~#define~  ~El Preprocesador~
+
+
+

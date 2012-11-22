@@ -1,0 +1,9 @@
+#define VERBO 257
+#define NOMBRE 258
+#define ADJETIVO 259
+#define ADVERBIO 260
+#define PREPOSICION 261
+#define CONJUNCION 262
+#define PRONOMBRE 263
+#define NOMBRE_VERBO 264
+#define DIRECCION 265

@@ -1,0 +1,1393 @@
+
+	1. EL COMPILADOR
+	----------------
+
+1.1     Las Banderas
+
+Las banderas son el conjunto de indicadores cuyos valores determinan el
+estado interno de la aventura. Cada bandera puede guardar un valor entero,
+que conforma el estado de dicha bandera en un momento determinado. El
+conjunto de los estados de todas las banderas es lo que determina el estado
+actual de la aventura.
+
+	Se referencian mediante un n£mero, por ejemplo, bandera 100, 37, 54,
+etc. Algunas banderas tienen significados especiales, y otras est n libres
+para que el escritor las utilice al describir la aventura. Entre las que
+poseen alg£n significado especial, est n varias que mantienen valores
+cr¡ticos, como la bandera 38 que lleva el n£mero de la localidad actual -sin
+la cual nos encontrar¡amos completamente perdidos-, o la bandera 52 que
+indica el n£mero m ximo de objetos que puede llevar el jugador.
+
+	Las banderas son las £nicas variables con las que cuenta el escritor para
+describir las condiciones y las acciones necesarias. Por tanto, todo valor
+temporal o auxiliar debe tambi‚n almacenarse en una bandera -esto se hace
+para dejar expl¡cito el hecho de que toda sentencia provoca un cambio de
+estado-. Todas las banderas se comportan como variables, as¡ que pueden
+asign rsele valores y hacer un test de su contenido en cualquier momento.
+
+	Las banderas que poseen un significado especial para GAC son las
+siguientes:
+
+Bandera 0:      Igual a 0 indica luz (se describe la localidad)
+				Diferente a 0 indica oscuridad (no se describe la localidad)
+				A£n as¡, si el objeto n§ 0 (el primero que se describe, que
+				se considera fuente de luz) est  presente, se describir  la
+				localidad de todas formas.
+
+Bandera 1:      Indica objetos llevados (no puestos).
+
+Bandera 2:      Se decrementa autom ticamente cuando se describe la localidad.
+
+Bandera 3:      Se decrementa autom ticamente cuando se describe la localidad
+				y est  oscuro (bandera 0 diferente de 0).
+			
+Bandera 4:      Se decrementa autom ticamente cuando se describe la localidad
+				y est  oscuro (bandera 0 diferente de 0) y el objeto 0 est 
+				ausente.
+
+Banderas 5 a 8: Se decrementan con cada turno.
+
+Bandera 9:      Se decrementa con cada turno si est  oscuro.
+
+Bandera 10:     Se decrementa con cada turno si est  oscuro y el objeto 0
+				est  ausente.
+
+Bandera 11:     Lleva el tiempo muerto (timeout). 
+
+Banderas 12 a 19: Est n libres para usar.
+
+Bandera 20:     Lleva la hora actual.
+
+Bandera 21:     Lleva los minutos actuales.
+
+Bandera 22:     Lleva los segundos actuales.
+
+Bandera 23:     Lleva las cent‚simas de segundo.
+
+Bandera 29:     Lleva el control de los gr ficos de las localidades:
+				Igual a 0 indica que aparece el gr fico cuando se describe la
+				localidad.
+				Diferente de 0 indica que no aparece nunca ning£n gr fico.
+
+Bandera 30:     Lleva la puntuaci¢n.
+
+Bandera 31:     N£mero actual de turnos del jugador.
+
+Bandera 32:     Libre para usar.
+
+Bandera 33:     El Verbo de la sentencia actual.
+
+Bandera 34:     El primer Nombre de la sentencia actual.
+
+Bandera 35:     El Adjetivo del primer Nombre.
+
+Bandera 36:     El Adverbio de la sentencia actual.
+
+Bandera 37:     El n£mero m ximo de objetos llevables.
+				Por defecto = 4
+
+Bandera 38:     La localidad actual.
+
+Bandera 39:     Libre para usar.
+
+Bandera 40:     Controla el borrado de pantalla cuando se describe una
+				localidad.
+				Igual a 0 indica que hay borrado de pantalla
+				Diferente de 0 indica que no hay borrado de pantalla.
+
+Bandera 41:     Libre para usar.
+
+Bandera 42:     Lleva el mensaje con el que se contesta al input del jugador
+				(normalmente se selecciona de forma aleatoria entre los
+				Mensajes del Sistema 1 a 4).
+
+Bandera 43:     Lleva la Preposici¢n de la sentencia actual.
+
+Bandera 44:     Lleva el Segundo Nombre de la sentencia actual.
+
+Bandera 45:     Lleva el Adjetivo del Segundo Nombre.
+
+Bandera 46:     Libre para usar.
+
+Bandera 47:     Libre para usar.
+
+Bandera 48:     El verbo de la sentencia entre comillas.
+
+Bandera 49:     El nombre de la sentencia entre comillas.
+
+Bandera 50:     El adjetivo de la sentencia entre comillas.
+
+Bandera 51:     Indica la £ltima direcci¢n que ha tomado un personaje.
+
+Bandera 52:     La fuerza del jugador (el m ximo peso de los objetos llevados
+				m s los puestos encima).
+				Inicialmente es 10
+
+Bandera 53:     Es la bandera para imprimir los objetos del Inventario y la
+				descripci¢n de la localidad actual.
+				0: Se imprimen los objetos en una sola l¡nea formando
+				una frase, tanto en el inventario como en la descripci¢n.
+				1: El inventario se imprime en una l¡nea, y la descripci¢n
+				usa varias l¡neas.
+				2: El inventario se imprime en varias l¡neas, y la descrip-
+				ci¢n en una s¢la.
+				3: Tanto el inventario como la descripci¢n se imprimen en
+				varias l¡neas.
+
+Bandera 54:     Lleva el n£mero de la localidad del objeto actualmente
+				referido.
+
+Bandera 55:     Lleva el peso del objeto actualmente referido.
+
+Bandera 56:     Igual a 1 si el objeto es un contenedor.
+
+Bandera 57:     Igual a 1 si el objeto es una ropa (se puede llevar puesto
+				encima).
+
+Bandera 58:     El c¢digo del objeto actualmente referido.
+
+Bandera 59:     No se inicializa cuando se comienza una nueva partida
+				(mantiene su valor entre partidas).
+
+El motivo por el que se dejan banderas libres -sin significado- de esa forma,
+al parecer, tan caprichosa, es para mantener la compatibilidad con PAW, otro
+producto generador de aventuras muy conocido. PAW usa dichas banderas para
+otros prop¢sitos que no son aplicables en ‚ste trabajo. Debido a que muchos
+escritores de aventuras usaron PAW durante bastante tiempo, se le considera
+el est ndar "de facto" en el tema de los generadores de aventuras
+conversacionales, y por ello se ha estimado conveniente mantener el
+significado de las distintas banderas a expensas de no usar algunas.
+
+
+1.2     El lenguaje de GAC
+
+Estamos ya preparados para estudiar el lenguaje de programaci¢n de GAC. El
+lenguaje pertime al escritor describir la aventura en t‚rminos sencillos y
+relacionados con las AC, dejando al compilador las tareas rutinarias y de
+bajo nivel.
+
+	El lenguaje de GAC est  dividido en dos secciones:
+
+	  La secci¢n de declaraciones
+	  La secci¢n de c¢digo
+
+La secci¢n de declaraciones sirve para indicar al compilador los elementos
+que componen la aventura: el vocabulario, las localidades, los objetos y los
+mensajes. Vamos a ver cada uno por separado.
+
+	El vocabulario de la aventura se expresa por la siguiente
+construcci¢n sint ctica:
+		 
+vocabulario '{'
+	<tipo> <lexema> {, <lexema>} 
+		['=' '{' <lexema> {, <lexema>} '}'] ';'
+	{<tipo> <lexema> {, <lexema>} 
+		['=' '{' <lexema> {, <lexema>} '}'] ';'}
+'}'
+
+
+donde <tipo> es una de las siguientes palabras reservadas:
+
+
+	verbo   adverbio   nombre   adjetivo   preposicion   conjuncion
+
+
+Hay que decir antes de nada que el compilador de GAC es sensible al caso, lo
+que significa que distingue entre letras may£sculas y min£sculas. Por tanto,
+"vocabulario" no ser  lo mismo que "VOCABULARIO" o que "Vocabulario". Adem s,
+los lexemas de las palabras del vocabulario deben ir siempre en may£sculas.
+
+	El vocabulario empieza con la palabra clave vocabulario, seguido de
+una lista de declaraciones de palabras encerrada entre llaves. Cada
+declaraci¢n consta de un tipo de palabra -verbo, nombre, etc.- y una lista de 
+lexemas separadas por comas, y terminada en un punto y coma. Opcionalmente,
+se pueden indicar los sin¢nimos de la £ltima palabra de la lista. Para ello,
+se a¤ade el signo '=', seguido de otra lista de palabras separadas por comas
+y encerradas entre llaves.
+
+	Un ejemplo de vocabulario ser¡a el siguiente:
+
+
+vocabulario {
+	verbo COGER = { ASIR, AGARRAR };
+	verbo DEJAR, ABRIR, CERRAR;
+	nombre MANZANA, PUERTA, PAJARO = { PAJARITO };
+	adjetivo AMARILLO, CERRADA;
+	conjuncion Y, ENTONCES;
+}
+
+
+La secci¢n de arriba declara, entre otros, el verbo "COGER" y le asocia los
+sin¢nimos "ASIR" y "AGARRAR". De esta forma, "COGER", "ASIR" y "AGARRAR"
+ser n sin¢nimos y por tanto, tendr n el mismo c¢digo dentro del vocabulario.
+Como puede apreciarse, dicho c¢digo no hay por qu‚ indicarlo, ya que lo 
+gestiona GAC internamente.
+
+	"MANZANA", "PUERTA" y "PAJARO" se declaran como nombres, y se le
+a¤ade la palabra "PAJARITO" como un sin¢nimo de "PAJARO". Es decir, dentro de 
+una declaraci¢n, los sin¢nimos hacen referencia a la £ltima palabra de la
+lista, en ‚ste caso "PAJARO". El resto de las declaraciones son similares.
+
+	Tras la secci¢n del vocabulario, sigue la secci¢n de localidades. En
+ella se expresan las distintas habitaciones de la aventura, con su
+descripci¢n y sus posibles conexiones entre ellas. La sintaxis ser¡a la
+siguiente:
+
+
+localidades '{'
+	<num> ':' <descripcion> [imagen <fichero>]
+	   ['{' <verbo> ':' <num> {, <verbo> ':' <num> } '}'] ';'
+	{<num> ':' <descripcion> [imagen <fichero>]
+	   ['{' <verbo> ':' <num> {, <verbo> ':' <num> } '}'] ';'}
+'}'
+
+
+La secci¢n de localidades comienza con la palabra clave "localidades",
+seguida de una lista de declaraciones entre llaves. Cada declaraci¢n consta
+de un n£mero de localidad, seguida de dos puntos, seguida de la descripci¢n
+de esa localidad, una posible imagen indicada por la palabra reservada
+"imagen" y el nombre de un fichero, y finalmente un punto y coma.
+Adicionalmente, es posible incluir conexiones entre esa localidad y las
+otras, a¤adiendo una lista de conexiones entre llaves. Cada conexi¢n tiene la 
+forma "<verbo> ':' <num>", indicando que si estamos en esa localidad y se
+introduce un cierto verbo, el jugador se trasladar  a la localidad dada por
+el n£mero.
+
+	Como ejemplo tenemos el siguiente:
+
+
+localidades {
+	0 : "Esta es la localidad 0." imagen "PANTA0"
+		{ NORTE : 1, SUR : 3 };
+	1 : "Estamos en la localidad 1."
+		{ SUR : 0, ENTRAR : 2 };
+	2 : "La localidad n£mero 2." imagen "PANTA2";
+	3 : "Esta es la localidad 3."
+		{ NORTE : 0 };
+}
+
+
+Hemos declarado cuatro localidades: la 0, la 1, la 2 y la 3, cada una con sus
+descripciones -las descripciones son irrelevantes en este ejemplo-. La
+localidad 0 lleva asociada una imagen de nombre "PANTA0.FLI", ya que la
+extensi¢n se incluye autom ticamente y debe ser siempre ".FLI". Por tanto,
+cada vez que el jugador entre en la localidad 0 y se describa, aparecer  en
+pantalla la imagen -o animaci¢n- inclu¡da en el fichero indicado. Adem s, la
+localidad 0 posee dos conexiones: con "NORTE" se va a la localidad 1, y con
+"SUR" se va a la 3. La localidad 1 es an loga a la anterior, pero con otras
+conexiones y sin imagen. La 2 tiene imagen pero no conexiones, algo
+perfectamente posible y que posibilita el que el jugador se encuentre
+encerrado o algo as¡. La 3 es semejante a la 1.
+
+	Tras escribir el vocabulario y las localidades, podemos describir los
+objetos. Los objetos poseen un cierto n£mero de atributos que deberemos
+indicar al compilador para representarlos con todas sus propiedades. Todo
+ello lo haremos con la siguiente construcci¢n sint ctica:
+
+
+objetos '{'
+	<nombre> [<adjetivo>] desc <descripcion> 
+		peso <num> inicial <local> [contenedor | ropa] ';'
+	{<nombre> [<adjetivo>] desc <descripcion> 
+		peso <num> inicial <local> [contenedor | ropa] ';'}
+'}'
+
+
+Debemos tener en cuenta que una cosa es el nombre y el adjetivo usados para
+referenciar al objeto, y otra cosa es la forma de describir el objeto al
+jugador. Una manzana verde puede referenciarse con el nombre "MANZANA" y el
+adjetivo "VERDE", y su descripci¢n podr¡a ser algo como "La jugosa manzana de
+color verde". Podr¡a decirse que el nombre y el adjetivo ser¡a la forma que
+tiene GAC de hacer referencia a un cierto objeto, mientras que la descripci¢n
+ser¡a la forma en que el jugador "ve" dicho objeto. Como puede observarse, el
+adjetivo es opcional, y puede omitirse si es necesario  en la pr ctica, hay
+pocos objetos que necesiten adjetivos para diferenciarlos de los dem s.
+
+	Tras la descripci¢n vienen atributos como el peso del objeto -un
+n£mero entero-, y su localidad inicial, es decir, la localidad en la que
+aparecer  el objeto al comienzo de la aventura. Adem s de las localidades
+anteriormente creadas, tenemos otras tres m s que, sin ser localidades
+estrictamente hablando, se usan para situar mejor a los objetos. La localidad
+"no_creado" se usa cuando no que requiere que el objeto est‚ incialmente en
+una localidad concreta. (A esta localidad se le suele llamar a veces el
+"limbo".) Otra ser¡a la localidad "llevado", lo que hace que dicho objeto
+est‚ inicialmente en el inventario del jugador. Finalmente, la localidad
+"encima" -s¢lo para objetos de tipo "ropa"- indica que dicho objeto debe
+aparecer puesto encima por el jugador, como su camisa o sus zapatos.
+
+	Estas tres localidades m s siempre existen y pueden usarse en
+cualquier contexto en el que se necesite un n£mero de localidad.
+
+	Si a la declaraci¢n se le a¤ade la palabra reservada "contenedor",
+esto indicar  que dicho objeto es un contenedor de otros objetos, o sea, que
+puede albergar dentro de s¡ mismo a m s objetos. Si en lugar de eso, se le
+a¤ade la palabra "ropa", indicar  que dicho objeto puede ponerse y quitarse
+como si fuera ropa. Un objeto no puede ser contenedor y ropa a la vez.
+
+	Como ejemplo, tenemos el siguiente trozo de c¢digo:
+
+
+objetos {
+	PAJARO desc "el canario de tu abuela" peso 3 incial 1;
+	MANZANA VERDE desc "la jugosa manzana de color verde"
+		peso 5 inicial llevado;
+	MANZANA ROJA desc "la manzana roja" peso 5 inicial 8;
+}
+
+
+Hemos declarado un pajaro que va a ser representado en la aventura por el
+nombre "PAJARO" -dicho nombre debe aparecer en el vocabulario-. Si, por
+ejemplo, tenemos a "CANARIO" como sin¢nimo de "PAJARO", podemos poner uno
+cualquiera de los dos, ya que la tabla de objetos recuerda el c¢digo del
+objeto y no su lexema. Tambi‚n vemos que hay dos manzanas que, para
+distinguirlas, le ponemos dos adjetivos diferentes. Cada una de ellas est  en
+una localidad diferente  la verde la lleva el jugador inicialmente, mientras
+que la otra aparecer  en la localidad 8 , y tienen (en este caso) el mismo
+peso.
+
+	Es imprescindible que estas tres secciones -el vocabulario, las
+localidades y los objetos- aparezcan siempre en el mismo orden. Esto es as¡
+porque las localidades pueden necesitar palabras para las conexiones,
+palabras que han debido ser declaradas anteriormente en el vocabulario.
+Del mismo modo, los objetos necesitan para su declaraci¢n un nombre y un
+adjetivo, junto con una localidad incial v lida que debe haber sido creada ya
+-sin contar las tres localidades "especiales" anteriores-. Por tanto, la
+secci¢n de declaraciones de objetos debe estar despu‚s de las otras dos.
+
+	La secci¢n de mensajes del sistema tiene la siguiente sintaxis:
+
+
+sistema '{'
+	<num> ':' <descripcion> ';'
+	{<num> ':' <descripcion> ';'}
+'}'
+
+
+Los mensajes del sistema son opcionales: si no se incluyen, se tomar n
+mensajes por defecto. Tambi‚n es posible especificar s¢lo alguno de ellos,
+dejando el resto por defecto.
+
+	Hasta ahora, hemos estudiado la secci¢n de Declaraciones. Ahora
+pasaremos a ver la secci¢n de c¢digo: qu‚ es y c¢mo se implementa.
+
+	La secci¢n de c¢digo la forma el lenguaje usado para describir el
+sistema de procesamiento. Es un lenguaje de programaci¢n imperativo,
+estructurado y procedimental, ya que divide la tarea a realizar en trozos m s 
+peque¤os. Hay que considerar a la tabla de respuestas como el procedimiento
+"padre" o ra¡z, es decir, aquel que llama a los dem s y comienza toda la
+ejecuci¢n. Cuando el int‚rprete reconoce una cierta entrada del usuario,
+busca en la tabla de respuestas una entrada que concuerde con ella. Cuando la 
+encuentra, empieza a ejecutar el c¢digo correspondiente, como si fuera la
+llamada a un procedimiento en cualquier lenguaje procedimental.
+
+	Podr¡amos dividir a estos procedimientos en dos tipos: respuestas y
+subrutinas. Las respuestas son las primeras en ejecutarse, como consecuencia
+de la llamada efectuada por el int‚rprete. Una respuesta, por tanto, es un
+conjunto de instrucciones que se ejecutan cuando la entrada del jugador
+concuerda con su cabecera  su verbo y su nombre . Las subrutinas s¢lo ser n
+ejecutadas si son llamadas desde una respuesta u otra subrutina.
+
+	Puede pensarse en una respuesta como un procedimiento cuyo nombre
+est  formado por un verbo y un nombre, de forma que el jugador, cuando
+escribe una cierta sentencia, activa el procedimiento cuya cabecera est 
+formada por el verbo y el nombre de dicha sentencia.
+
+	La sintaxis para describir las respuestas es la siguiente:
+
+
+verbo nombre '{' sentencia; {sentencia;} '}'
+{verbo nombre '{' sentencia; {sentencia;} '}'}
+
+
+Como se ve, tiene mucha similitud a la definici¢n de una funci¢n en C o
+Pascal, con la diferencia de que el nombre de dicha funci¢n es en realidad un
+par formado por un verbo y un nombre. Las sentencias son las instrucciones
+que indican las acciones a realizar. Hay muchas acciones diferentes, que
+sirven para manipular objetos, moverse entre localidades, y verficar y
+cambiar el estado de una bandera, entre otras cosas.
+
+	Un ejemplo de ‚sto ser¡a:
+
+
+COGER MANZANA {
+	si (llevado?(MANZANA))
+		mensaje("Ya tienes la manzana");
+	sino
+		mensaje("Has cogido la manzana");
+}
+
+
+ABRIR PUERTA {
+	si (b78 = 1) {
+		b78 := 0;
+		mensaje("Cierras la puerta lentamente");
+	} sino
+		mensaje("La puerta ya est  cerrada");
+}
+
+
+Este c¢digo incluye dos entradas en la tabla de respuestas: una para
+"COGER MANZANA" y otra para "ABRIR PUERTA". Las acciones a ejecutar se
+compilan y su c¢digo es puesto en una zona de c¢digo objeto. El campo de
+direcci¢n de las entradas de la tabla ser n las direcciones de comienzo del
+c¢digo objeto generado para cada una de las respuestas.
+
+	Lo anterior significa: si el jugador teclea la sentencia
+"COGER MANZANA", el int‚rprete debe ejecutar los pasos indicados entre
+llaves. Estos dicen que si el jugador ya lleva la manzana, debe emitir el
+mensaje de usuario tal; en caso contrario, debe emitir el cual. Para
+"ABRIR PUERTA", si la bandera 78 est  a 1, ponerla a 0 y emitir el mensaje
+correspondiente; en otro caso, emitir el otro.
+
+Como se ve, el lenguaje impone un cambio de estado en la aventura, y est 
+basado en el tradicional pseudoc¢digo con extensiones para manejar
+directamente los elementos de la aventura. Tambi‚n se observa que se han
+tomado construcciones de la programaci¢n estructurada  por ejemplo: la
+estructura de control alternativa if-then-else, o la iterativa do-while.
+
+	La otra parte de la secci¢n de c¢digo es la que describe la tabla de
+subrutinas. Es semejante a la tabla de respuestas, con una diferencia: se
+hace referencia a ellas mediante un nombre o identificador, y no mediante un
+verbo y un nombre. S¢lo se activan mediante una llamada desde otro punto del
+programa. Su sintaxis es:
+
+
+[subrutina identificador '{' sentencia; {sentencia;} '}'
+{subrutina identificador '{' sentencia; {sentencia;} '}'}]
+
+
+Cada subrutina comienza con la palabra clave subrutina, seguida de un
+identificador -el nombre de la subrutina- y una lista de instrucciones
+encerradas entre llaves. Pueden haber varias subrutinas, o una, o ninguna -la
+tabla de subrutinas es opcional, pero rara vez deja de utilizarse.
+
+	Un ejemplo de tabla de subrutinas ser¡a la siguiente:
+
+
+subrutina Perro {
+	si (verbo?(COGER) y nombre1?(PERRO))
+		mensaje("Intentas coger al perro, pero ‚ste no se deja");
+	b14 := 0;
+	b13 := b13 + 1;
+	si (b13 >= 30)
+		b13 := 0;
+}
+
+
+En este caso, tenemos una sola subrutina en la tabla. Una subrutina se activa
+con la orden "llama(nombre_subrutina);". Por tanto, para activar la subrutina
+anterior, se deber  incluir en alguna parte del c¢digo la sentencia
+"llama(Perro);". Una sentencia de ‚ste tipo se traduce en una instrucci¢n de
+salto. Cuando se encuentra la llave que cierra la subrutina, se a¤ade de
+forma impl¡cita una instrucci¢n de "retorna de subrutina". Es imprescindible
+comprender el hecho de que, en la traducci¢n, una instrucci¢n en el lenguaje
+de GAC se sustituye por una instrucci¢n con el mismo significado en el
+lenguaje objeto. Algunas instrucciones solas, como la alternativa o la
+repetitiva, se traducen en varias instrucciones de comparaci¢n y
+"salto-si-cero".
+
+
+1.2.1   Expresiones y acciones
+
+Vamos ya a describir las instrucciones que pueden usarse en el sistema de
+procesamiento. Dichas instrucciones forman el verdadero lenguaje del
+generador de aventuras, en la medida en que la potencia y la flexibilidad de
+un generador vienen en proporci¢n directa a las de sus instrucciones.
+
+	GAC clasifica las instrucciones en dos tipos: expresiones y acciones. La
+diferencia fundamental es la siguiente: las expresiones est n formadas por
+operadores y operandos, y denotan un cierto valor entero. (Para los valores
+l¢gicos, se ha seguido la codificaci¢n del lenguaje C, de forma que verdadero
+es 1 -u otro n£mero distinto de cero- y falso es 0.) Por otra parte, las
+acciones no denotan ning£n valor; son simplemente una forma de expresar
+acciones.
+
+	Vamos a hacer una lista de los operadores que pueden usarse en las
+expresiones. Para ello tendremos en cuenta las siguientes pautas:
+
+	1.  Todos los argumentos u operandos son n£meros enteros. Eso quiere
+		decir que cualquier expresi¢n o subexpresi¢n siempre denotar  un
+		n£mero entero. Por tanto, cuando decirmos localidad, estamos
+		haciendo referencia a un n£mero v lido de localidad; objeto es el
+		c¢digo de un cierto objeto; y palabra es el c¢digo -la sem ntica-
+		de una palabra, no su lexema.
+
+	2.  Una bandera se identifica mediante la letra "b" min£scula seguida
+		inmediatamente por un n£mero, como "b38". El contenido de una
+		bandera es un n£mero entero, y adem s las banderas son las £nicas
+		unidades l‚xicas que pueden aparecer en la parte izquierda
+		-lvalue- de una asignaci¢n. Por tanto, el contexto dir  cu ndo
+		una bandera eval£a a una direcci¢n y cu ndo a un contenido.
+
+	3.  Un objeto se indica mediante su nombre y su posible adjetivo. En
+		cualquier lugar en el que se necesite una expresi¢n, puede usarse el
+		nombre de un objeto. Este evaluar  al c¢digo de dicho objeto. Por
+		tanto, la expresi¢n "MANZANA VERDE" es perfectamente v lida, y
+		hace referencia al c¢digo de dicho objeto.
+
+	4.  Una localidad se referencia por su n£mero o por una de las tres
+		siguientes palabras clave: llevado, encima, no_creado. Estas tres no
+		son m s que una forma distinta de llamar a tres localidades
+		especiales -las tres £ltimas dentro de la tabla de localidades-,
+		y son localidades que siempre existen, por lo que el escritor no
+		tiene por qu‚ declararlas.
+
+Sin m s pre mbulos, ah¡ van los operadores:
+
+	no n£mero
+		devuelve el valor 1 si "n£mero" es distinto de cero, y 0 si
+		es cero.
+
+	n£mero1 y n£mero2
+		devuelve 1 si sus dos operandos son ambos distintos de cero.
+
+	n£mero1 o n£mero2
+		devuelve 1 si alguno de sus dos operandos es distinto de
+		cero.
+
+	- n£mero
+		devuelve "n£mero" cambiado de signo.
+
+	esta?(localidad)
+		devuelve 1 si el jugador est  en la localidad localidad. (Es
+		decir, comprueba si el valor de la bandera 38 es igual a
+		localidad.)
+
+	estamay?(localidad)
+		devuelve 1 si el jugador est  en una localidad mayor que
+		"localidad". (O sea, si b38 > localidad.)
+
+	estamen?(localidad)
+		devuelve 1 si el jugador est  en una localidad menor que
+		"localidad". (O sea, si b38 < localidad.)
+
+	presente?(objeto)
+		devuelve 1 si el objeto "objeto" est  siendo llevado en el
+		inventario, se lleva puesto encima o se encuentra en la
+		localidad actual.
+
+	ausente?(objeto)
+		devuelve 1 si el objeto "objeto" no est  siendo llevado en el
+		inventario, ni se lleva puesto encima ni se encuentra en la
+		localidad actual.
+
+	puesto?(objeto)
+		devuelve 1 si el objeto "objeto" est  siendo llevado puesto.
+
+	llevado?(objeto)
+		devuelve 1 si el objeto "objeto" est  siendo llevado en el
+		inventario.
+
+	estaen?(objeto, localidad)
+		devuelve 1 si el objeto "objeto" se encuentra en la localidad
+		"localidad".
+
+	verbo?(palabra)
+		devuelve 1 si la palabra "palabra" es el verbo de la
+		sentencia actual.
+
+	nombre1?(palabra)
+		devuelve 1 si la palabra "palabra" es el primer nombre de la
+		sentencia actual.
+
+	adjetivo1?(palabra)
+		devuelve 1 si la palabra "palabra" es el adjetivo del primer
+		nombre de la sentencia actual.
+
+	adverbio?(palabra)
+		devuelve 1 si la palabra "palabra" es el adverbio de la
+		sentencia actual.
+
+	nombre2?(palabra)
+		devuelve 1 si la palabra "palabra" es el segundo nombre de la 
+		sentencia actual.
+
+	adjetivo2?(palabra)
+		devuelve 1 si la palabra "palabra" es el adjetivo del segundo 
+		nombre de la sentencia actual.
+
+	preposicion?(palabra)
+		devuelve 1 si la palabra "palabra" es la preposici¢n de la
+		sentencia actual.
+
+	acabar?
+		hace imprimir el mensaje del sistema n§ 12 ("¨Estas seguro?") 
+		y llama a la rutina de input. Devuelve 1 si el jugador teclea 
+		la primera letra del mensaje del sistema n§ 30 ("S"),
+		indicando con ello que desea acabar la partida.
+
+	analiza?
+		se utiliza para facilitar los di logos entre los personajes 
+		del juego. Sustituye cualquier cadena entre comillas por la 
+		sentencia actual, de forma que la sentencia DECIR PEPE "HOLA" 
+		se transformar  en HOLA. Devuelve 1 si la cadena entre
+		comillas es sint cticamente correcta. (Es convienente ver
+		alg£n ejemplo de esto, porque es una de las instrucciones
+		m s complejas.)
+
+	objeto(nombre, adjetivo)
+		es un operador binario que, dados un nombre y un adjetivo
+		-en realidad, el c¢digo del nombre y el del adjetivo-
+		devuelve el c¢digo del objeto correspondiente. Se usa cuando
+		necesitamos el c¢digo de un objeto, pero no sabemos su
+		nombre, sino que lo tenemos en banderas. Si no existe ning£n 
+		objeto con dicho nombre, devuelve -1.
+
+	local(objeto)
+		devuelve el n£mero de localidad en la que se encuentra el
+		objeto "objeto".
+
+	posx(), posy()
+		devuelven la posici¢n actual (en coordenadas X e Y) del cursor de
+		texto en la pantalla.
+
+	caminar(localidad, verbo)
+		hace el efecto de mover al jugador (u otro personaje) de una loca-
+		lidad a otra. Para ello, se indica tanto la localidad actual como
+		el verbo que indica la direcci¢n de movimiento. Si ‚ste es el n§ -1,
+		se indica que se escoja uno aleatoriamente (pudiendo darse el caso
+		de que no se tome ninguno). Devuelve el n§ de la localidad a la que
+		se llega desde esa localidad con esa direcci¢n, o -1 si no se llega
+		a ning£n sitio o se queda quieto (en caso de aleatoriedad).
+
+Adem s de estos, est n los operadores relacionales <, <=, >, >=, = y <>, con
+sus significados, asociatividades y prioridades habituales.
+
+	En la siguiente tabla se exponen las prioridades de los distintos
+operadores y fuinciones. El primer nivel es el m s prioritario, y el £ltimo
+el menos prioritario. Todos los operadores que se encuentren al mismo nivel
+tienen la misma prioridad.
+
+		
+_   no, esta?, estamay?, estamen?, presente?, ausente?, puesto?, llevado?,
+		estaen?, verbo?, nombre1?, adjetivo1?, adverbio?, nombre2?,
+		adjetivo2?, preposicion?, acabar?, analiza?, - (unario)
+
+_   *, /
+
+_   +, -
+	
+_   estaen?
+
+_   <, <=, >. >=
+
+_   =, <>
+
+_   y
+
+_   o
+
+
+Puede observarse que los operadores unarios tienen la m xima prioridad, y a
+partir de ellos se va bajando hasta el operador or, el de menor prioridad.
+Adem s, los operadores relacionales son m s prioritarios que los l¢gicos;
+esto hace que, en las condiciones, no sean necesarios tantos par‚ntesis.
+Hablando de ellos, se usan de la forma habitual, es decir, aumentando la
+prioridad de aquello a lo que encierran. Todos los operadores son asociativos
+por la izquierda.
+
+	Ejemplos de expresiones podr¡an ser:
+
+	local(LLAVE) y no estaen?(MANZANA, llevado)
+		que valdr  1 si la localidad actual del objeto LLAVE es
+		distinto de cero y la MANZANA est  siendo llevada por el
+		jugador. La subexpresi¢n estaen?(MANZANA, llevado) ser¡a
+		equivalente a llevado?(MANZANA).
+
+	verbo?(COGER) o verbo?(DEJAR)
+		valdr  1 si el verbo de la sentencia actual es COGER o DEJAR.
+
+	LLAVE AMARILLA
+		eval£a al c¢digo del objeto con ese nombre y ese adjetivo.
+
+	b15 >= objeto(b34, b35) y (b15 <= 0 o adverbio?(RAPIDAMENTE))
+		aunque un poco liado, es f cil de entender.
+
+Hasta aqu¡, todo lo relacionado con las expresiones. Naturalmente,
+necesitamos acciones en las que poder usar estas expresiones, y para permitir
+cambiar el estado de la aventura. Dichas acciones se clasifican en varios
+grupos, que son los siguientes:
+
+a) Manipulaci¢n de Objetos
+
+	coger(objeto)
+		si el objeto est  presente en la localidad actual, entonces
+		pasa el objeto "objeto" al inventario, emitiendo el mensaje
+		del sistema n§ 36 ("Ahora tengo <el objeto>"). En otro caso,
+		emite un mensaje de error apropiado.
+
+	dejar(objeto)
+		si el objeto est  siendo llevado, entonces pasa el objeto
+		"objeto" a la localidad actual, emitiendo el mensaje del
+		sistema n§ 39 ("He dejado caer <el objeto>"). En otro caso,
+		emite un mensaje de error apropiado.
+
+	poner(objeto)
+		si el objeto est  siendo llevado en el inventario del
+		jugador, entonces el objeto pasa al estado de puesto, y se
+		emite el mensaje del sistema n§ 37 ("Ahora llevo puesto
+		<el objeto>"). Si el objeto no es ropa, o no se puede
+		realizar la operaci¢n por otros motivos, se emite un mensaje
+		de error.
+
+	quitar(objeto)
+		si el objeto est  siendo llevado puesto encima, entonces el
+		objeto pasa a ser llevado a secas, emiti‚ndose el mensaje
+		del sistema n§ 38 ("Me he quitado <el objeto>"). En otro
+		caso, se emite un mensaje de error apropiado.
+
+	crear(objeto)
+		el objeto objeto pasa a la localidad actual, y la bandera 1
+		se decrementar  si el jugador lo estaba llevando.
+
+	destruir(objeto)
+		el objeto pasa a la localidad "no_creado", y la bandera 1 se
+		decrementa si el jugador lo estaba llevando.
+
+	intercambiar(objeto, objeto)
+		se intercambian las posiciones de los objetos indicados.
+
+	colocar(objeto, localidad)
+		el objeto objeto se lleva a la localidad localidad. La
+		bandera 1 se decrementa si estaba siendo llevado, y se
+		incrementa si ahora pasa a ser llevado (localidad = llevado).
+
+	meter(objeto, contenedor)
+		mete el objeto "objeto" en el contenedor "contenedor". Se
+		emite un mensaje de error si el segundo argumento no resulta
+		ser un contenedor en tiempo de ejecuci¢n.
+
+	sacar(objeto, contenedor)
+		saca el objeto "objeto" del contenedor "contenedor". Se emite 
+		un mensaje de error si el segundo argumento no resulta ser un 
+		contenedor en tiempo de ejecuci¢n.
+
+	autoc
+		el nombre y el adjetivo de la sentencia actual se usan para
+		buscar un objeto con dicho nombre. Si existe, se efect£a una
+		acci¢n "coger" autom tica con dicho objeto. Sirve para poder
+		coger cualquier objeto.
+
+	autod
+		el nombre y el adjetivo de la sentencia actual se usan para
+		buscar un objeto con dicho nombre. Si existe, se efect£a una
+		acci¢n "dejar" autom tica con dicho objeto. Sirve para poder
+		dejar cualquier objeto.
+
+	autop
+		el nombre y el adjetivo de la sentencia actual se usan para
+		buscar un objeto con dicho nombre. Si existe, se efect£a una
+		acci¢n "poner" autom tica con dicho objeto. Sirve para poder
+		poner cualquier objeto.
+
+	autoq
+		el nombre y el adjetivo de la sentencia actual se usan para
+		buscar un objeto con dicho nombre. Si existe, se efect£a una
+		acci¢n "quitar" autom tica con dicho objeto. Sirve para poder 
+		quitar cualquier objeto.
+
+	autom(contenedor)
+		el nombre y el adjetivo de la sentencia actual se usan para
+		buscar un objeto con dicho nombre. Si existe, se efect£a una
+		acci¢n "meter" autom tica con dicho objeto, usando como
+		contenedor el argumento "contenedor". Sirve para poder meter
+		cualquier objeto en un cierto contenedor.
+
+	autos(contenedor)
+		el nombre y el adjetivo de la sentencia actual se usan para
+		buscar un objeto con dicho nombre. Si existe, se efect£a una
+		acci¢n "sacar" autom tica con dicho objeto, usando como
+		contenedor el argumento "contenedor". Sirve para poder sacar
+		cualquier objeto de un cierto contenedor.
+
+
+b) Listado de objetos
+
+	listaobj
+		si hay alg£n objeto presente en la localidad actual, entonces se
+		imprime el mensaje del sistema n§ 1 ("Adem s puedo ver "),
+		seguido de una lista de los objetos presentes en dicha
+		localidad.
+
+	listade(contenedor)
+		se imprime una lista de los objetos inclu¡dos dentro del
+		contenedor "contenedor". No se imprime el mensaje del sistema 
+		n§ 1, al contrario que con "listaobj", con lo que se deber 
+		preceder esta acci¢n con un mensaje del tipo de
+		"En la bolsa hay:".
+
+	inven
+		se imprime el mensaje del sistema n§ 9 ("Tengo: "), seguido
+		de una lista de los objetos que se llevan o se tienen puesto
+		encima. Si un objeto se lleva puesto, su texto ir  seguido
+		del mensaje del sistema n§ 10 ("encima" o "puesto"). Sirve
+		para describir el inventario del jugador.
+
+
+c) Emisi¢n de mensajes
+
+	"mensaje"
+		emite el mensaje del usuario de n£mero dado por mensaje, sin hacer
+		un salto de l¡nea.
+
+	mensis(mensaje)
+		emite el mensaje del sistema dado por mensaje. No hace salto
+		de l¡nea.
+
+	imprime(n£mero)
+		emite el valor de n£mero. Sirve para imprimir el valor de una cierta
+		bandera, por ejemplo.
+
+	describe
+		describe la localidad actual, es decir, emite su descripci¢n.
+
+	saltolinea
+		efect£a un salto de l¡nea.
+
+
+d) Control de subrutinas
+
+	retorno
+		retorna el control a la instrucci¢n que sigue a la llamada a
+		la subrutina actual. Si se incluye en una respuesta en lugar
+		de en una subrutina, se provoca un salto a la b£squeda de
+		otra entrada en la tabla de respuestas. Al final de cada
+		respuesta y cada subrutina hay un retorno impl¡cito.
+
+	hecho
+		provoca un salto incondicional al int‚rprete. Similar al
+		"retorno", pero m s traum tico, ya que deja sin ejecutar las
+		instrucciones siguientes a la llamada de la subrutina actual.
+		Si se incluye en una respuesta, se usa para evitar que se
+		busquen m s respuestas que cuadren con la sentencia actual.
+		Es una forma f cil de indicar que no se consideran m s
+		entradas y que contin£e la ejecuci¢n.
+
+	no_hecho
+		exactamente igual que "hecho", s¢lo que imprime el mensaje
+		del sistema n§ 8 ("No puedo hacer eso"). Se usa para indicar
+		que la sentencia del jugador no puede ser realizada por
+		alguna raz¢n.
+
+
+e) Estructuras de control
+
+	'{' sentencia; {sentencia;} '}'
+		es la estructura secuencial del lenguaje de GAC. Determina un
+		bloque formado por varias sentencias encerradas entre llaves. 
+		Los bloques de sentencias pueden usarse en cualquier contexto 
+		en el que se necesite una sentencia -son un caso particular 
+		de sentencia.
+
+	si (expresi¢n) sentencia-then [sino sentencia-else]
+		es la estructura alternativa. Si "expresi¢n" es distinto de
+		cero, se ejecuta la sentencia-then. En otro caso, si se
+		incluye la cl usula "sino", se ejecuta la sentencia-else.
+
+	mientras (expresi¢n) sentencia
+		es la estructura iterativa del lenguaje. Mientras "expresi¢n" 
+		sea distinto de cero, se ejecutar  la sentencia "sentencia".
+
+	evaluar (expresi¢n) '{'
+		caso valor1: sentencia1;
+		[{caso valorN: sentenciaN;}]
+		[defecto: sentencia_defecto;]
+	'}'
+		la estructura alternativa m£ltiple. El valor de "expresi¢n" se
+		compara con cada uno de los valores de los "casos". Cuando se en-
+		cuentra una igualdad, se ejecuta la sentencia correspondiente,
+		saliendo despu‚s de la estructura. Es necesario que haya al menos
+		un caso, y el caso por defecto es opcional.
+
+f) Miscel nea
+
+	diag
+		activa el diagn¢stico de la aventura. Se pide el n£mero de
+		una cierta bandera y se imprime su valor actual, dando la
+		posibilidad de cambiarlo. Este proceso se repite hasta que se 
+		pulsa [ENTER] cuando se pide el n£mero de la bandera.
+
+	tecla
+		imprime el mensaje del sistema n§ 16 ("Pulsa una tecla para
+		continuar..."), y espera hasta que el jugador apriete
+		cualquier tecla.
+
+	pausa(tiempo)
+		detiene la ejecuci¢n de la aventura durante "tiempo"
+		milisegundos.
+
+	mueve(localidad)
+		mueve al jugador a la localidad "localidad". En realidad, lo
+		que hace es cambiar la bandera 38 al valor "localidad".
+
+	turnos
+		emite los mensajes del sistema del 17 al 20, que son del tipo 
+		de "Has dado X ¢rden(es)". Aqu¡ X es el contenido de la
+		bandera 31 -la que almacena el n§ de turnos del jugador.
+
+	acabar
+		emite el mensaje del sistema n§ 13 ("¨Quieres jugar otra
+		vez?"), tras lo cual se llama a la rutina del int‚rprete. Si
+		la respuesta no empieza con el primer car cter que lleve el
+		mensaje del sistema 31, se hace un salto a la rutina de
+		inicializaci¢n; si no, se devuelve el control al sistema
+		operativo. Es el comando que permite finalizar la aventura y
+		salir de ella.
+
+	bandera := expresi¢n    (asignaci¢n)
+		cambia el valor de una cierta bandera por el de "expresi¢n". 
+		Al igual que ocurre con los lenguajes del paradigma
+		imperativo, la asignaci¢n es casi la instrucci¢n m s
+		importante de todo el conjunto de instrucciones. En nuestro
+		caso, permite cambiar el estado de la aventura.
+
+	imagen(fichero)
+		presenta en pantalla la animaci¢n o imagen contenida en el fichero
+		"fichero" (caso de que el fichero exista).
+
+	sonido(sonido, numero)
+		emite el sonido "sonido" por la tarjeta de sonido. Adem s, si el
+		"numero" es distinto de cero, lo hace de forma cont¡nua. El sonido
+		debe estar en la librer¡a de sonidos que previamente hemos tenido
+		que crear con la utilidad SNDLIB.EXE.
+	
+	silencio(sonido)
+		deja de emitir el sonido "sonido" por la tarjeta de sonido.
+
+
+Es importante indicar que todas las sentencias -menos las estructuras de
+control- acaban en punto y coma. Es decir, el punto y coma es un terminador
+de sentencias, como en C.
+
+	Estas acciones, como puede verse, hacen referencia a los conceptos y
+elementos de la aventura. Es posible interaccionar con los objetos, con las
+banderas, con los mensajes, etc., lo permite expresar las acciones a realizar
+en t‚rminos comunes y abstractos. Ayuda a esconder los detalles de
+implementaci¢n -en ning£n momento se hablan de las estructuras de datos, por
+ejemplo-, y de esta forma el escritor no se tiene que preocupar por el c¢mo,
+sino por el qu‚.
+
+
+1.2.2   Gram tica libre de contexto
+
+La gram tica es el formalismo que especifica de forma clara y precisa la
+sintaxis de un lenguaje de programaci¢n. La sintaxis del lenguaje de GAC
+tambi‚n viene descrita mediante una gram tica; en particular, una gram tica
+libre de contexto.
+
+	El estudio de dicha gram tica es esencial para determinar si un cierto
+programa posee o no alg£n error sint ctico, adem s de dar una referencia
+r pida del lenguaje de descripci¢n de la aventura. Dicha gram tica es usada
+despu‚s para obtener el analizador sint ctico para GAC, mediante el uso de la
+herramienta PC-YACC. Sobre dicha gram tica se construir  el traductor
+"enganchando" acciones sem nticas a las producciones.
+
+	Vamos ya con el listado de la gram tica. Hay que indicar que se ha usado
+la notaci¢n de PC-YACC en lugar de las notaciones BNF o EBNF habituales. De
+esta forma, es m s f cil "seguirle la pista" a la gram tica cuando se
+comenten algunos esquemas de traducci¢n del compilador. Los s¡mbolos
+terminales est n en may£sculas, y los no-terminales en min£sculas. Los
+caracteres se consideran s¡mbolos terminales.
+
+
+aventura : vocabulario localidades objetos mensajes instrucciones
+	 ;
+
+vocabulario : VOCABULARIO 
+		;
+
+lista_decl_palabras : lista_decl_palabras palabra ';'
+			| palabra ';'
+			;
+
+palabra : tipo_palabra lista_palabras
+	;
+
+tipo_palabra : VERBO        
+		 | ADVERBIO     
+		 | NOMBRE       
+		 | ADJETIVO     
+		 | PREPOSICION  
+		 | CONJUNCION   
+		 | PRONOMBRE    
+		 ;
+
+lista_palabras : CADENA sgte_palabra
+		   ;
+
+sgte_palabra : ',' CADENA sgte_palabra
+		 | '=' '{' lista_sinonimos '}'
+		 |
+		 ;
+
+lista_sinonimos : lista_sinonimos ',' sinonimo
+		| sinonimo
+		;
+
+sinonimo : CADENA
+	 ;
+
+localidades : LOCALIDADES '{' lista_localidades '}'
+		;
+
+lista_localidades : lista_localidades localidad ';'
+		  | localidad ';'
+		  ;
+
+localidad : NUM ':' CADENA imagen conexiones
+	  |
+	  ;
+
+conexiones : CONEXIONES '{' lista_conexiones '}'
+	   |
+	   ;
+
+lista_conexiones : conexion ',' lista_conexiones
+		 | conexion
+		 ;
+
+conexion : VERBO1 ':' NUM
+	 ;
+
+objetos : OBJETOS '{' lista_objetos '}'
+	|
+	;
+	
+lista_objetos : lista_objetos objeto ';'
+		  | objeto ';'
+		  ;
+
+objeto : NOMBRE1 adjetivo DESC CADENA PESO NUM INICIAL loc_inic
+	 tipo_objeto
+	   ;
+
+loc_inic : NO_CREADO1
+	 | ENCIMA1   
+	 | LLEVADO2  
+	 | NUM    
+	 ;
+
+adjetivo : ADJETIVO1
+	 |    
+	 ;
+
+tipo_objeto : CONTENEDOR
+		| ROPA
+		|
+		;
+
+mensajes : mens_usuario mens_sistema
+	 ;
+
+mens_usuario : MENSAJES '{' lista_mensajes '}'
+		 |
+		 ;
+
+lista_mensajes : lista_mensajes mensaje ';'
+		   | mensaje ';'
+		   ;
+
+mensaje : NUM ':' CADENA
+	;
+
+mens_sistema : SISTEMA '{' lista_sistema '}'
+		 |
+		 ;
+
+lista_sistema : lista_sistema sistema ';'
+		  | sistema ';'
+		  ;
+
+sistema : NUM ':' CADENA
+	;
+
+instrucciones : respuestas resto_instrucciones
+		  ;
+
+respuestas : respuestas respuesta
+	   | respuesta
+	   ;
+
+respuesta : verbo nombre '{' lista_sentencias '}'
+	  ;
+
+verbo : VERBO1
+	  | '*'
+	  | '_'
+	  ;
+
+nombre : NOMBRE1
+	   | '*'
+	   | '_'
+	   ;
+
+lista_sentencias : lista_sentencias sentencia
+		 | sentencia
+		 ;
+
+sentencia : compuesta
+	  | while_do
+	  | if_then
+	  | if_then_else
+	  | simple ';'
+	  ;
+
+simple : asignacion
+	   | llamada_subrutina
+	   | retorno
+	   | coger
+	   | dejar
+	   | poner
+	   | quitar
+	   | crear
+	   | destruir
+	   | acabar
+	   | turnos
+	   | hecho
+	   | no_hecho
+	   | colocar
+	   | intercambiar
+	   | meter
+	   | sacar
+	   | autoc
+	   | autod
+	   | autop
+	   | autoq
+	   | autom
+	   | autos
+	   | listaobj
+	   | listade
+	   | inven
+	   | mens
+	   | mensaje
+	   | mensis
+	   | tecla
+	   | pausa
+	   | describe
+	   | mueve
+	   | diag
+	   | imprime
+	   | saltolinea
+	   ;
+
+compuesta : '{' lista_sentencias '}'
+	  ;
+
+asignacion : BANDERA ASIGNA rvalue
+	   ;
+
+llamada_subrutina : LLAMA '(' ID ')'
+		  ;
+
+rvalue : rvalue '+' rvalue
+	   | rvalue '-' rvalue
+	   | rvalue '*' rvalue
+	   | rvalue '/' rvalue
+	   | '(' rvalue ')'
+	   | '-' rvalue %prec MENOSU
+	   | lvalue
+	   | NUM
+	   | obj
+	   | OBJETO '(' rvalue ',' rvalue ')'
+	   | NOT rvalue
+	   | rvalue AND rvalue
+	   | rvalue OR  rvalue
+	   | rvalue MAY rvalue
+	   | rvalue MEN rvalue
+	   | rvalue MAI rvalue
+	   | rvalue MEI rvalue
+	   | rvalue EQU rvalue
+	   | rvalue NEQ rvalue
+	   | NO_CREADO1
+	   | ENCIMA1
+	   | LLEVADO2
+	   | ESTA '(' rvalue ')'
+	   | ESTAMAY '(' rvalue ')'
+	   | ESTAMEN '(' rvalue ')'
+	   | PRESENTE '(' rvalue ')'
+	   | AUSENTE '(' rvalue ')'
+	   | PUESTO1 '(' rvalue ')'
+	   | LLEVADO1 '(' rvalue ')'
+	   | ESTAEN '(' rvalue ',' rvalue ')'
+	   | LOCAL '(' rvalue ')'
+	   | VERB1 '(' VERBO1 ')'
+	   | NOMB1 '(' NOMBRE1 ')'
+	   | ADJET1 '(' ADJETIVO1 ')'
+	   | ADVERB '(' ADVERBIO1 ')'
+	   | PREPOS '(' PREPOSICION1 ')'
+	   | NOMB2 '(' NOMBRE1 ')'
+	   | ADJET2 '(' ADJETIVO1 ')'
+	   | ACABAR1
+	   | ANALIZA
+	   ;
+
+obj : NOMBRE1 adjetivo
+	;
+
+lvalue : BANDERA
+	   ;
+
+retorno : RETORNO
+	;
+
+while_do : MIENTRAS '(' rvalue ')' sentencia
+	 ;
+
+if_then : SI '(' rvalue ')' sentencia
+	;
+
+if_then_else : SI '(' rvalue ')' sentencia SINO sentencia
+		 ;
+
+resto_instrucciones : subrutinas
+			|
+			;
+
+subrutinas : subrutinas subrutina
+	   | subrutina
+	   ;
+
+subrutina : SUBRUTINA ID '{' lista_sentencias '}'
+	  ;
+
+
+Para aquellos que no est‚n familiarizados con la notaci¢n de YACC, decir que
+se basa en una lista de producciones, donde cada producci¢n empieza con un
+no-terminal -la cabeza-, seguido del s¡mbolo ':' -el cuello-, seguido de una
+cadena de terminales y no-terminales -el cuerpo-. La producci¢n acaba con un
+punto y coma. Adem s, se utiliza el s¡mbolo '|' para unir varias producciones
+que comparten la misma cabeza. Por £ltimo, la producci¢n "A ::= lambda" se
+representa por "A : ;", es decir, una producci¢n con el cuerpo vac¡o.
+
+	Se usa el token VERBO para indica que se espera la palabra clave
+"verbo", mientras que VERBO1 hace referencia a una palabra de tipo verbo que
+ya se haya almacenado en el vocabulario. Lo mismo ocurre con NOMBRE,
+ADJETIVO, etc.
+
+	Recordar tambi‚n que, aunque los s¡mbolos terminales est n escritos
+en may£sculas, sus lexemas son cadenas de caracteres en min£sculas. (Por
+ejemplo, el token SUBRUTINA hace referencia a la palabra clave subrutina,
+que est  en min£sculas.) El analizador l‚xico es el encargado de buscar dicha
+cadena de caracteres y de devolver al analizador sint ctico el token
+correspondiente, que en este caso se representa con una palabra en
+may£sculas: SUBRUTINA. De cualquier forma, dicha palabra no es m s que un
+n£mero entero; YACC se encarga de sustituir la cadena por su n£mero.
+
+	Se¤alar tambi‚n el hecho de que esta gram tica es el resultado de
+adaptar la gram tica inicial a la traducci¢n ascendente. Adem s, el esquema
+de traducci¢n ha requerido a¤adir ciertos s¡mbolos y producciones
+adicionales, o separar una cierta producci¢n en dos para que el traductor sea 
+m s eficiente.
+
+
+
+	2. EL MODULO RUN-TIME
+	---------------------
+
+- Funcionamiento interno
+
+Vamos ahora a describir de forma m s precisa el conjunto de acciones que
+efect£a el m¢dulo run-time a la hora de ejecutar el c¢digo de la aventura.
+Son un total de 7 puntos, de los cuales el primero s¢lo se realiza una vez
+-al entrar en la aventura-, mientras que los otros seis forman un bucle, de
+manera que cada iteraci¢n coincide con un turno del jugador.
+
+	1.  INICIALIZACION DEL SISTEMA
+	------------------------------
+	Los caracteres se ponen en cursiva.
+	Las banderas son todas puestas a cero, excepto:
+		La bandera 37, la cual contiene el n£mero de objetos
+		llevables, se pondr  a 4.
+		La bandera 52, lleva el m ximo peso permitido y se pone a 10.
+		La bandera 1, lleva el n£mero de objetos llevados pero no
+		puestos encima.
+	Hay que tener en cuenta que con la limpieza de las banderas, el juego
+	siempre comenzar  en la localidad 0. Esto es porque la bandera 38,
+	que lleva la localizaci¢n actual del jugador, est  ahora a cero.
+	Por £ltimo, mueve los objetos a sus lugares iniciales.
+
+	2.  DESCRIPCION DE LA LOCALIDAD ACTUAL
+	--------------------------------------
+	Si la bandera 2 no est  a cero, ser  decrementada en 1.
+	Si est  oscuro  que la bandera 0 no es cero  y la bandera 3 no es
+	cero, entonces la bandera 3 es decrementada. Si est  oscuro y la
+	bandera 4 no est  a cero y el objeto 0 -la fuente de luz- est 
+	ausente, la bandera 4 es decrementada.
+	Todo esto se hace para proporcionar al escritor unos indicadores
+	autom ticos que les sirva para manejar las habitaciones oscuras.
+	Se hace una limpieza de pantalla si el contenido del modo de pantalla -el
+	que contiene la bandera 40- no est  a 1.
+	Si est  oscuro y el objeto 0 est  ausente, entonces el mensaje del
+	sistema n§ 0 -el que se refiere al mensaje "Est  muy oscuro para
+	poder ver"- se imprime.
+	Si no, la imagen de la localidad -si la tiene- es presentada en
+	pantalla, y aparecer  la descripci¢n de la localidad en texto.
+
+	3.  BUSQUEDA EN LA TABLA DE SUBRUTINAS: Process1
+	------------------------------------------------
+	La subrutina Process1 se utiliza principalmente para que contenga
+	aquellas entradas que van a a¤adir informaci¢n extra a la descripci¢n
+	actual de la localidad. Por ejemplo, detalles sobre puertas abiertas,
+	objetos presentes, etc.
+
+	A partir de aqu¡, entramos en el bucle principal del int‚rprete, que
+	actuar  en cada paso de tiempo -siempre que se haya extra¡do una
+	sentencia del jugador- y tambi‚n con las respuestas a las ¢rdenes del
+	jugador.
+
+	4.  BUSQUEDA EN LA TABLA DE SUBRUTINAS: Process2
+	------------------------------------------------
+	Esta subrutina contiene el control principal del turno de GAC durante el
+	juego. Se usa para implementar los movimientos y las acciones de los
+	personajes. Tambi‚n se usa en los eventos incontrolados, como son
+	puentes que se derrumban, cosas que se caen, etc.
+
+	5.  OBTENER LA ENTRADA DEL JUGADOR
+	----------------------------------
+	Si las banderas 7 y 8 no est n a cero, son decrementadas. Si est 
+	oscuro (la bandera 0 no est  a cero) y la bandera 9 no est  a cero,
+	entonces tambi‚n es decrementada. Si est  oscuro y la bandera 10 no
+	est  a cero, ser  decrementada si el objeto 0 est  ausente.
+	Ahora el parser va a extraer una entrada y convertirla en sentencias. Si
+	el b£ffer de input est  vac¡o, se busca un nuevo input del jugador
+	por medio de la impresi¢n del mensaje adecuado y una posterior
+	llamada a la rutina de input. El mensaje ser  el que contenga la
+	bandera 42. Si tiene un valor igual a 0, los mensajes se
+	seleccionar n de entre los n£meros 2, 3, 4 y 5 con probabilidad 0.30, 
+	0.30, 0.30 y 0.10, respectivamente.
+	La entrada se convierte en una sentencia convirtiendo cualquier
+	palabra que est‚ presente en ella -y que est‚ en el vocabulario- a su
+	c¢digo de palabra y poni‚ndola luego en la bandera requerida. Si no
+	se encuentra una sentencia v lida, entonces el mensaje del sistema
+	n§ 6 ("No te entiendo") aparece y vuelve a activar la subrutina
+	Process2.
+
+	6.  BUSQUEDA EN LA TABLA DE RESPUESTAS
+	--------------------------------------
+	El n§ de turnos se almacena en la bandera 31. Este turno entonces se
+	incrementar  en 1.
+	En la tabla de respuestas se busca una entrada que haga juego con el
+	Verbo y el primer Nombre de la sentencia actual.
+	Si la b£squeda es satisfactoria, se llevan a cabo las acciones y
+	luego se vuelve a activar la subrutina Process2.
+
+	7.  BUSQUEDA DE CONEXIONES
+	--------------------------
+	Es importante destacar que las conexiones se buscar n despu‚s de
+	haber pasado por el sistema de procesamiento -la tabla de respuestas
+	y la de subrutinas-. Por ello, cualquier conexi¢n constru¡da "a mano" 
+	en el sistema de procesamiento puede ser omitida en las conexiones.
+	Esto se hace para tener un mayor control sobre las conexiones,
+	impidiendo que el jugador pase de localidad si no tiene una cierta
+	llave, etc.
+	Para la localidad actual, se busca en su lista de conexiones una
+	palabra que haga juego con el verbo presente en la sentencia actual.
+	Si se encuentra una, entonces la localidad del jugador -llevada por
+	la bandera 38- se actualiza para que lleve ahora el n£mero de
+	localidad que est‚ asociado con dicha palabra en la tabla. Luego se
+	ejecuta la descripci¢n de esa localidad. Si no se encuentra la
+	palabra, GAC, imprimir  el mensaje del sistema n§ 7 ("No puedo hacer
+	eso"). De cualquier manera, se vuelve de nuevo a activar la subrutina
+	Process2.
+
+

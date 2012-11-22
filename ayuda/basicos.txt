@@ -1,0 +1,1015 @@
+@Conceptos b sicos
+:Introducci¢n
+^Introducci¢n a PROMETEO 2.2.1
+
+     PROMETEO 2.2.1 es un generador de aventuras conversacionales. Permite
+ escribir aventuras de texto (con posibilidad de animaciones y sonido) sin
+ necesidad de tener conocimientos profundos de Inform tica o Programaci¢n.
+ Posee un lenguaje propio para describir aventuras de forma c¢moda y
+ sencilla.
+
+     PROMETEO 2.2.1 es un paquete compuesto por varias herramientas. Las m s
+ importantes son el compilador (PC.EXE) y el m¢dulo run-time (PR.EXE). El
+ compilador toma el programa fuente escrito en el lenguaje de descripci¢n de
+ aventuras, y con ‚l genera un programa objeto con un formato propio en un
+ fichero de igual nombre y extensi¢n .GAM. Una vez generado el c¢digo, se usa
+ el m¢dulo run-time para, en base a la informaci¢n contenida en el fichero
+ objeto, ejecutar la aventura.
+
+     As¡, distribuir una aventura es muy f cil. Tan s¢lo hay que dar el
+ c¢digo objeto (el fichero de extensi¢n .GAM) y el m¢dulo run-time (el
+ programa PR.EXE), que son los dos £nicos ficheros que el jugador necesita
+ para poder jugar a la aventura. El c¢digo fuente queda asegurado, y no es
+ necesario facilitarlo, lo que hace que sea un producto muy seguro.
+
+     Un programa fuente para PROMETEO 2.2.1 ser  un fichero de texto (usual-
+ mente de extensi¢n .PRO) formado por varias secciones de informaci¢n, que
+ suministran al compilador la informaci¢n necesaria para poder generar la
+ aventura. Estas secciones pueden aparecer en cualquier lugar del programa
+ fuente, teniendo en cuenta que:
+
+     - Las secciones son disjuntas, lo que significa que ninguna secci¢n
+       puede estar total o parcialmente contenida en otra.
+
+     - Antes de usar un cierto elemento, hay que definirlo. Por ejemplo, si
+       queremos usar una palabra en la secci¢n de respuestas, previamente
+       hemos tenido que definir esa palabra en el ~vocabulario~.
+
+     - Las secciones pueden aparecer varias veces en un mismo fichero fuente
+       siempre que no se redefina un elemento previamente definido. Por
+       ejemplo, es posible tener dos secciones de ~vocabulario~ separadas por
+       una secci¢n de ~localidades~.
+
+     Otras caracter¡sticas m s avanzadas del lenguaje de PROMETEO 2.2.1 son
+ las ~subrutinas~, las estructuras que cambian el flujo de control, etc.
+ Tambi‚n es posible reproducir ficheros de animaci¢n en formato .FLI, y usar
+ la Sound Blaster para generar sonidos por hasta 8 canales independientes.
+
+     Puede aprender m s sobre las herramientas de desarrollo, entrando en
+ el submen£ correspondiente del men£ principal. En el submen£ dedicado a
+ los conceptos b sicos encontrar  m s informaci¢n sobre las distintas
+ secciones que componen un programa para PROMETEO 2.2.1, adem s de otra infor-
+ maci¢n de inter‚s para los que empiezan a escribir aventuras con esta he-
+ rramienta.
+
+:Programa de Ejemplo
+^Programa de Ejemplo: "El Billete"
+
+     En el directorio donde haya instalado PROMETEO 2.2.1, se encuentra una
+ aventura de ejemplo que pretende mostrar algunas de las caracter¡sticas
+ de este generador de aventuras. El c¢digo fuente se encuentra en el fichero
+ BILLETE.PRO, y el c¢digo objeto es el fichero BILLETE.GAM (caso de que no
+ se encuentre, se puede generar sin problemas compilando el fichero fuente
+ con la orden "PC BILLETE" desde el prompt de MS-DOS). Para jugarla debe
+ escribirse "PR BILLETE".
+
+     El objetivo del juego consiste en encontrar el billete de autob£s que
+ se le ha perdido al jugador mientras esperaba cerca de un parque. Este
+ billete es necesario para poder tomar el autob£s y volver sano y salvo a
+ su casa. Es una aventura muy peque¤a (pocas localidades, pocos objetos,
+ f cil de terminar, ...) pero creo que sirve bastante bien para aclarar
+ algunos conceptos y mostar alguna que otra caracter¡stica curiosa de
+ PROMETEO 2.2.1. Por ejemplo, si examinamos al pajarito, aparecer  una anima-
+ ci¢n. Tambi‚n se ejemplifica el uso de los colores en el texto, y se
+ muestra como hacer operaciones autom ticas con muchos objetos a la vez
+ (cosas del estilo de "COGE TODO EXCEPTO LA BOLSA", y as¡). En realidad,
+ mucho de su c¢digo puede reutilizarse para formar el "esqueleto" base de
+ cualquier aventura que el escritor desarrolle.
+
+:Int‚rprete
+^El int‚rprete de lenguaje natural
+
+     Cuando el jugador est  ejecutando la aventura, ‚sta le pide constante-
+ mente que le vaya indicando las acciones que desea realizar. Estas acciones
+ son descritas usando un lenguaje natural (que puede ser castellano, catal n,
+ u otro cualquiera, dependiendo del escritor). Pues bien: la parte de
+ PROMETEO que traduce en tiempo de ejecuci¢n la frase del jugador a los
+ c¢digos internos que la aventura entiende es el int‚rprete de lenguaje
+ natural (para abreviar, "int‚rprete").
+
+     La finalidad del int‚rprete es, por tanto, verificar que la frase est 
+ correctamente escrita, y en caso afirmativo, almacenar en las ~banderas~
+ adecuadas los c¢digos de las palabras que componen la frase. A su vez,
+ dichas palabras deber¡an haber sido introducidas en el ~vocabulario~ cuando
+ la aventura se estaba desarrollando. Toda palabra escrita por el jugador que
+ no aparezca en el vocabulario ser  simplemente ignorada por el int‚rprete.
+
+     Una frase v lida para PROMETEO es una combinaci¢n de palabras de la
+ siguiente forma:
+
+     VERBO [PREPOSICION] [NOMBRE [ADJETIVO] | PRONOMBRE] ["FRASE"]
+           [PREPOSICION] [NOMBRE [ADJETIVO] | PRONOMBRE] [ADVERBIO]
+
+     Adem s, una frase puede estar compuesta de varias unidas mediante una
+ CONJUNCION o un signo de puntuaci¢n (".", "," o ";").
+
+     Como puede comprobarse, el £nico elemento necesario en una frase es el
+ verbo, que es el que indica la acci¢n de la frase. El resto de los compo-
+ nentes se usan para escribir frases m s complejas. Por ejemplo, es normal
+ usar frases con verbo y nombre, indicando as¡ que se quiere hacer algo con
+ una cosa (se expresa la acci¢n y aquello sobre lo que recae la acci¢n).
+
+     A veces, es necesario especificar dos cosas para completar la acci¢n
+ del verbo. Por ejemplo, en la frase "METE LA LLAVE EN LA BOLSA" (recordamos
+ que las palabras como "LA" o "EN" son ignorados, pues no aparecen en el
+ vocabulario), tenemos un verbo ("METE") y dos nombres ("LLAVE" y "BOLSA").
+ Eso se puede hacer sin problemas y el int‚rprete lo entiende perfectamente.
+
+     Los nombres pueden ser sustituidos por un pronombre, y en ese caso, el
+ nombre ser  el mismo que se us¢ en la frase anterior. Por ejemplo, ser¡a
+ v lido escribir "COGE LA ESPADA Y MATA A MANOLO CON ELLA", donde "ELLA" es
+ el pronombre.
+
+     Existen unos nombres especiales, que son los "nombres convertibles a
+ verbos", que se transforman autom ticamente en el verbo de la frase cuando no
+ se especifica ning£n verbo en concreto. De entre ellos, los m s interesantes
+ son las "direcciones", que funcionan como nombres o verbos seg£n el caso, y
+ que cuando se teclean en una frase y no existe conexi¢n asociada a ella en la
+ localidad actual, hace que se emita el mensaje "No hay salida en esa direc-
+ ci¢n", en lugar del "No puedo hacer eso" tradicional. (Ver ~Vocabulario~ para
+ m s informaci¢n).
+
+     Adem s, a veces hay que matizar m s la acci¢n a realizar, incluyendo
+ adverbios ("RAPIDAMENTE", por ejemplo), que modifican la acci¢n del verbo,
+ o preposiciones.
+
+
+^Caracter¡sticas avanzadas del int‚rprete
+
+     El int‚rprete es m s inteligente de lo que parece a primera vista, pues
+ adem s es capaz de entender otras frases m s complicadas. Por ejemplo,
+ la frase "COGE LA MANZANA Y COMETELA" la entiende correctamente, porque
+ cuando el int‚rprete detecta un verbo terminado en "LA", "LAS", "LO", "LOS",
+ "LE" o "LES", toma el verbo, y el nombre lo toma de la frase anterior. En
+ el ejemplo, tomar¡a "COMETE" como verbo, y el nombre ser¡a "MANZANA".
+
+     Otro concepto avanzado del int‚rprete es la gesti¢n de las frases que
+ van dirigidas a otros personajes del juego. En efecto, PROMETEO usa una
+ sint xis especial para cuando el jugador quiere hablar con alg£n personaje.
+ Esta consiste en usar comillas (") para delimitar aquello que se quiere
+ decir al personaje, como por ejemplo: DI AL GUARDIA "DEJAME ENTRAR". Si
+ tenemos "DEJAME" como verbo en el vocabulario, la frase ser  correctamente
+ entendida por el int‚rprete. ¨C¢mo lo hace?
+
+     Ya sabemos que una frase se descompone en palabras componentes, y el
+ int‚rprete lo que hace es almacenar los c¢digos internos de las palabras
+ en sus correspondientes ~banderas~ (hay una bandera para el verbo, otra para
+ el primer nombre, otra para el segundo, etc...). Pues lo mismo hace con
+ las palabras escritas entre comillas: hay una bandera para el verbo de la
+ frase entre comillas, otra para el nombre, etc. Estas banderas, por
+ supuesto, son distintas a las usadas por las palabras de la frase
+ "principal".
+
+     Posteriormente, en el c¢digo fuente se debe haber previsto la circuns-
+ tancia de que el jugador pueda hablar con el personaje. La t‚cnica habitual
+ es usar la funci¢n ~analiza~.
+
+:Vocabulario
+^Vocabulario
+
+     El vocabulario determina qu‚ palabras entender  el int‚rprete una vez
+ se est‚ jugando a la aventura. A su vez, y como consecuencia, determina
+ las posibles frases v lidas que el jugador puede escribir para que el
+ ~Int‚rprete~ le entienda.
+
+     Cuando una palabra es inscrita en el vocabulario, autom ticamente le es
+ asignado un c¢digo interno, consistente en un n£mero entero. Por tanto, para
+ PROMETEO, una palabra no es m s que un n£mero; el lexema de dicha palabra
+ s¢lo se usa en el momento en que el jugador teclea una frase, y entonces
+ el ~Int‚rprete~ traduce dicha palabra y la sustituye internamente por su
+ c¢digo correspondiente.
+
+
+^Sin¢nimos
+
+     El caso es que una aventura en la que para hacer algo se tenga que
+ buscar exactamente las palabras que el escritor pens¢, es algo horrible de
+ jugar. Por eso, PROMETEO introduce el concepto de "sin¢nimo": una palabra
+ es sin¢nimo de otra cuando, teniendo lexemas diferentes, tienen asignadas
+ el mismo c¢digo interno. Claramente se ve que dos palabras con el mismo
+ c¢digo ser n tratadas internamente por PROMETEO "exactamente" de la misma
+ forma, puesto que PROMETEO s¢lo ve n£meros y no palabras. Es el ~Int‚rprete~
+ el £nico que ve diferencia entre ambas, diferencia que elimina en el momen-
+ to en que las traduce a su correspondiente c¢digo.
+
+     El uso de los sin¢nimos enriquece enormemente la aventura, puesto que
+ de esta forma el potencial jugador no tendr  que buscar mientras juega
+ exactamente aquella palabra que se le ocurri¢ al escritor en el momento de
+ escribir la aventura.
+
+
+^Sintaxis del vocabulario
+
+     El vocabulario de la aventura se expresa por la siguiente construcci¢n
+ sint ctica:
+
+%    vocabulario '{'
+%        <tipo> <lexema> {, <lexema>}
+%            ['=' '{' <lexema> {, <lexema>} '}'] ';'
+%        {<tipo> <lexema> {, <lexema>}
+%            ['=' '{' <lexema> {, <lexema>} '}'] ';'}
+%    '}'
+
+ donde <tipo> es una de las siguientes palabras reservadas:
+
+     - verbo
+     - adverbio
+     - nombre
+     - adjetivo
+     - preposicion
+     - conjuncion
+     - nombre_verbo
+     - direccion
+
+     Hay que decir antes de nada que el compilador de PROMETEO es sensible al
+ caso, lo que significa que distingue entre letras may£sculas y min£sculas.
+ Por tanto, "vocabulario" no ser  lo mismo que "VOCABULARIO" o que
+ "Vocabulario". Adem s, los lexemas de las palabras del vocabulario deben ir
+ siempre en may£sculas.
+
+^---*---
+
+%Caso especial
+
+     Podemos hacer que un n£mero de varias cifras sea tambi‚n una palabra del
+ vocabulario. Esto es £til cuando hay un c¢digo que el jugador tiene que
+ teclear (Ej: "TECLEA 48572 EN EL ORDENADOR"), o algo similar. Para que el
+ compilador sepa que es una palabra y no un n£mero, hay que anteponer al n£me-
+ ro en cuesti¢n una comilla simple ('), TANTO EN EL VOCABULARIO COMO EN EL
+ RESTO DEL CODIGO FUENTE (Ej: "nombre '48572"). De esta forma, reconocer  que
+ se trata de un lexema especial, formado s¢lo por n£meros. En el caso de que
+ los n£meros vengan tras letras, como en "PEPE123", no es necesario poner la
+ comilla.
+
+^---*---
+
+     El vocabulario empieza con la palabra clave "vocabulario", seguido de
+ una lista de declaraciones de palabras encerrada entre llaves. Cada
+ declaraci¢n consta de un tipo de palabra (verbo, nombre, etc.) y una lista
+ de lexemas separadas por comas, y terminada en un punto y coma. Opcional-
+ mente, se pueden indicar los sin¢nimos de la £ltima palabra de la lista.
+ Para ello, se a¤ade el signo '=', seguido de otra lista de palabras
+ separadas por comas y encerradas entre llaves.
+
+ Hay dos tipos de palabra especiales: "nombre_verbo" y "direccion". El tipo
+ "nombre_verbo" indica "nombre convertible en verbo", y cuando una palabra es
+ de ese tipo, quiere decir que es un nombre, pero que puede llegar a ser el
+ verbo de una frase del jugador cuando ‚ste no especifica ning£n verbo en tal
+ frase. Por otra parte, "direccion" es un caso particular de "nombre converti-
+ ble en verbo", que lo que indica es que se trata de una orden de movimiento.
+ Las palabras "direcci¢n" son las que se deber¡an usar para las conexiones
+ entre las localidades, ya que, cuando se teclea una direcci¢n que no existe
+ en la localidad actual, se emite el mensaje "No hay salida en esa direcci¢n",
+ en lugar de la usual "No puedo hacer eso", que en este caso es menos apropia-
+ da.
+
+     Un ejemplo de vocabulario ser¡a el siguiente:
+
+%    vocabulario {
+%        verbo COGER = { ASIR, AGARRAR };
+%        verbo DEJAR, ABRIR, CERRAR;
+%        direccion NORTE = { N };
+%        direccion SUR = { S };
+%        nombre MANZANA, PUERTA, PAJARO = { PAJARITO };
+%        adjetivo AMARILLO, CERRADA;
+%        conjuncion Y, ENTONCES;
+%    }
+
+     La secci¢n de arriba declara, entre otros, el verbo "COGER" y le asocia
+ los sin¢nimos "ASIR" y "AGARRAR". De esta forma, "COGER", "ASIR" y "AGARRAR"
+ ser n sin¢nimos y por tanto, tendr n el mismo c¢digo dentro del vocabulario.
+ Como puede apreciarse, dicho c¢digo no hay por qu‚ indicarlo, ya que lo
+ gestiona PROMETEO internamente. Por otra parte, "NORTE", "N", "SUR" y "S" se
+ declaran como direcciones.
+
+     "MANZANA", "PUERTA" y "PAJARO" se declaran como nombres, y se le a¤ade
+ la palabra "PAJARITO" como un sin¢nimo de "PAJARO". Es decir, dentro de una
+ declaraci¢n, los sin¢nimos hacen referencia a la £ltima palabra de la lista,
+ en ‚ste caso "PAJARO". El resto de las declaraciones son similares.
+
+:Localidades
+^Localidades
+
+     Las localidades son las distintas  reas en las que se divide el mapa
+ geogr fico de la aventura. Para el ordenador, una aventura consiste en un
+ determinado n£mero de apartados o localidades que el jugador debe visitar.
+ Representan en cierta forma las estancias del mundo imaginario en el que se
+ desenvuelve la aventura, y cada una de ellas posee sus propias caracter¡s-
+ ticas particulares. Cada una posee una descripci¢n, una posible animaci¢n
+ gr fica, un conjunto de conexiones (posiblemente vac¡o) a otras localidades
+ y un posible conjunto de objetos visibles.
+
+     Todas las localidades poseen su propia descripci¢n. La descripci¢n es
+ un texto que informa al jugador de las caracter¡sticas que la localidad
+ posee, entre ellas: informaci¢n sobre el decorado, personajes no jugadores
+ que rondan por ella, y objetos directamente visibles por el jugador.
+
+     Naturalmente, debe haber alguna forma de cambiar de localidad, ya que
+ si no fuese as¡, ¨de qu‚ nos servir¡an cientos de localidades inconexas?
+ La forma de comunicar unas localidades con otras se basa en las ~conexiones~.
+
+
+^Sintaxis de la secci¢n de localidades
+
+     En la secci¢n de localidades se expresan las distintas habitaciones de
+ la aventura, con su descripci¢n y sus posibles conexiones entre ellas. La
+ sintaxis ser¡a la siguiente:
+
+%    localidades '{'
+%        <num> ':' <descripcion> [imagen <fichero>]
+%            ['{' <verbo> ':' <num> {, <verbo> ':' <num> } '}'] ';'
+%        {<num> ':' <descripcion> [imagen <fichero>]
+%            ['{' <verbo> ':' <num> {, <verbo> ':' <num> } '}'] ';'}
+%    '}'
+
+     La secci¢n de localidades comienza con la palabra clave "localidades",
+ seguida de una lista de declaraciones entre llaves. Cada declaraci¢n consta
+ de un n£mero de localidad, seguida de dos puntos, seguida de la descripci¢n
+ de esa localidad, una posible imagen indicada por la palabra reservada
+ "imagen" y el nombre de un fichero, y finalmente un punto y coma.
+ Adicionalmente, es posible incluir conexiones entre esa localidad y las
+ otras, a¤adiendo una lista de conexiones entre llaves. Cada conexi¢n tiene
+ la forma "<verbo> ':' <num>", indicando que si estamos en esa localidad y se
+ introduce un cierto verbo, el jugador se trasladar  a la localidad dada por
+ el n£mero.
+
+    Como ejemplo tenemos el siguiente:
+
+%   localidades {
+%       0 : "Esta es la localidad 0." imagen "PANTA0"
+%           { NORTE : 1, SUR : 3 };
+%       1 : "Estamos en la localidad 1."
+%           { SUR : 0, ENTRAR : 2 };
+%       2 : "La localidad n£mero 2." imagen "PANTA2";
+%       3 : "Esta es la localidad 3."
+%           { NORTE : 0 };
+%   }
+
+     Hemos declarado cuatro localidades: la 0, la 1, la 2 y la 3, cada una
+ con sus descripciones -las descripciones son irrelevantes en este ejemplo-.
+ La localidad 0 lleva asociada una imagen de nombre "PANTA0". Por tanto,
+ cada vez que el jugador entre en la localidad 0 y se describa, aparecer  en
+ pantalla la imagen -o animaci¢n- inclu¡da en el fichero indicado. Adem s, la
+ localidad 0 posee dos conexiones: con "NORTE" se va a la localidad 1, y con
+ "SUR" se va a la 3. La localidad 1 es an loga a la anterior, pero con otras
+ conexiones y sin imagen. La 2 tiene imagen pero no conexiones, algo
+ perfectamente posible y que posibilita el que el jugador se encuentre
+ encerrado o algo as¡. La 3 es semejante a la 1.
+
+
+^Las localidades especiales "llevado", "encima" y "no_creado"
+
+     Antes que nada vamos a explicar c¢mo maneja internamente PROMETEO la
+ gesti¢n de los objetos llevados en el inventario, y encima del jugador como
+ ropa. PROMETEO considera que el inventario del jugador es una localidad, y
+ por tanto, los objetos que el jugador se lleva a su inventario (al cogerlos
+ por ejemplo), realmente se trasladan hacia dicha localidad. Esa localidad
+ tiene un nombre especial y se llama "llevado". De igual forma, los objetos
+ que el jugador se pone encima (si son ropa) se trasladan a otra localidad
+ distinta llamada "encima".
+
+     Finalmente, la localidad "no_creado" es aquella en la que residen todos
+ aquellos objetos que no han sido creados todav¡a o han sido destru¡dos
+ ~destruir~). Son aquellos objetos que no deben aparecer en la aventura hasta
+ que ‚sta alcance un cierto estado. Los objetos pueden aparecer con la orden
+ ~crear~ o simplemente movi‚ndolos a otra localidad diferente con la orden
+ ~colocar~.
+
+     Indicar por £ltimo que aunque son localidades como cualesquiera otras,
+ realmente no tiene mucho sentido enviar al jugador a alguna de ellas (aunque
+ el l¡mite del escritor de aventuras es su propia imaginaci¢n, y qui‚n
+ sabe...).
+
+:Conexiones
+^Las conexiones entre localidades
+
+     Las conexiones son enlaces l¢gicos que el creador de la aventura inser-
+ ta entre dos ~localidades~ para que el jugador pueda moverse por ellas. El
+ modo m s habitual de representar dichas conexiones consiste en indicar a
+ qu‚ localidad se llegar¡a si parti‚ramos de otra dada e indic ramos una
+ cierta direcci¢n (generalmente tomada de los cuatro u ocho puntos cardina-
+ les).
+
+     Las conexiones automatizan el proceso de mover al jugador de una loca-
+ lidad a otra. Cuando el jugador teclea una frase formada por un verbo,
+ el ~Int‚rprete~ determina si en la localidad actual hay una conexi¢n aso-
+ ciada con ese verbo. Si es as¡, es que el verbo indica una acci¢n de
+ movimiento, y traslada al jugador autom ticamente a la localidad indicada
+ por la conexi¢n.
+
+
+     Ver tambi‚n: ~Localidades~
+
+:Objetos
+^Objetos
+
+     El concepto de "objeto" puede ser el m s importante dentro del mundo
+ de las aventuras conversacionales. La potencia y flexibilidad de un
+ generador de aventuras, y la facilidad de uso y capacidad de expresi¢n de
+ una aventura radican principalmente en el tratamiento que hacen de los
+ objetos.
+
+     Un objeto es, como puede figurarse, todo aquello presente en la aven-
+ tura y que es directamente manipulable por el jugador. En esta definici¢n
+ deber¡amos eliminar, por ejemplo, a las puertas que pueden abrirse y
+ cerrarse (que no son objetos, sino parte del decorado que se emula con
+ banderas -ver ~Banderas~-), a menos que podamos cogerlas y
+ llevarlas en nuestro inventario.
+
+     Casi siempre (aunque hay excepciones) los objetos directamente manipu-
+ lables aparecen justo despu‚s de la descripci¢n de la localidad actual,
+ con un mensaje del tipo "Tambi‚n puedes ver:" (ver ~Mensajes~).
+ Evidentemente, nada impide que hayan varios objetos en una misma localidad.
+
+     Los objetos pueden ser cogidos, dejados caer, puestos encima y quitados
+ (si son "ropa"), e incluso albergar dentro otros objetos (si son "contene-
+ dores").
+
+%Atributos
+
+     Por atributos entendemos todas aquellas propiedades o caracter¡sticas
+ que sirven para describir un objeto y diferenciarlo de los dem s. Ejemplos
+ de atributos son: su nombre, su descripci¢n, su peso, su localidad inicial,
+ su localidad actual, etc... Algunos son fijos: es el caso del nombre o la
+ localidad inicial; otros son variables: pueden cambiar de valor a lo largo
+ de la aventura, como su localidad actual, o incluso su peso.
+
+     Tambi‚n hay que tener en cuenta que el nombre de un objeto puede llevar
+ asociado un adjetivo, ed decir, una palabra que termina de completar la
+ referencia a dicho objeto. Por ejemplo, en una aventura, la "llave roja"
+ ser¡a un objeto distinto a la "llave amarilla".
+
+%Tipos de objetos
+
+     Los objetos podemos clasificarlos en tres grandes categor¡as:
+
+%        - normales o generales
+
+%        - contenedores
+
+%        - ropa
+
+     Hay que decir que los contenedores y las ropas son, en realidad,
+ objetos normales a los que se han a¤adido ciertas caracter¡sticas especiales
+ que les dan sus propiedades particulares.
+
+     Los contenedores son objetos que permiten, adem s de todo lo que permite
+ un objeto normal, almacenar objetos en su interior. Un cl sico ejemplo ser¡a
+ el de una bolsa o un saco en el que se podr¡an meter monedas o cualquier
+ otra cosa.
+
+     Las ropas son objetos que pueden ponerse o quitarse, como por ejemplo
+ una camisa o unos pantalones. Dan un mayor realismo a la aventura, al
+ permitir al jugador realizar acciones usuales con ‚ste tipo de objetos,
+ como pon‚rselos, quit rselos, etc...
+
+     Finalmente, los objetos generales son precisamente aquellos objetos que
+ no caen dentro de las otras dos clases, es decir, que no son contenedores
+ ni ropa.
+
+     Existe un objeto especial, que se trata como "fuente de luz" con inde-
+ pendencia de su tipo. Este objeto es necesario en algunas ~localidades~,
+ aquellas en las que se supone hay poca luz para ver nada, y por lo tanto no
+ se describen cuando se entra en ellas. En ese tipo de ~localidades~ hay que
+ llevar dicho objeto en nuestras manos para que podamos "ver", y de esa forma
+ se produzca la descripci¢n de la localidad actual. Para simular luz y
+ oscuridad, se usa una bandera especial (ver ~Bandera 0~).
+
+
+^Sintaxis de la secci¢n de objetos
+
+     Los objetos poseen un cierto n£mero de atributos que deberemos
+ indicar al compilador para representarlos con todas sus propiedades. Ello lo
+ haremos con la siguiente construcci¢n sint ctica:
+
+%    objetos '{'
+%        <nombre> [<adjetivo>] <descripcion>
+%            [peso <num>] [inicial <local>] [contenedor | ropa] ';'
+%        {<nombre> [<adjetivo>] <descripcion>
+%            [peso <num>] [inicial <local>] [contenedor | ropa] ';'}
+%    '}'
+
+     Si no se especifica el peso, se supone que el objeto tiene peso 1.
+     Si no se indica la localidad inicial, ‚sta ser  ~no_creado~.
+     Si no se especifica el tipo de objeto, ‚ste ser  de tipo normal.
+     Debemos tener en cuenta que una cosa es el nombre y el adjetivo usados
+ para referenciar al objeto, y otra cosa es la forma de describir el objeto
+ al jugador. Una manzana verde puede referenciarse con el nombre "MANZANA" y
+ el adjetivo "VERDE", y su descripci¢n podr¡a ser algo como "La jugosa
+ manzana de color verde". Podr¡a decirse que el nombre y el adjetivo ser¡a la
+ forma que tiene PROMETEO de hacer referencia a un cierto objeto, mientras que
+ la descripci¢n ser¡a la forma en que el jugador "ve" dicho objeto. Como
+ puede observarse, el adjetivo es opcional, y puede omitirse si es necesario
+ en la pr ctica, hay pocos objetos que necesiten adjetivos para
+ diferenciarlos de los dem s.
+
+     Tras la descripci¢n vienen atributos como el peso del objeto (un
+ n£mero entero), y su localidad inicial, es decir, la localidad en la que
+ aparecer  el objeto al comienzo de la aventura. Adem s de las ~localidades~
+ anteriormente creadas, tenemos otras tres m s que, sin ser ~localidades~
+ estrictamente hablando, se usan para situar mejor a los objetos. La
+ localidad ~no_creado~ se usa cuando no que requiere que el objeto est‚
+ incialmente en una localidad concreta. (A esta localidad se le suele llamar
+ a veces el "limbo".) Otra ser¡a la localidad ~llevado~, lo que hace que
+ dicho objeto est‚ inicialmente en el inventario del jugador. Finalmente, la
+ localidad ~encima~ (s¢lo para objetos de tipo ~ropa~) indica que dicho
+ objeto debe aparecer puesto encima por el jugador, como su camisa o sus
+ zapatos.
+
+     Estas tres ~localidades~ m s siempre existen y pueden usarse en
+ cualquier contexto en el que se necesite un n£mero de localidad.
+
+     Si a la declaraci¢n se le a¤ade la palabra reservada "~contenedor~",
+ esto indicar  que dicho objeto es un contenedor de otros objetos, o sea,
+ que puede albergar dentro de s¡ mismo a m s objetos. Si en lugar de eso, se
+ le a¤ade la palabra "~ropa~", indicar  que dicho objeto puede ponerse y
+ quitarse como si fuera ropa. Un objeto no puede ser contenedor y ropa a la
+ vez.
+
+     Como ejemplo, tenemos el siguiente trozo de c¢digo:
+
+%    objetos {
+%        PAJARO "el canario de tu abuela" peso 3 incial 1;
+%        MANZANA VERDE "la jugosa manzana de color verde"
+%            peso 5 inicial llevado;
+%        MANZANA ROJA "la manzana roja" peso 5 inicial 8;
+%    }
+
+     Hemos declarado un pajaro que va a ser representado en la aventura por
+ el nombre "PAJARO" (dicho nombre debe aparecer en el ~vocabulario~). Si, por
+ ejemplo, tenemos a "CANARIO" como sin¢nimo de "PAJARO", podemos poner uno
+ cualquiera de los dos, ya que la tabla de objetos recuerda el c¢digo del
+ objeto y no su lexema. Tambi‚n vemos que hay dos manzanas que, para
+ distinguirlas, le ponemos dos adjetivos diferentes. Cada una de ellas est 
+ en una localidad diferente  la verde la lleva el jugador inicialmente,
+ mientras que la otra aparecer  en la localidad 8 , y tienen (en este caso)
+ el mismo peso.
+
+:Mensajes
+^Mensajes de respuesta
+
+     Los mensajes de respuesta son la forma que la aventura tiene de
+ decirle algo al jugador. Hay dos tipos de mensajes de respuesta: los
+ mensajes del usuario, que se imprimen usando ~"mensaje"~ seguido de un ";",
+ y los mensajes del sistema, que aparecen de forma autom tica ante ciertas
+ situaciones.
+
+     T¡picamente, son cadenas de caracteres (con una longitud m xima de
+ 2 Kb) y opcionalmente, algunos c¢digos de control intercalados (ver
+ ~C¢digos especiales~). Estos mensajes, junto con las descripciones de las
+ ~localidades~ y los ~objetos~, son la £nica fuente de informaci¢n para el
+ jugador, y por tanto deben ser cuidados con mimo por parte del escritor.
+ A su vez, los m s importantes son los mensajes del usuario, que aparecen
+ cuando el escritor requiere dar informaci¢n al jugador en un momento dado.
+ Como una aventura conversacional es b sicamente informaci¢n textual, se
+ ve r pidamente que los mensajes del usuario son la parte m s importante
+ desde el punto de vista de la escritura de la aventura.
+
+     Por otra parte, los mensajes del sistema son menos importantes, pero
+ quiz s m s dif¡ciles de entender. Si quieres saber m s sobre ellos, mira
+ en ~Mensajes sistema~.
+
+
+^Sintaxis de la secci¢n de mensajes del sistema
+
+     La secci¢n de mensajes del sistema tiene la siguiente sintaxis:
+
+%    sistema '{'
+%        <num> ':' <descripcion> ';'
+%        {<num> ':' <descripcion> ';'}
+%    '}'
+
+     Los mensajes del sistema son opcionales: si no se incluyen, se tomar n
+ mensajes por defecto. Tambi‚n es posible especificar s¢lo alguno de ellos,
+ dejando el resto por defecto.
+
+     En el c¢digo, se puede forzar la aparici¢n de un mensaje del sistema
+ usando para ello la sentencia ~mensis~.
+
+
+     Ver tambi‚n: ~Mensajes iniciales~
+
+:Secci¢n de c¢digo
+^Secci¢n de c¢digo
+
+     La secci¢n de c¢digo la forma el lenguaje usado para describir el
+ sistema de procesamiento. Es un lenguaje de programaci¢n imperativo,
+ estructurado y procedimental, ya que divide la tarea a realizar en trozos
+ m s peque¤os. Hay que considerar a la tabla de respuestas como el proce-
+ dimiento "padre" o ra¡z, es decir, aquel que llama a los dem s y comienza
+ toda la ejecuci¢n. Cuando el int‚rprete reconoce una cierta entrada del
+ usuario, busca en la tabla de respuestas una entrada que concuerde con
+ ella. Cuando la encuentra, empieza a ejecutar el c¢digo correspondiente,
+ como si fuera la llamada a un procedimiento en cualquier lenguaje proce-
+ dimental.
+
+     Podr¡amos dividir a estos procedimientos en dos tipos: ~respuestas~ y
+ ~subrutinas~. Las respuestas son las primeras en ejecutarse, como consecuen-
+ cia de la llamada efectuada por el int‚rprete. Una respuesta, por tanto, es
+ un conjunto de instrucciones que se ejecutan cuando la entrada del jugador
+ concuerda con su cabecera  su verbo y su nombre . Las subrutinas s¢lo ser n
+ ejecutadas si son llamadas desde una respuesta u otra subrutina.
+
+:Respuestas
+^Respuestas
+
+     Puede pensarse en una respuesta como un procedimiento cuyo nombre
+ est  formado por un verbo y un nombre, de forma que el jugador, cuando
+ escribe una cierta sentencia, activa el procedimiento cuya cabecera est 
+ formada por el verbo y el nombre de dicha sentencia.
+
+
+^Sintaxis de la secci¢n de respuestas
+
+     La sintaxis para describir las respuestas es la siguiente:
+
+%    verbo nombre '{' sentencia; {sentencia;} '}'
+%    {verbo nombre '{' sentencia; {sentencia;} '}'}
+
+     Como se ve, tiene mucha similitud a la definici¢n de una funci¢n en C o
+ Pascal, con la diferencia de que el nombre de dicha funci¢n es en realidad
+ un par formado por un verbo y un nombre. Las sentencias son las instruc-
+ ciones que indican las acciones a realizar. Hay muchas acciones diferentes,
+ que sirven para manipular objetos, moverse entre localidades, y verficar y
+ cambiar el estado de una bandera, entre otras cosas.
+
+     Un ejemplo de ‚sto ser¡a:
+
+%    COGER MANZANA {
+%        si (llevado?(MANZANA))
+%            "Ya tienes la manzana";
+%        sino
+%            "Has cogido la manzana";
+%    }
+
+%    ABRIR PUERTA {
+%        si (b78 = 1) {
+%            b78 := 0;
+%            "Cierras la puerta lentamente";
+%        } sino
+%            "La puerta ya est  cerrada";
+%    }
+
+     Este c¢digo incluye dos entradas en la tabla de respuestas: una para
+ "COGER MANZANA" y otra para "ABRIR PUERTA". Las acciones a ejecutar se
+ compilan y su c¢digo es puesto en una zona de c¢digo objeto. El campo de
+ direcci¢n de las entradas de la tabla ser n las direcciones de comienzo del
+ c¢digo objeto generado para cada una de las respuestas.
+
+     Lo anterior significa: si el jugador teclea la sentencia
+ "COGER MANZANA", el int‚rprete debe ejecutar los pasos indicados entre
+ llaves. Estos dicen que si el jugador ya lleva la manzana, debe emitir el
+ mensaje de usuario tal; en caso contrario, debe emitir el cual. Para
+ "ABRIR PUERTA", si la bandera 78 est  a 1, ponerla a 0 y emitir el mensaje
+ correspondiente; en otro caso, emitir el otro.
+
+
+^Las palabras especiales "*" y "_"
+
+     A veces no hace falta saber el nombre, sino s¢lo el verbo. Otras veces,
+ ocurre al contrario. Incluso hay veces que ser¡a interesante que una
+ respuesta se activase siempre independientemente de la entrada del jugador.
+ Para eso, tenemos dos palabras especiales: "*" y "_". Los dos tienen el
+ mismo significado: significan "cualquier palabra". Por tanto, si en la
+ respuesta no es necesario saber el nombre, sino s¢lamente el verbo, se
+ podr¡a poner (por ejemplo):
+
+%    COGER * {
+%        "No hay ning£n objeto aqu¡ para coger";
+%    }
+
+     La respuesta anterior se ejecutar¡a siempre que el jugador escribiera
+ el verbo "COGER" e independientemente del nombre que escriba (incluso si
+ no escribe ning£n nombre).
+
+     Una respuesta que siempre se activar¡a ser¡a:
+
+%    * * {
+%        "Esto siempre se imprime";
+%    }
+
+     La diferencia entre "*" y "_" es que se busca antes el "*", luego la
+ palabra tecleada por el jugador (si la ha tecleado), y finalmente el "_".
+ Es fundamentalmente importante en los casos como el sgte.:
+
+%    COGER * {
+%          "Coges un objeto:\n";
+%    }
+
+%    COGER LAMPARA {
+%          "Al coger la l mpara descubres una moneda.\n";
+%    }
+
+%    COGER _ {
+%          autoc;
+%    }
+
+     Si el jugador teclea el verbo "COGER", primero se ejecutar¡a la
+ respuesta "COGER *", luego la respuesta "COGER LAMPARA" s¢lo si el nombre
+ tecleado es "LAMPARA", y por £ltimo la respuesta "COGER _". Hay otros
+ casos en los que resulta especialmente interesante el uso conjunto de
+ "*" y "_".
+
+     Tambi‚n tener en cuenta que el orden en el que se escriben las
+ respuestas en el c¢digo fuente no influyen en absoluto en el orden en el
+ que se ejecutan. Eso quiere decir que podr¡amos haber alterado el orden
+ de las respuestas anteriores y el resultado hubiera sido el mismo.
+
+
+:Subrutinas
+^Subrutinas
+
+     La tabla de subrutinas es semejante a la tabla de respuestas, con una
+ diferencia: se hace referencia a ellas mediante un nombre o identificador, y
+ no mediante un verbo y un nombre. S¢lo se activan mediante una llamada desde
+ otro punto del programa.
+
+
+^Sintaxis de la secci¢n de subrutinas
+
+     Su sintaxis es:
+
+%    [subrutina identificador '{' sentencia; {sentencia;} '}'
+%    {subrutina identificador '{' sentencia; {sentencia;} '}'}]
+
+     Como se ve, es una secci¢n opcional.
+
+     Cada subrutina comienza con la palabra clave "subrutina", seguida de un
+ identificador -el nombre de la subrutina- y una lista de instrucciones
+ encerradas entre llaves. Pueden haber varias subrutinas, o una, o ninguna
+ -la tabla de subrutinas es opcional, pero rara vez deja de utilizarse.
+
+     Un ejemplo de tabla de subrutinas ser¡a la siguiente:
+
+%    subrutina Perro {
+%        si (verbo?(COGER) y nombre1?(PERRO))
+%            "Intentas coger al perro, pero ‚ste no se deja";
+%        b14 := 0;
+%        b13 := b13 + 1;
+%        si (b13 >= 30)
+%            b13 := 0;
+%    }
+
+     En este caso, tenemos una sola subrutina en la tabla. Una subrutina se
+ activa con la orden "~llama~(nombre_subrutina);". Por tanto, para activar la
+ subrutina anterior, se deber  incluir en alguna parte del c¢digo la
+ sentencia "~llama~(Perro);".
+
+
+^Las subrutinas Process1 y Process2
+
+     Hay dos subrutinas especiales, llamadas Process1 y Process2. Son
+ especiales, porque PROMETEO las llama autom ticamente en dos situaciones
+ distintas:
+
+     Process1: Se llama tras describir la localidad actual.
+     Process2: Se llama inmediatamente antes de pedir la entrada al jugador.
+
+     Son dos subrutinas opcionales, pero lo normal es que se incluyan
+ siempre. Process1 suele usarse para ampliar la descripci¢n de la localidad
+ actual, con cosas tales como personajes presentes. Process2 es como el
+ turno de la aventura, y suele usarse para acciones autom ticas del estilo
+ de movimientos de personajes, suelos que se derrumban bajo tus pies, etc.
+
+     Con Process1 hay que tener un cuidado especial si se incluye en ella
+ una acci¢n "~describe~". Como se sabe, Process1 se llama autom ticamente
+ tras describir una localidad; por tanto, cada vez que se ejecute "describe"
+ tambi‚n se har  impl¡citamente una llamada posterior a la subrutina
+ Process1. Es decir: si inclu¡mos "describe" dentro de Process1, es posible
+ que se produzca un bucle sin fin por llamarse una a la otra. Para evitar
+ esto, hay que proteger la acci¢n "describe" con alg£n condicional, de
+ manera que no siempre se ejecute (por ejemplo, el caso t¡pico es ejecutar
+ un "describe" £nicamente cuando se est  en la localidad 0 -la de comienzo-
+ y se mueve al jugador a la localidad de inicio de la aventura; as¡, como
+ el jugador nunca estar  m s en la localidad 0, no se ejecutar  m s la
+ acci¢n describe, y por tanto Process1 tampoco).
+
+%    Ejemplo:
+
+%    subrutina Process1 {
+%        si (esta?(0)) {   // Si el jugador est  en la localidad inicial.
+%            tecla;	   // Espera una tecla.
+%            mueve(1);     // Mueve al jugador a la localidad 1.
+%            describe;     // Describe dicha localidad. Implica llamar otra
+%        } sino {          // vez a Process1, pero ahora se ejecutar  la rama
+%            ...           // correspondiente al "sino". Se supone que aqu¡
+%            ...           // ya no hay otra acci¢n "describe".
+%        }
+%    }
+
+
+^La subrutina Timeout
+
+     Una subrutina opcional, llamada Timeout, se llama autom ticamente
+ cada cierto tiempo prefijado por la ~bandera 11~. Esta bandera especifica,
+ en segundos, cada cu nto tiempo se llama a dicha subrutina. Si su valor es
+ cero, no tiene ning£n efecto.
+
+     El tiempo empieza a contar cuando se le pide una entrada al jugador, y
+ ‚ste no escribe. En el momento en que escribe algo, se empieza a contar
+ desde cero.
+
+     Es importante saber que si la subrutina termina con un "hecho" o un
+ "no_hecho", entonces se perder  la entrada actual del jugador y se pedir 
+ otra nueva. Si por el contrario se termina con un "retorno", la entrada
+ actual no sufrir  cambios, y en el caso de que no se imprima ning£n mensaje
+ en la pantalla, el jugador ni siquiera se enterar  de que se ha ejecutado
+ una subrutina.
+
+%    Ej: subrutina Timeout {
+%            "\nEl tiempo pasa...";
+%        }
+
+%    Ej: subrutina Timeout {
+%            sonido("PASOS");
+%        }      // Sin "hecho" o "no_hecho", el jugador sigue como si nada
+
+
+     Ver tambi‚n: ~llama~  ~retorno~  ~hecho~  ~no_hecho~
+
+:Sentencias:Expresiones
+^Sentencias y expresiones
+
+     - Una sentencia es una acci¢n v lida de PROMETEO terminada en un punto
+       y coma ";". A su vez, las estructuras de control "Secuencia", "si",
+       "mientras" y "evaluar" tambi‚n son consideradas sentencias por s¡
+       mismas, y pueden ser utilizadas en cualquier contexto en el que se
+       necesite una sentencia.
+
+     - Una expresi¢n es una combinaci¢n de operadores y de n£meros colocados
+       de manera consistente. Por operadores entenderemos los aritm‚ticos
+       ("+", "-", "*", "/"), los l¢gicos ("y", "o", "no"), los relacionales
+       ("<", "<=", ">", ">=", "=", "<>") y las funciones de uno o varios
+       argumentos. Toda expresi¢n denota un n£mero entero.
+
+       Adem s, el lexema de un verbo denota el c¢digo interno de dicho ~verbo~
+       (cosa que se puede usar para comparar lo que ha dicho el jugador con lo
+       que deber¡a de decir), y el nombre y el posible adjetivo de un objeto
+       referencia al c¢digo de dicho objeto. Lo dicho anteriormente para
+       "verbo" tambi‚n es v lido para "~nombre_verbo~" y "~direccion~".
+
+       Por £ltimo, cuando una cadena de caracteres se usa como parte de una
+       expresi¢n, el valor que devuelven es el n£mero interno (el puntero) de
+       dicha cadena en la tabla de cadenas y mensajes. Eso quiere decir que
+       podemos almacenar una cadena en una bandera (realmente un puntero a
+       ella), para luego poder ser usada en sentencias como ~imagen~ o
+       ~sonido~.
+
+
+     Tendremos en cuenta las siguientes pautas:
+
+     1.  Cuando decirmos "localidad", estamos haciendo referencia a un n£mero
+         v lido de localidad; "objeto" es el c¢digo de un cierto objeto; y
+         "palabra" es el c¢digo interno de la palabra, no su lexema.
+         Los c¢digos de las palabras y los objetos no son visibles al
+         escritor de aventuras (ni falta que hace), pues en lugar de ello
+         se usa directamente el nombre del objeto o el lexema de la palabra.
+         Por otra parte, "fichero" es una cadena de caracteres que indica
+         el nombre de un fichero MS-DOS, y "sonido" es una cadena que hace
+         referencia al nombre de un sonido grabado en la librer¡a de sonidos.
+         Cualquier otro concepto se considerar  un n£mero (ej: "contenedor"
+         es el c¢digo de un objeto contenedor, y "n£mero" es un n§ entero
+         comprendido entre -32768 y 32767).
+
+     2.  Una bandera se identifica mediante la letra "b" min£scula seguida
+         inmediatamente por un n£mero, como "b38". El contenido de una
+         bandera es un n£mero entero, y adem s las banderas son las £nicas
+         unidades l‚xicas que pueden aparecer en la parte izquierda
+         -lvalue- de una asignaci¢n. Por tanto, el contexto dir  cu ndo
+         una bandera eval£a a una direcci¢n y cu ndo a un contenido.
+
+     3.  Un objeto se indica mediante su nombre y su posible adjetivo. En
+         cualquier lugar en el que se necesite una expresi¢n, puede usarse el
+         nombre de un objeto. Este evaluar  al c¢digo de dicho objeto. Por
+         tanto, la expresi¢n "MANZANA VERDE" es perfectamente v lida, y
+         hace referencia al c¢digo de dicho objeto.
+         De igual forma, el lexema de un verbo (por ejemplo, "COGER"), hace
+         referencia directamente al c¢digo de dicho verbo, y puede ser usado
+         en expresiones como un operando entero m s (o sea, puede ser compa-
+         rado con otro n£mero -o verbo-, puede ser asignado a una bandera,
+         etc‚tera).
+
+     4.  Una localidad se referencia por su n£mero o por una de las tres
+         siguientes palabras clave: llevado, encima, no_creado. Estas tres no
+         son m s que una forma distinta de llamar a tres localidades
+         especiales y son localidades que siempre existen, por lo que el
+         escritor no tiene que declararlas. (M s informaci¢n en la secci¢n
+         ~Localidades~).
+
+     Es importante indicar que todas las sentencias (menos las estructuras de
+ control) acaban en punto y coma. Es decir, el punto y coma es un terminador
+ de sentencias, como en C.
+
+     Es posible interaccionar con los objetos, con las banderas, con las
+ localidades, etc., lo que permite expresar las acciones a realizar en
+ t‚rminos comunes y abstractos. Ayuda a esconder los detalles de implementa-
+ ci¢n (en ning£n momento se hablan de las estructuras de datos, por ejemplo),
+ y de esta forma el escritor no se tiene que preocupar por el "c¢mo", sino
+ por el "qu‚".
+
+:Flujo de control
+^Flujo de control
+
+     Vamos a describir de forma m s precisa el conjunto de acciones que
+ efect£a el m¢dulo run-time a la hora de ejecutar el c¢digo de la aventura.
+ Son un total de 7 puntos, de los cuales el primero s¢lo se realiza una vez
+ -al entrar en la aventura-, mientras que los otros seis forman un bucle, de
+ manera que cada iteraci¢n coincide con un turno del jugador.
+
+%    1.  INICIALIZACION DEL SISTEMA
+%    ------------------------------
+     - Las banderas son todas puestas a cero, excepto:
+       La ~bandera 37~, la cual contiene el n£mero de objetos llevables,
+       se pondr  a 4.
+       La ~bandera 52~, lleva el m ximo peso permitido y se pone a 10.
+       La ~bandera 1~, lleva el n£mero de objetos llevados pero no
+       puestos encima.
+     - Hay que tener en cuenta que con la limpieza de las banderas, el juego
+       siempre comenzar  en la localidad 0. Esto es porque la ~bandera 38~,
+       que lleva la localizaci¢n actual del jugador, est  ahora a cero.
+     - Por £ltimo, mueve los objetos a sus lugares iniciales.
+
+%    2.  DESCRIPCION DE LA LOCALIDAD ACTUAL
+%    --------------------------------------
+     - Si la ~bandera 2~ no est  a cero, ser  decrementada en 1.
+     - Si est  oscuro (la ~bandera 0~ no es cero) y la ~bandera 3~ no es
+       cero, entonces la ~bandera 3~ es decrementada. Si est  oscuro y la
+       ~bandera 4~ no est  a cero y el objeto 0 -la fuente de luz- est 
+       ausente, la ~bandera 4~ es decrementada.
+       Todo esto se hace para proporcionar al escritor unos indicadores
+       autom ticos que les sirva para manejar las habitaciones oscuras.
+     - Se hace una limpieza de pantalla si el contenido del modo de pantalla
+       (el que contiene la ~bandera 40~) no est  a 1.
+     - Si est  oscuro y el objeto 0 est  ausente, entonces el mensaje del
+       sistema n§ 0 (el que se refiere al mensaje "Est  muy oscuro para
+       poder ver") se imprime.
+       Si no, la imagen de la localidad (si la tiene) es presentada en
+       pantalla, y aparecer  la descripci¢n de la localidad en texto.
+
+%    3.  BUSQUEDA EN LA TABLA DE ~SUBRUTINAS~: Process1
+%    ------------------------------------------------
+     La subrutina Process1 se utiliza principalmente para que contenga
+     aquellas entradas que van a a¤adir informaci¢n extra a la descripci¢n
+     actual de la localidad. Por ejemplo, detalles sobre puertas abiertas,
+     objetos presentes, etc.
+
+     A partir de aqu¡, entramos en el bucle principal del int‚rprete, que
+     actuar  en cada paso de tiempo -siempre que se haya extra¡do una
+     sentencia del jugador- y tambi‚n con las respuestas a las ¢rdenes del
+     jugador.
+
+%    4.  BUSQUEDA EN LA TABLA DE ~SUBRUTINAS~: Process2
+%    ------------------------------------------------
+     Esta subrutina contiene el control principal del turno de PROMETEO
+     durante el juego. Se usa para implementar los movimientos y las acciones
+     de los personajes. Tambi‚n se usa en los eventos incontrolados, como son
+     puentes que se derrumban, cosas que se caen, etc.
+
+%    5.  OBTENER LA ENTRADA DEL JUGADOR
+%    ----------------------------------
+     - Si la ~bandera 7~ y la ~bandera 8~ no est n a cero, son decrementadas.
+       Si est  oscuro (la ~bandera 0~ no est  a cero) y la ~bandera 9~ no
+       est  a cero, entonces tambi‚n es decrementada. Si est  oscuro y la
+       ~bandera 10~ no est  a cero, ser  decrementada si el ~objeto 0~ est 
+       ausente.
+     - Ahora el parser va a extraer una entrada y convertirla en sentencias.
+       Si el b£ffer de input est  vac¡o, se busca un nuevo input del jugador
+       por medio de la impresi¢n del mensaje adecuado y una posterior
+       llamada a la rutina de input. El mensaje ser  el que contenga la
+       ~bandera 42~. Si tiene un valor igual a 0, los mensajes se
+       seleccionar n de entre los n£meros 2, 3, 4 y 5 con probabilidad 0.30,
+       0.30, 0.30 y 0.10, respectivamente.
+     - La entrada se convierte en una sentencia convirtiendo cualquier
+       palabra que est‚ presente en ella -y que est‚ en el ~vocabulario~- a su
+       c¢digo de palabra y poni‚ndola luego en la bandera requerida. Si no
+       se encuentra una sentencia v lida, entonces el mensaje del sistema
+       n§ 6 ("No te entiendo") aparece y vuelve a activar la subrutina
+       Process2.
+
+%    6.  BUSQUEDA EN LA TABLA DE RESPUESTAS
+%    --------------------------------------
+     - El n§ de turnos se almacena en la ~bandera 31~. Este turno entonces se
+       incrementar  en 1.
+     - En la tabla de respuestas se busca una entrada que haga juego con el
+       ~Verbo~ y el primer ~Nombre~ de la sentencia actual.
+     - Si la b£squeda es satisfactoria, se llevan a cabo las acciones y
+       luego se vuelve a activar la subrutina Process2.
+
+%    7.  BUSQUEDA DE CONEXIONES
+%    --------------------------
+     Es importante destacar que las ~conexiones~ se buscar n despu‚s de
+     haber pasado por el sistema de procesamiento -la tabla de ~respuestas~
+     y la de ~subrutinas~-. Por ello, cualquier conexi¢n constru¡da "a mano"
+     en el sistema de procesamiento puede ser omitida en las ~conexiones~.
+     Esto se hace para tener un mayor control sobre las ~conexiones~,
+     impidiendo que el jugador pase de localidad si no tiene una cierta
+     llave, etc.
+     - Para la localidad actual, se busca en su lista de conexiones una
+       palabra que haga juego con el verbo presente en la sentencia actual.
+     - Si se encuentra una, entonces la localidad del jugador (llevada por
+       la ~bandera 38~) se actualiza para que lleve ahora el n£mero de
+       localidad que est‚ asociado con dicha palabra en la tabla. Luego se
+       emite la descripci¢n de esa localidad. Si no se encuentra la
+       palabra, PROMETEO imprimir  el mensaje del sistema n§ 7 ("No puedo
+       hacer eso"). De cualquier manera, se vuelve de nuevo a activar la
+       subrutina Process2.

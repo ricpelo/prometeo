@@ -1,0 +1,544 @@
+@Operadores y funciones
+:no
+%    no n£mero
+
+         devuelve el valor 1 si "n£mero" es distinto de cero, y 0 si
+         es cero.
+
+%    Ej: b60 := no b36;
+
+
+         Ver tambi‚n: ~y~  ~o~  ~Expresiones~
+:y
+%    n£mero1 y n£mero2
+
+         devuelve 1 si sus dos operandos son ambos distintos de cero.
+
+%    Ej: si (b37 = 1 y b38 = 0)
+             b50 := b50 + 1;
+
+
+         Ver tambi‚n: ~no~  ~o~  ~Expresiones~
+:o
+%    n£mero1 o n£mero2
+
+         devuelve 1 si alguno de sus dos operandos es distinto de cero.
+
+%    Ej: si (b37 = 1 o b37 = 0)
+             b50 := b50 + 1;
+
+
+         Ver tambi‚n: ~no~  ~y~  ~Expresiones~
+:Prioridades
+     En la siguiente tabla se exponen las prioridades de los distintos
+ operadores. El primer nivel es el m s prioritario, y el £ltimo el menos
+ prioritario. Todos los operadores que se encuentren al mismo nivel
+ tienen la misma prioridad.
+
+    no
+
+    *  /
+
+    +  -
+
+    <  <=  >  >=
+
+    =  <>
+
+    y
+
+    o
+
+
+ Puede observarse que los operadores unarios tienen la m xima prioridad, y a
+ partir de ellos se va bajando hasta el operador or, el de menor prioridad.
+ Adem s, los operadores relacionales son m s prioritarios que los l¢gicos;
+ esto hace que, en las condiciones, no sean necesarios tantos par‚ntesis.
+ Hablando de ellos, se usan de la forma habitual, es decir, aumentando la
+ prioridad de aquello a lo que encierran. Todos los operadores son
+ asociativos por la izquierda.
+
+:esta?
+%    esta?(localidad)
+
+         devuelve 1 si el jugador est  en la localidad "localidad". (Es
+         decir, comprueba si el valor de la bandera 38 es igual a
+         "localidad".)
+
+%    Ej: si (esta?(5))
+%            "Estas en un bosque";
+
+
+         Ver tambi‚n: ~Bandera 38~  ~estamay?~  ~estamen?~  ~Expresiones~
+                      ~Banderas~  ~Localidades~
+:estamay?
+%    estamay?(localidad)
+
+         devuelve 1 si el jugador est  en una localidad mayor que
+         "localidad". (O sea, si b38 > "localidad".)
+
+%    Ej: si (estamay?(5))
+%            "Ya no estas en la isla";
+
+
+         Ver tambi‚n: ~Bandera 38~  ~esta?~  ~estamen?~  ~Expresiones~
+                      ~Banderas~  ~Localidades~
+:estamen?
+%    estamen?(localidad)
+
+         devuelve 1 si el jugador est  en una localidad menor que
+         "localidad". (O sea, si b38 < "localidad".)
+
+%    Ej: si (estamay?(5))
+%            "Todav¡a estas en la isla";
+
+
+         Ver tambi‚n: ~Bandera 38~  ~esta?~  ~estamay?~  ~Expresiones~
+                      ~Banderas~  ~Localidades~
+:presente?
+%    presente?(objeto)
+
+         devuelve 1 si el objeto "objeto" est  siendo llevado en el
+         inventario, se lleva puesto encima o se encuentra en la
+         localidad actual.
+
+%    Ej: si (presente?(DIAMANTE))
+%            "El ogro se asusta del brillo del diamante";
+
+
+         Ver tambi‚n: ~ausente?~  ~Expresiones~  ~Objetos~  ~Localidades~
+:ausente?
+%    ausente?(objeto)
+
+         devuelve 1 si el objeto "objeto" no est  siendo llevado en el
+         inventario, ni se lleva puesto encima ni se encuentra en la
+         localidad actual.
+
+%    Ej: si (ausente?(ESPADA))
+%            "El ogro te arranca la cabeza de un mordisco";
+
+
+         Ver tambi‚n: ~presente?~  ~Expresiones~  ~Objetos~  ~Localidades~
+:puesto?
+%    puesto?(objeto)
+
+         devuelve 1 si el objeto "objeto" est  siendo llevado puesto.
+
+%    Ej: si (no puesto?(ESCAFANDRA))
+%            "Tus ojos se salen de las orbitas por la enorme presi¢n";
+
+
+         Ver tambi‚n: ~encima~  ~llevado?~  ~Expresiones~
+:llevado?
+%    llevado?(objeto)
+
+         devuelve 1 si el objeto "objeto" est  siendo llevado en el
+         inventario.
+
+%    Ej: si (llevado?(PISTOLA))
+%            "GUARDA: \"¨Qu‚ tienes en los bolsillos?\"";
+
+
+         Ver tambi‚n: ~llevado~  ~puesto?~  ~Expresiones~
+                      ~C¢digos especiales~
+:estaen?
+%    estaen?(objeto, localidad)
+
+         devuelve 1 si el objeto "objeto" se encuentra en la localidad
+         "localidad", y 0 en caso contrario.
+
+%    Ej: si (estaen?(LLAVE, no_creado))
+%            "La llave todav¡a no existe en el juego";
+
+
+         Ver tambi‚n: ~Expresiones~  ~Objetos~  ~Localidades~
+:verbo?
+%    verbo?(palabra)
+
+         devuelve 1 si la palabra "palabra" es el verbo de la
+         sentencia actual.
+
+%    Ej: si (verbo?(COGER))
+%            "Intentas coger algo... pero no puedes";
+
+
+         Ver tambi‚n: ~nombre1?~  ~adjetivo1?~  ~adverbio?~  ~nombre2?~
+                      ~adjetivo2?~  ~preposicion?~  ~Expresiones~
+                      ~Vocabulario~  ~Int‚rprete~
+:nombre1?
+%    nombre1?(palabra)
+
+         devuelve 1 si la palabra "palabra" es el primer nombre de la
+         sentencia actual.
+
+%    Ej: si (nombre1?(LLAVE))
+%            "¨A qu‚ llave te refieres?";
+
+
+         Ver tambi‚n: ~verbo?~  ~adjetivo1?~  ~adverbio?~  ~nombre2?~
+                      ~adjetivo2?~  ~preposicion?~  ~Expresiones~
+                      ~Vocabulario~  ~Int‚rprete~
+:adjetivo1?
+%    adjetivo1?(palabra)
+
+         devuelve 1 si la palabra "palabra" es el adjetivo del primer
+         nombre de la sentencia actual.
+
+%    Ej: si (adjetivo1?(BLANCO))
+%            "Coges el libro blanco";
+
+
+         Ver tambi‚n: ~verbo?~  ~nombre1?~  ~adverbio?~  ~nombre2?~
+                      ~adjetivo2?~  ~preposicion?~  ~Expresiones~
+                      ~Vocabulario~  ~Int‚rprete~
+:adverbio?
+%    adverbio?(palabra)
+
+         devuelve 1 si la palabra "palabra" es el adverbio de la
+         sentencia actual.
+
+%    Ej: si (adverbio?(RAPIDAMENTE))
+%            "Saltas con rapidez y te salvas por los pelos";
+
+
+         Ver tambi‚n: ~verbo?~  ~nombre1?~  ~adjetivo1?~  ~nombre2?~
+                      ~adjetivo2?~  ~preposicion?~  ~Expresiones~
+                      ~Vocabulario~  ~Int‚rprete~
+:nombre2?
+%    nombre2?(palabra)
+
+         devuelve 1 si la palabra "palabra" es el segundo nombre de la
+         sentencia actual.
+
+%    Ej: si (nombre2?(LLAVE))
+%            "¨A qu‚ llave te refieres?";
+
+
+         Ver tambi‚n: ~verbo?~  ~nombre1?~  ~adjetivo1?~  ~adverbio?~
+                      ~adjetivo2?~  ~preposicion?~  ~Expresiones~
+                      ~Vocabulario~  ~Int‚rprete~
+:adjetivo2?
+%    adjetivo2?(palabra)
+
+         devuelve 1 si la palabra "palabra" es el adjetivo del segundo
+         nombre de la sentencia actual.
+
+%    Ej: si (adjetivo2?(ROJO)) {
+%            "Metes la llave en el bolso rojo";
+%            meter(LLAVE, BOLSO ROJO);
+%        }
+
+
+         Ver tambi‚n: ~verbo?~  ~nombre1?~  ~adjetivo1?~  ~adverbio?~
+                      ~nombre2?~  ~preposicion?~  ~Expresiones~
+                      ~Vocabulario~  ~Int‚rprete~
+:preposicion?
+%    preposicion?(palabra)
+
+         devuelve 1 si la palabra "palabra" es la preposici¢n de la
+         sentencia actual.
+
+%    Ej: si (preposicion?(EN)) {
+%            "Miras DENTRO del bolso, y encuentras una llave";
+%            crear(LLAVE);
+%        }
+
+
+         Ver tambi‚n: ~verbo?~  ~nombre1?~  ~adjetivo1?~  ~adverbio?~
+                      ~nombre2?~  ~adjetivo2?~  ~Expresiones~
+                      ~Vocabulario~  ~Int‚rprete~
+:acabar?
+%    acabar?
+
+         hace imprimir el mensaje del sistema n§ 12 ("¨Estas seguro?")
+         y llama a la rutina de input. Devuelve 1 si el jugador teclea
+         la primera letra del mensaje del sistema n§ 30 ("S"),
+         indicando con ello que desea acabar la partida.
+
+%    Ej: si (acabar?)
+%            acabar
+
+
+         Ver tambi‚n: ~Expresiones~  ~Mensajes sistema~
+:analiza?
+%    analiza?
+
+         se utiliza para facilitar los di logos entre los personajes
+         del juego. Sustituye cualquier cadena entre comillas por la
+         sentencia actual, de forma que la sentencia DECIR PEPE "HOLA"
+         se transformar  en HOLA. Devuelve 1 si la cadena entre
+         comillas es sint cticamente correcta, y en tal caso almacena en
+         las banderas 48, 49 y 50 las palabras usadas en la frase entre
+         comillas.
+
+%    Ej: DECIR GUARDA {
+%            si (analiza?)
+%                llama(Subrutina_habla_guarda);
+%            sino
+%                "El guarda no te entiende";
+%        }
+
+
+         Ver tambi‚n: ~Expresiones~  ~Vocabulario~  ~Int‚rprete~
+                      ~Bandera 48~  ~Bandera 49~  ~Bandera 50~
+:objeto
+%    objeto(nombre, adjetivo)
+
+         es una funci¢n que, dados un nombre y un adjetivo (en realidad,
+         el c¢digo del nombre y el del adjetivo) devuelve el c¢digo del
+         objeto correspondiente. Se usa sobre todo cuando necesitamos el
+         c¢digo de un objeto, pero no sabemos el lexema de su nombre,
+         aunque el c¢digo de dicho nombre en banderas. Si no existe ning£n
+         objeto con dicho nombre, devuelve -1.
+
+         Es posible incluso no incluir ning£n par metro. En tal caso, el
+         nombre y el adjetivo se tomar n directamente del nombre y el adje-
+         tivo que haya escrito el jugador en su £ltima frase.
+
+         Adem s modifica convenientemente las banderas 54 a 58.
+
+%    Ej: b50 := objeto(b70, b71);
+%        b80 := objeto();          // Toma el nombre de b33 y b34.
+
+         Ver tambi‚n: ~Expresiones~  ~Objetos~  ~Vocabulario~
+                      ~Bandera 33~  ~Bandera 34~  ~Bandera 54~
+                      ~Bandera 55~  ~Bandera 56~  ~Bandera 57~
+                      ~Bandera 58~
+:local
+%    local(objeto)
+
+         devuelve el n£mero de localidad en la que se encuentra el
+         objeto "objeto".
+
+%    Ej: si (local(LLAVE) = b38)
+%            "La llave est  delante tuya";
+
+
+         Ver tambi‚n: ~Expresiones~  ~Objetos~  ~Localidades~
+                      ~Bandera 38~
+:posx:posy
+%    posx(), posy()
+
+         devuelven la posici¢n actual (en coordenadas X e Y, respectivamente)
+         del cursor de texto en la pantalla.
+
+%    Ej: b60 := posx(); b61 := posy();
+%        cursor(20, 12);
+%        "HOLA A TODOS";
+%        cursor(b60, b61);
+
+
+         Ver tambi‚n: ~cursor~  ~Expresiones~
+:caminar
+%    caminar(localidad, verbo)
+
+         hace el efecto de mover al jugador (u otro personaje) de una loca-
+         lidad a otra. Para ello, se indica tanto la localidad actual como
+         el verbo que indica la direcci¢n de movimiento. Si ‚ste es el n§ -1,
+         se indica que se escoja uno aleatoriamente (pudiendo darse el caso
+         de que no se tome ninguno). Devuelve el n§ de la localidad a la que
+         se llega desde esa localidad con esa direcci¢n, y en la bandera 51
+         almacena la direcci¢n que ha tomado.
+
+%    Ej: subrutina Mueve_guarda {
+%            b60 := caminar(b60, -1);
+%            evaluar (b51) {
+%                caso NORTE: "El guarda se va al norte";
+%                caso SUR:   "El guarda tira p'al sur";
+%                caso -1:    "El guarda se queda quieto";
+%                defecto:    "El guarda se va... a alguna parte";
+%            }
+%        }
+
+
+         Ver tambi‚n: ~Expresiones~  ~Vocabulario~  ~Localidades~
+                      ~Banderas~  ~Bandera 51~
+:aleatorio
+%    aleatorio(n£mero)
+
+         devuelve un n£mero escogido aleatoriamente entre 0 y "n£mero"
+
+%    Ej: b60 := aleatorio(5);
+
+
+         Ver tambi‚n: ~Expresiones~
+:primero
+%    primero(localidad)
+
+         considerando los objetos de una localidad como elementos de una
+         lista, devuelve el primer objeto de la lista correspondiente a
+         "localidad". Hay que tener en cuenta que la ordenaci¢n de los
+         objetos en la lista es arbitraria.
+
+%    Ej: COGER TODO {
+%            b28 := primero(b38);
+%
+%            si (b28 = -1)
+%                "No hay nada que coger.";
+%            sino
+%                mientras (b28 <> -1) {
+%                    coger(b28);
+%
+%                    b28 := siguiente(b38);
+%
+%                    si (b28 <> -1)
+%                        saltolinea;
+%                }
+%
+%            hecho;
+%        }
+
+
+         Ver tambi‚n: ~siguiente~  ~Expresiones~  ~Objetos~  ~Localidades~
+:siguiente
+%    siguiente(localidad)
+
+         considerando los objetos de una localidad como elementos de una
+         lista, devuelve el siguiente objeto (de la lista correspondiente a
+         "localidad") al £ltimo objeto procesado por "~primero~" o
+         "siguiente". Cuando encuentra el fin de la lista, devuelve -1.
+         Hay que tener en cuenta que la ordenaci¢n de los objetos en la
+         lista es arbitraria.
+
+%    Ej: DEJAR TODO {
+%            b28 := primero(llevado);
+%
+%            si (b28 = -1)
+%                "No hay nada que dejar.";
+%            sino
+%                mientras (b28 <> -1) {
+%                    dejar(b28);
+%
+%                    b28 := siguiente(llevado);
+%
+%                    si (b28 <> -1)
+%                        saltolinea;
+%                }
+%
+%            hecho;
+%        }
+
+
+         Ver tambi‚n: ~primero~  ~Expresiones~  ~Objetos~  ~Localidades~
+:peso
+%    peso(objeto)
+
+         devuelve el peso de un objeto.
+
+%    Ej: b70 := peso(LLAVE);
+
+         Ver tambi‚n: ~Objetos~  ~Expresiones~
+:contenedor?
+%    contenedor?(objeto)
+
+         devuelve 1 si el objeto "objeto" es un contenedor; 0 en caso
+         contrario.
+
+%    Ej: si (contenedor?(CAMISA))
+%            "La camisa tiene bolsillos";
+
+
+         Ver tambi‚n: ~ropa~  ~Objetos~  ~Expresiones~
+:ropa?
+%    ropa?(objeto)
+
+         devuelve 1 si el objeto "objeto" es de tipo "ropa"; 0 en caso
+         contrario.
+
+%    Ej: si (ropa?(BOLSA))
+%            "Puedes llevar la bolsa a la espalda";
+
+
+         Ver tambi‚n: ~contenedor~  ~Objetos~  ~Expresiones~
+:direccion?
+%    direccion?(palabra)
+
+         devuelve 1 si la palabra "palabra" es de tipo "direccion"; 0 en caso
+         contrario.
+
+%    Ej: si (direccion?(SUBIR))
+%            "No puedes subir por ah¡";
+
+
+         Ver tambi‚n: ~direccion~  ~Vocabulario~  ~Expresiones~
+:llevado
+%    llevado
+
+         es una constante que hace referencia a la localidad en la que se
+         almacenan los objetos que el jugador tiene en su inventario.
+         Puede ser usada como cualquier otro n£mero v lido de localidad.
+
+%    Ej: DEJAR TODO {
+%            b28 := primero(llevado);
+%            b27 := objeto(b44, b45);
+%
+%            si (b28 = -1)
+%                "No hay nada que dejar.";
+%            sino
+%                mientras (b28 <> -1) {
+%                    si (b27 = -1 o b27 <> b28)
+%                        dejar(b28);
+%
+%                    b28 := siguiente(llevado);
+%
+%                    si (b28 <> -1)
+%                        saltolinea;
+%                }
+%
+%            hecho;
+%        }
+
+
+         Ver tambi‚n: ~encima~  ~no_creado~  ~Localidades~  ~Expresiones~
+                      ~Objetos~
+:encima
+%    encima
+
+         es una constante que hace referencia a la localidad en la que se
+         almacenan los objetos que el jugador lleva puesto encima.
+         Puede ser usada como cualquier otro n£mero v lido de localidad.
+
+%    Ej: si (local(CAMISA) = encima)
+%            "Tienes la camisa puesta";
+
+
+         Ver tambi‚n: ~llevado~  ~no_creado~  ~Localidades ~  ~Expresiones~
+                      ~Objetos~
+:no_creado
+%    no_creado
+
+         es una constante que hace referencia a la localidad en la que se
+         almacenan los objetos que todav¡a no han sido creados (es decir,
+         que no tienen asignado ninguna localidad actual).
+         Puede ser usada como cualquier otro n£mero v lido de localidad.
+
+%    Ej: colocar(LLAVE, no_creado);   // Hace desaparecer la llave
+
+
+         Ver tambi‚n: ~llevado~  ~encima~  ~Localidades ~  ~Expresiones~
+                      ~crear~  ~destruir~  ~Objetos~
+:Ejemplos
+^    Ejemplos de expresiones podr¡an ser:
+
+%    local(LLAVE) y no estaen?(MANZANA, llevado)
+
+         que valdr  1 si la localidad actual del objeto LLAVE es
+         distinto de cero y la MANZANA est  siendo llevada por el
+         jugador. La subexpresi¢n estaen?(MANZANA, llevado) ser¡a
+         equivalente a llevado?(MANZANA).
+
+%    verbo?(COGER) o verbo?(DEJAR)
+
+         valdr  1 si el verbo de la sentencia actual es COGER o DEJAR.
+
+%    LLAVE AMARILLA
+
+         devuelve el c¢digo interno del objeto con ese nombre y ese adjetivo.
+
+%    b15 >= objeto(b34, b35) y (b15 <= 0 o adverbio?(RAPIDAMENTE))
+
+         aunque un poco liado, es f cil de entender.
+
+
+     Ver tambi‚n: ~Expresiones~
+

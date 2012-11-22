@@ -1,0 +1,92 @@
+@Mensajes del sistema
+:Mensajes sistema
+^Concepto de "Mensaje del sistema"
+
+     Los mensajes del sistema son mensajes con significado predefinido que
+ aparecen ante ciertas situaciones. Generalmente, estas situaciones ser n
+ acciones autom ticas o repetitivas. El ejemplo t¡pico es el mensaje que
+ aparece cuando el jugador coge un objeto. Supongamos que en la aventura
+ hay 30 objetos (una cifra no muy descabellada para una aventura de mediana
+ envergadura). Ser¡a muy engorroso tener que escribir 30 mensajes del tipo
+ "Has cogido TAL", "Has cogido CUAL", etc. En lugar de eso, lo que se tiene
+ es un mensaje del sistema que aparece autom ticamente cada vez que se coge
+ un objeto. Ese mensaje es del tipo "Has cogido _", donde "_" es un c¢digo
+ especial que indica el objeto actualmente referido (ver tambi‚n
+ ~C¢digos especiales~).
+
+     Otro ejemplo t¡pico es el mensaje del "prompt" del jugador, que inicial-
+ mente es ">>>", o el que aparece cuando la habitaci¢n est  oscura, o el
+ que te pide el nombre del fichero cuando vas a grabar una situacion.
+
+     Una caracter¡stica com£n en este tipo de mensajes, es que el signifi-
+ cado de los mismos ya se encuentra predefinido de antemano, y no puede
+ cambiarse. Es decir, el mensaje del sistema n§ 6, por ejemplo, que es el
+ que aparece cuando el int‚rprete no entiende las palabras del jugador,
+ puede cambiarse libremente, en el sentido de que puede decir "No te
+ entiendo", en lugar de "No se qu‚ quieres decirme", pero ser  siempre el
+ n§ 6 el que aparezca en dicha situaci¢n.
+
+
+     Ver tambi‚n: ~Mensajes iniciales~  ~mensis~
+
+:Mensajes iniciales
+^Mensajes del sistema por defecto
+
+      0: "Esta muy oscuro para poder ver nada."
+      1: " Tambi‚n veo "
+      2: "\nDi algo coherente."
+      3: "\n­Vamos! ¨A qu‚ esperas?"
+      4: "\n¨Qu‚ quieres que haga?"
+      5: "\nDime que hacemos..."
+      6: "No entiendo lo que quieres decirme."
+      7: "<<< MAS >>>"
+      8: "No puedo hacer eso."
+      9: "Llevas "
+     10: " (encima)"
+     11: "nada en absoluto."
+     12: "¨Estas seguro?"
+     13: "\n¨Quieres jugar otra vez?"
+     14: "Nombre del fichero a salvar: "
+     15: "Nombre del fichero a recuperar: "
+     16: "\nPulsa una tecla para continuar...\n"
+     17: "Has hecho _ acciones(s) v lida(s).\n"
+     18: "Las salidas posibles son "
+     19: "Unicamente "
+     20: "No hay ninguna salida."
+     21: "No hay salida en esa direcci¢n."
+     22: ""
+     23: "No llevo puesto uno de esos."
+     24: "No puedo. Ya llevo puesto _."
+     25: "Ya tengo _."
+     26: "No hay uno de esos por aqu¡."
+     27: "Ya no puedo llevar m s cosas."
+     28: "No tengo eso."
+     29: "Ya llevo puesto _."
+     30: "S"
+     31: "S"
+     32: ""
+     33: "\n>>> "
+     34: ""
+     35: ""
+     36: "Ahora tengo _."
+     37: "Ahora llevo puesto _."
+     38: "Me he quitado _."
+     39: "He dejado caer _."
+     40: "No puedo ponerme _."
+     41: "No me puedo quitar _."
+     42: "No puedo quitarme _. Mis manos est n llenas."
+     43: "_ pesa mucho para m¡."
+     44: "_ est  en "
+     45: "- "
+     46: " "
+     47: " y "
+     48: "."
+     49: "No tengo _."
+     50: "No llevo puesto _."
+     51: ""
+     52: "No hay uno de esos en "
+     53: "nada de nada"
+
+
+     Ver tambi‚n: ~Mensajes sistema~  ~mensis~
+

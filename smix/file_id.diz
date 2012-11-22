@@ -1,0 +1,9 @@
+SMIXC - allows programmers to include
+sounds to applications which support
+Sound Blaster compatible sound cards.
+Up to eight sound files can be played
+simultaneously. Sounds are stored on
+disk as raw signed 8-bit sample data at
+a sampling rate of 22050 HZ. C source
+code is inlcuded.
+Description Copyright 1995 PsL

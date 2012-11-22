@@ -1,0 +1,867 @@
+@Sentencias y estructuras de control
+:// (Comentario)
+     // <cualquier cosa>
+
+         las dos barras inclinadas // se usan como comienzo de un comentario.
+         Todo lo que haya entre ellas y el final de la l¡nea se considerar 
+         un comentario y ser  ignorado. Los comentarios pueden aparecer en
+         cualquier lugar del programa fuente en el que se permita un espacio
+         o salto de l¡nea.
+
+         En esencia, se usan de igual forma que los comentarios en C++.
+         
+%    Ej: coger(LLAVE);  // El jugador coge la llave del suelo
+
+:color
+     color(n£mero)
+
+         cambia el color actual del texto.
+
+
+         Ver tambi‚n: ~fondo~  ~C¢digos especiales~
+:fondo
+     fondo(n£mero)
+
+         cambia el color de fondo del texto.
+
+
+         Ver tambi‚n: ~color~  ~C¢digos especiales~
+:coger
+%    coger(objeto)
+
+         si el objeto est  presente en la localidad actual, entonces
+         pasa el objeto "objeto" al inventario, emitiendo el mensaje
+         del sistema n§ 36 ("Ahora tengo <el objeto>"). En otro caso,
+         emite un mensaje de error apropiado.
+
+%    Ej: coger(LLAVE);
+
+
+         Ver tambi‚n: ~dejar~  ~poner~  ~quitar~  ~crear~  ~destruir~
+                      ~intercambiar~  ~colocar~  ~meter~  ~sacar~
+                      ~Sentencias~
+:dejar
+%    dejar(objeto)
+
+         si el objeto est  siendo llevado, entonces pasa el objeto
+         "objeto" a la localidad actual, emitiendo el mensaje del
+         sistema n§ 39 ("He dejado caer <el objeto>"). En otro caso,
+         emite un mensaje de error apropiado.
+
+%    Ej: dejar(LLAVE);
+
+
+         Ver tambi‚n: ~coger~  ~poner~  ~quitar~  ~crear~  ~destruir~
+                      ~intercambiar~  ~colocar~  ~meter~  ~sacar~
+                      ~Sentencias~
+:poner
+%    poner(objeto)
+
+         si el objeto est  siendo llevado en el inventario del
+         jugador, entonces el objeto pasa al estado de puesto, y se
+         emite el mensaje del sistema n§ 37 ("Ahora llevo puesto
+         <el objeto>"). Si el objeto no es ropa, o no se puede
+         realizar la operaci¢n por otros motivos, se emite un mensaje
+         de error.
+
+%    Ej: poner(CAMISA);
+
+
+         Ver tambi‚n: ~coger~  ~dejar~  ~quitar~  ~crear~  ~destruir~
+                      ~intercambiar~  ~colocar~  ~meter~  ~sacar~
+                      ~Sentencias~
+:quitar
+%    quitar(objeto)
+
+         si el objeto est  siendo llevado puesto encima, entonces el
+         objeto pasa a ser llevado a secas, emiti‚ndose el mensaje
+         del sistema n§ 38 ("Me he quitado <el objeto>"). En otro
+         caso, se emite un mensaje de error apropiado.
+
+%    Ej: quitar(CAMISA);
+
+
+         Ver tambi‚n: ~coger~  ~dejar~  ~poner~  ~crear~  ~destruir~
+                      ~intercambiar~  ~colocar~  ~meter~  ~sacar~
+                      ~Sentencias~
+:crear
+%    crear(objeto)
+
+         el objeto "objeto" pasa a la localidad actual, y la ~bandera 1~
+         se decrementar  si el jugador lo estaba llevando.
+
+%    Ej: crear(AGUJERO);
+
+
+         Ver tambi‚n: ~coger~  ~dejar~  ~poner~  ~quitar~  ~destruir~
+                      ~intercambiar~  ~colocar~  ~meter~  ~sacar~
+                      ~Sentencias~
+:destruir
+%    destruir(objeto)
+
+         el objeto pasa a la localidad "no_creado", y la ~bandera 1~ se
+         decrementa si el jugador lo estaba llevando.
+
+%    Ej: destruir(LIBRO);
+
+
+         Ver tambi‚n: ~coger~  ~dejar~  ~poner~  ~quitar~  ~crear~
+                      ~intercambiar~  ~colocar~  ~meter~  ~sacar~
+                      ~Sentencias~
+:intercambiar
+%    intercambiar(objeto, objeto)
+
+         se intercambian las posiciones de los objetos indicados.
+
+%    Ej: intercambiar(LINTERNA ENCENDIDA, LINTERNA APAGADA);
+
+
+         Ver tambi‚n: ~coger~  ~dejar~  ~poner~  ~quitar~  ~crear~
+                      ~destruir~  ~colocar~  ~meter~  ~sacar~
+                      ~Sentencias~
+:colocar
+%    colocar(objeto, localidad)
+
+         el objeto "objeto" se lleva a la localidad localidad. La
+         bandera 1 se decrementa si estaba siendo llevado, y se
+         incrementa si ahora pasa a ser llevado (localidad = "llevado").
+
+%    Ej: colocar(LLAVE, b38)     // Coloca la llave en la localidad actual
+
+
+         Ver tambi‚n: ~coger~  ~dejar~  ~poner~  ~quitar~  ~crear~
+                      ~destruir~  ~intercambiar~  ~meter~  ~sacar~
+                      ~Sentencias~  ~Banderas~  ~Bandera 38~
+:meter
+%    meter(objeto, contenedor)
+
+         mete el objeto "objeto" en el contenedor "contenedor". Se
+         emite un mensaje de error si el segundo argumento no resulta
+         ser un contenedor en tiempo de ejecuci¢n.
+
+%    Ej: meter(MONEDA, MONEDERO);
+
+
+         Ver tambi‚n: ~coger~  ~dejar~  ~poner~  ~quitar~  ~crear~
+                      ~destruir~  ~intercambiar~  ~colocar~  ~sacar~
+                      ~Sentencias~
+:sacar
+%    sacar(objeto, contenedor)
+
+         saca el objeto "objeto" del contenedor "contenedor". Se emite
+         un mensaje de error si el segundo argumento no resulta ser un
+         contenedor en tiempo de ejecuci¢n.
+
+%    Ej: sacar(MONEDA, MONEDERO);
+
+
+         Ver tambi‚n: ~coger~  ~dejar~  ~poner~  ~quitar~  ~crear~
+                      ~destruir~  ~intercambiar~  ~colocar~  ~meter~
+                      ~Sentencias~
+:autoc
+%    autoc
+
+         el nombre y el adjetivo de la sentencia actual se usan para
+         buscar un objeto con dicho nombre. Si existe, se efect£a una
+         acci¢n "coger" autom tica con dicho objeto. Sirve para poder
+         coger cualquier objeto.
+
+%    Ej: COGER * {
+%            autoc;
+%        }
+
+
+         Ver tambi‚n: ~autod~  ~autop~  ~autoq~  ~autom~  ~autos~
+                      ~Sentencias~  ~Respuestas~
+:autod
+%    autod
+
+         el nombre y el adjetivo de la sentencia actual se usan para
+         buscar un objeto con dicho nombre. Si existe, se efect£a una
+         acci¢n "dejar" autom tica con dicho objeto. Sirve para poder
+         dejar cualquier objeto.
+
+%    Ej: DEJAR * {
+%            autod;
+%        }
+
+
+         Ver tambi‚n: ~autoc~  ~autop~  ~autoq~  ~autom~  ~autos~
+                      ~Sentencias~  ~Respuestas~
+:autop
+%    autop
+
+         el nombre y el adjetivo de la sentencia actual se usan para
+         buscar un objeto con dicho nombre. Si existe, se efect£a una
+         acci¢n "poner" autom tica con dicho objeto. Sirve para poder
+         poner cualquier objeto.
+
+%    Ej: PON * {
+%            autop;
+%        }
+
+
+         Ver tambi‚n: ~autoc~  ~autod~  ~autoq~  ~autom~  ~autos~
+                      ~Sentencias~  ~Respuestas~
+:autoq
+%    autoq
+
+         el nombre y el adjetivo de la sentencia actual se usan para
+         buscar un objeto con dicho nombre. Si existe, se efect£a una
+         acci¢n "quitar" autom tica con dicho objeto. Sirve para poder
+         quitar cualquier objeto.
+
+%    Ej: QUITATE * {
+%            autoq;
+%        }
+
+
+         Ver tambi‚n: ~autoc~  ~autod~  ~autop~  ~autom~  ~autos~
+                      ~Sentencias~  ~Respuestas~
+:autom
+%    autom(contenedor)
+
+         el nombre y el adjetivo de la sentencia actual se usan para
+         buscar un objeto con dicho nombre. Si existe, se efect£a una
+         acci¢n "meter" autom tica con dicho objeto, usando como
+         contenedor el argumento "contenedor". Sirve para poder meter
+         cualquier objeto en un cierto contenedor.
+
+%    Ej: METE * {
+%            si (nombre2?(MONEDERO))
+%               autom(MONEDERO);
+%        }
+
+
+         Ver tambi‚n: ~autoc~  ~autod~  ~autop~  ~autoq~  ~autos~
+                      ~Sentencias~
+:autos
+%    autos(contenedor)
+
+         el nombre y el adjetivo de la sentencia actual se usan para
+         buscar un objeto con dicho nombre. Si existe, se efect£a una
+         acci¢n "sacar" autom tica con dicho objeto, usando como
+         contenedor el argumento "contenedor". Sirve para poder sacar
+         cualquier objeto de un cierto contenedor.
+
+%    Ej: SACA * {
+%            si (nombre2?(MONEDERO))
+%               autos(MONEDERO);
+%        }
+
+
+         Ver tambi‚n: ~autoc~  ~autod~  ~autop~  ~autoq~  ~autom~
+                      ~Sentencias~
+:listaobj
+%    listaobj
+
+         si hay alg£n objeto presente en la localidad actual, entonces se
+         imprime el mensaje del sistema n§ 1 ("Adem s puedo ver "),
+         seguido de una lista de los objetos presentes en dicha
+         localidad.
+
+
+         Ver tambi‚n: ~listade~  ~listacont~  ~inven~  ~Sentencias~
+:listade
+%    listade(localidad)
+
+         si hay alg£n objeto presente en la localidad "localidad", entonces se
+         imprime el mensaje del sistema n§ 1 ("Adem s puedo ver "),
+         seguido de una lista de los objetos presentes en dicha
+         localidad.
+
+
+         Ver tambi‚n: ~listaobj~  ~listacont~  ~inven~  ~Sentencias~
+
+:listacont
+%    listacont(contenedor)
+
+         se imprime una lista de los objetos inclu¡dos dentro del
+         contenedor "contenedor". No se imprime el mensaje del sistema
+         n§ 1, al contrario que con "listaobj", con lo que se deber 
+         preceder esta acci¢n con un mensaje del tipo de
+         "En la bolsa hay:".
+
+%    Ej: MIRA BOLSA {
+%            listacont(BOLSA);
+%        }
+
+
+         Ver tambi‚n: ~listaobj~  ~listade~  ~inven~  ~Sentencias~
+:inven
+%    inven
+
+         se imprime el mensaje del sistema n§ 9 ("Tengo: "), seguido
+         de una lista de los objetos que se llevan o se tienen puesto
+         encima. Si un objeto se lleva puesto, su texto ir  seguido
+         del mensaje del sistema n§ 10 ("encima" o "puesto"). Sirve
+         para describir el inventario del jugador.
+
+%    Ej: INVENTARIO * {
+%            inven;
+%        }
+
+
+         Ver tambi‚n: ~listaobj~  ~listade~  ~Sentencias~
+:"mensaje"
+%    "mensaje"
+
+         emite el mensaje del usuario de n£mero dado por mensaje, sin hacer
+         un salto de l¡nea. Aunque parece una simple cadena de caracteres,
+         cuando se termina con un punto y coma ";", se transforma en una
+         sentencia que escribe el mensaje en pantalla.
+
+%    Ej: ABRE PUERTA {
+%            "Abres la puerta";
+%        }
+
+
+         Ver tambi‚n: ~mensis~  ~Sentencias~
+:mensis
+%    mensis(mensaje)
+
+         emite el mensaje del sistema dado por mensaje. No hace salto
+         de l¡nea.
+
+%    Ej: mensis(2);
+
+
+         Ver tambi‚n: ~"mensaje"~  ~Sentencias~
+:imprime
+%    imprime(n£mero)
+
+         emite el valor de n£mero. Sirve para imprimir el valor de una cierta
+         bandera, por ejemplo.
+
+%    Ej: "El valor de la bandera 35 es ";
+%        imprime(b35);
+
+
+         Ver tambi‚n: ~Sentencias~  ~"mensaje"~
+:describe
+%    describe
+
+         describe la localidad actual, es decir, emite su descripci¢n.
+
+%    Ej: MIRAR * {
+%            describe;
+%        }
+
+
+         Ver tambi‚n: ~Sentencias~  ~Bandera 40~ 
+                      ~Subrutinas~ Process1 y Process2
+:saltolinea
+%    saltolinea
+
+         efect£a un salto de l¡nea.
+
+
+         Ver tambi‚n: ~Sentencias~
+:retorno
+%    retorno
+
+         retorna el control a la instrucci¢n que sigue a la llamada a
+         la subrutina actual. Si se incluye en una respuesta en lugar
+         de en una subrutina, se provoca un salto a la b£squeda de
+         otra entrada en la tabla de respuestas. Al final de cada
+         respuesta y cada subrutina hay un retorno impl¡cito; por tanto,
+         terminar una respuesta o subrutina con una acci¢n retorno supone
+         a¤adir una instrucci¢n m s sin necesidad alguna.
+
+%    Ej: COGE LLAVE {
+%            si (local(LLAVE) <> b38)
+%                retorno;
+%            sino
+%                "Has cogido la llave";
+%        }   // Aqu¡ hay un retorno impl¡cito
+
+
+         Ver tambi‚n: ~hecho~  ~no_hecho~  ~Subrutinas~  ~Sentencias~
+:hecho
+%    hecho
+
+         provoca un salto incondicional al int‚rprete. Similar al
+         "retorno", pero m s traum tico, ya que deja sin ejecutar las
+         instrucciones siguientes a la llamada de la subrutina actual.
+         Si se incluye en una respuesta, se usa para evitar que se
+         busquen m s respuestas que cuadren con la sentencia actual.
+         Es una forma f cil de indicar que no se consideran m s
+         entradas y que contin£e la ejecuci¢n.
+
+%    Ej: COGE LLAVE {
+%            si (local(LLAVE) <> b38)
+%                retorno;
+%            sino
+%                "Has cogido la llave";
+%        }
+
+
+         Ver tambi‚n: ~retorno~  ~no_hecho~  ~Subrutinas~  ~Sentencias~
+:no_hecho
+%    no_hecho
+
+         exactamente igual que "hecho", s¢lo que imprime el mensaje
+         del sistema n§ 8 ("No puedo hacer eso"). Se usa para indicar
+         que la sentencia del jugador no puede ser realizada por
+         alguna raz¢n.
+
+%    Ej: COGE LLAVE {
+%            si (local(LLAVE) <> b38)
+%                no_hecho;
+%            sino
+%                "Has cogido la llave";
+%        }
+
+
+         Ver tambi‚n: ~retorno~  ~hecho~  ~Subrutinas~  ~Sentencias~
+:Secuencia
+%    '{' sentencia; {sentencia;} '}'
+
+         es la estructura secuencial del lenguaje de GAC. Determina un
+         bloque formado por varias sentencias encerradas entre llaves.
+         Los bloques de sentencias pueden usarse en cualquier contexto
+         en el que se necesite una sentencia -son un caso particular
+         de sentencia.
+
+%    Ej: b60 := 0;
+%        mientras (b60 < 50) {
+%            imprime(b60);
+%            b60 := b60 + 1;
+%        }
+
+
+         Ver tambi‚n: ~Sentencias~
+:si:sino
+%    si (expresi¢n) sentencia-then [sino sentencia-else]
+
+         es la estructura alternativa. Si "expresi¢n" es distinto de
+         cero, se ejecuta la sentencia-then. En otro caso, si se
+         incluye la cl usula "sino", se ejecuta la sentencia-else.
+
+%    Ej: si (b30 < 0)
+%            "Menor";
+%        sino
+%            "Mayor";
+
+
+         Ver tambi‚n: ~Sentencias~  ~"mensaje"~
+:mientras
+%    mientras (expresi¢n) sentencia
+
+         es la estructura iterativa del lenguaje. Mientras "expresi¢n"
+         sea distinto de cero, se ejecutar  la sentencia "sentencia".
+
+%    Ej: b60 := 0;
+%        mientras (b60 < 50) {
+%            imprime(b60);
+%            b60 := b60 + 1;
+%        }
+
+
+         Ver tambi‚n: ~Sentencias~
+:evaluar:caso
+%    evaluar (expresi¢n) '{'
+%        caso valor1: sentencia1;
+%        [{caso valorN: sentenciaN;}]
+%        [defecto: sentencia_defecto;]
+%    '}'
+
+         la estructura alternativa m£ltiple. El valor de "expresi¢n" se
+         compara con cada uno de los valores de los "casos". Cuando se en-
+         cuentra una igualdad, se ejecuta la sentencia correspondiente,
+         saliendo despu‚s de la estructura. Es necesario que haya al menos
+         un caso, y el caso por defecto es opcional.
+
+%    Ej: evaluar (b60) {
+%            caso 0:  "La bandera 60 vale 0";
+%            caso 1:  "La bandera 60 vale 1";
+%            defecto: "La bandera 60 es mayor o igual que 2, o menor que 0";
+%        }
+
+
+         Ver tambi‚n: ~Sentencias~  ~"mensaje"~
+:diag
+%    diag
+
+         activa el diagn¢stico de la aventura. Se pide el n£mero de
+         una cierta bandera y se imprime su valor actual, dando la
+         posibilidad de cambiarlo. Este proceso se repite hasta que se
+         pulsa [ENTER] cuando se pide el n£mero de la bandera.
+
+%    Ej: DIAG * {
+%            diag;
+%        }
+
+
+         Ver tambi‚n: ~Sentencias~
+:tecla
+%    tecla
+
+         imprime el mensaje del sistema n§ 16 ("Pulsa una tecla para
+         continuar..."), y espera hasta que el jugador apriete
+         cualquier tecla.
+
+%    Ej: b60 := 0;
+%        while (b60 < 50) {
+%            imprime(b60);
+%            tecla;
+%            b60 := b60 + 1;
+%        }
+
+
+         Ver tambi‚n: ~pausa~  ~Sentencias~  ~Mensajes sistema~
+:pausa
+%    pausa(tiempo)
+
+         detiene la ejecuci¢n de la aventura durante "tiempo"
+         milisegundos.
+
+
+         Ver tambi‚n: ~tecla~  ~Sentencias~
+:mueve
+%    mueve(localidad)
+
+         mueve al jugador a la localidad "localidad". En realidad, lo
+         que hace es cambiar la bandera 38 al valor "localidad".
+
+%    Ej: ABRE PUERTA {
+%            "Abres la puerta y ‚sta te absorbe...\n";
+%            "Ahora te encuentras en otro lugar.";
+%            mueve(34);
+%        }
+
+
+         Ver tambi‚n: ~Bandera 38~  ~Sentencias~
+:turnos
+%    turnos
+
+         emite los mensajes del sistema del 17 al 20, que son del tipo
+         de "Has dado X ¢rden(es)". Aqu¡ X es el contenido de la
+         bandera 31 (la que almacena el n§ de turnos del jugador).
+
+%    Ej: DIME TURNOS {
+%            turnos;
+%        }
+
+
+         Ver tambi‚n: ~Bandera 31~  ~Sentencias~
+:acabar
+%    acabar
+
+         emite el mensaje del sistema n§ 13 ("¨Quieres jugar otra
+         vez?"), tras lo cual se llama a la rutina del int‚rprete. Si
+         la respuesta no empieza con el primer car cter que lleve el
+         mensaje del sistema 31, se hace un salto a la rutina de
+         inicializaci¢n; si no, se devuelve el control al sistema
+         operativo. Es el comando que permite finalizar la aventura y
+         salir de ella.
+
+%    Ej: FIN * {
+%            si (acabar?)
+%                acabar;
+%        }
+
+
+         Ver tambi‚n: ~Sentencias~
+:(asignacion)
+%    bandera := expresi¢n    (asignaci¢n)
+
+         cambia el valor de una cierta bandera por el de "expresi¢n".
+         Al igual que ocurre con los lenguajes del paradigma
+         imperativo, la asignaci¢n es casi la instrucci¢n m s
+         importante de todo el conjunto de instrucciones. En nuestro
+         caso, permite cambiar el estado de la aventura.
+
+%    Ej: b60 := 1;
+
+
+         Ver tambi‚n: ~Banderas~  ~Sentencias~
+:imagen
+%    imagen(fichero)
+
+         presenta en pantalla la animaci¢n o imagen contenida en el fichero
+         "fichero" (caso de que el fichero exista). S¢lo reproduce el fichero
+         una sola vez. La animaci¢n se para con la pulsaci¢n de una tecla.
+
+%    Ej: MOSTRAR GRAFICO {
+%            imagen("PEPITO.FLI");
+%        }
+
+
+         Ver tambi‚n: ~Sentencias~  ~imagen_ciclo~
+:imagen_ciclo
+%    imagen_ciclo(fichero)
+
+         presenta en pantalla la animaci¢n o imagen contenida en el fichero
+         "fichero" ininterrumpidamente (caso de que el fichero exista). La
+         animaci¢n se para con la pulsaci¢n de una tecla.
+
+%    Ej: MOSTRAR GRAFICO {
+%            imagen_ciclo("CONTINUO.FLI");
+%        }
+
+
+         Ver tambi‚n: ~Sentencias~  ~imagen~
+
+:sonido
+%    sonido(sonido)
+
+         emite el sonido "sonido" por la tarjeta de sonido una sola vez.
+         El sonido debe estar en la librer¡a de sonidos que previamente hemos
+         tenido que crear con la utilidad ~SNDLIB.EXE~.
+
+%    Ej: ABRE PUERTA {
+%            "Abres la puerta, y la oyes chirriar...";
+%            sonido("CHIRRIDO");
+%        }
+
+         Nota: PROMETEO s¢lo detecta tarjetas compatibles Sound Blaster.
+
+
+         Ver tambi‚n: ~sonido_ciclo~  ~silencio~  ~Sentencias~
+:sonido_ciclo
+%    sonido_ciclo(sonido)
+
+         emite el sonido "sonido" por la tarjeta de sonido ininterrumpida-
+         mente. S¢lo se para con la orden ~silencio~. El sonido debe estar
+         en la librer¡a de sonidos que previamente hemos tenido que crear con
+         la utilidad SNDLIB.EXE.
+
+%    Ej: ABRE PUERTA {
+%            "Oyes pasos...";
+%            sonido_ciclo("PASOS");
+%        }
+
+         Nota: PROMETEO s¢lo detecta tarjetas compatibles Sound Blaster.
+
+
+         Ver tambi‚n: ~sonido~  ~silencio~  ~"mensaje"~  ~Sentencias~
+:silencio
+%    silencio(sonido)
+
+         deja de emitir el sonido "sonido" por la tarjeta de sonido.
+
+%    Ej: silencio("PASOS");
+
+
+         Ver tambi‚n: ~sonido~  ~sonido_ciclo~  ~Sentencias~
+:cursor
+%    cursor(posX, posY)
+
+         coloca el cursor de texto en la columna posX de la fila posY.
+
+%    Ej: b60 := posx(); b61 := posy();
+%        cursor(20, 12);
+%        "HOLA A TODOS";
+%        cursor(b60, b61);
+
+
+         Ver tambi‚n: ~posx~  ~posy~  ~"mensaje"~  ~Sentencias~
+:borrar
+%    borrar
+
+         limpia la pantalla y coloca el cursor en la posici¢n (1,1),
+         restituyendo la ventana de texto y haciendo que ‚sts sea toda la
+         pantalla.
+
+
+         Ver tambi‚n: ~Sentencias~
+:cargar
+%    cargar
+
+         carga una situaci¢n previa desde un fichero. Se pide el nombre
+         del fichero en el que se encuentra grabada la situaci¢n.
+
+%    Ej: LOAD * {
+%            cargar;
+%        }
+
+
+         Ver tambi‚n: ~salvar~  ~Sentencias~
+                      mensaje del sistema n§ 15.
+:salvar
+%    salvar
+
+         salva la situaci¢n actual de la aventura en un fichero. Se pide
+         el nombre del fichero destino.
+
+%    Ej: SAVE * {
+%            salvar;
+%        }
+
+
+         Ver tambi‚n: ~cargar~  ~Sentencias~
+                      mensaje del sistema n§ 14.
+:llama
+%    llama(subrutina)
+
+         transfiere el flujo de control al punto de entrada de la subrutina
+         "subrutina".
+
+%    Ej: llama(pepito);
+%        // ...
+%        subrutina pepito {
+%        // ...
+
+
+         Ver tambi‚n: ~Sentencias~  ~Subrutinas~
+:salidas
+%    salidas
+
+         se usa para presentar las conexiones o salidas posibles a otras
+         localidades. Si no hay ninguna salida (no existen conexiones con
+         otras localidades), se imprime el mensaje del sistema n§ 20 ("No
+         hay ninguna salida"). En caso contrario, se imprime el mensaje
+         del sistema n§ 18 ("Las salidas son:") o 19 ("Unicamente:"),
+         dependiendo de si hay m s de una salida o £nicamente una salida.
+         Por £ltimo se hace una lista con las salidas posibles.
+
+%    Ej: DIME SALIDAS {
+%            salidas;
+%        }
+
+
+         Ver tambi‚n: ~Sentencias~  ~Mensajes sistema~  ~Localidades~
+:sistema
+%    sistema
+
+         cambia un mensaje del sistema.
+
+
+     Ver ~Mensajes~  ~Mensajes sistema~  ~mensis~
+
+:subrutina
+%    subrutina
+
+         declara una subrutina.
+
+
+     Ver ~Subrutinas~
+:verbo
+%    verbo
+
+         declara una palabra con el tipo "verbo".
+
+
+     Ver ~Vocabulario~  ~Int‚rprete~
+:adverbio
+%    adverbio
+
+         declara una palabra con el tipo "adverbio".
+
+
+     Ver ~Vocabulario~  ~Int‚rprete~
+:nombre
+%    nombre
+
+         declara una palabra con el tipo "nombre".
+
+
+     Ver ~Vocabulario~  ~Int‚rprete~
+:pronombre
+%    pronombre
+
+         declara una palabra con el tipo "pronombre".
+
+
+     Ver ~Vocabulario~  ~Int‚rprete~
+:preposicion
+%    preposicion
+
+         declara una palabra con el tipo "preposici¢n".
+
+
+     Ver ~Vocabulario~  ~Int‚rprete~
+:conjuncion
+%    conjuncion
+
+         declara una palabra con el tipo "conjunci¢n".
+
+
+     Ver ~Vocabulario~  ~Int‚rprete~
+:adjetivo
+%    adjetivo
+
+         declara una palabra con el tipo "adjetivo".
+
+
+     Ver ~Vocabulario~  ~Int‚rprete~
+:nombre_verbo
+%    nombre_verbo
+
+         declara una palabra con el tipo "nombre convertible en verbo".
+
+
+     Ver ~Vocabulario~  ~Int‚rprete~
+:direccion
+%    direccion
+
+         declara una palabra con el tipo "direccion" (especialmente indicadas
+         para las conexiones entre localidades).
+
+
+     Ver ~Vocabulario~  ~Int‚rprete~
+:contenedor
+%    contenedor
+
+         especifica que un objeto es de tipo "contenedor".
+
+
+     Ver ~Objetos~
+:ropa
+%    ropa
+
+         especifica que un objeto es de tipo "ropa".
+
+
+     Ver ~Objetos~
+:ventana
+%    ventana(fila_superior, fila_inferior)
+
+         crea un recinto cerrado dentro de la pantalla, limitado por dos
+         filas de texto. Desde el momento en que se ejecute esta acci¢n, todos
+         los mensajes aparecer n entre las filas "fila_superior" y
+         "fila_inferior" (haci‚ndose un "scroll" dentro de ellas si fuese
+         necesario) y cualquier sentencia o funci¢n que cambie el estado de
+         la pantalla de alg£n modo tambi‚n afectar  £nicamente a dicha ventana.
+         La excepci¢n a ‚sto es la sentencia ~borrar~, que restituye la
+         ventana por la pantalla completa y luego limpia la pantalla.
+
+         El efecto es el de reducir las acciones posteriores a una zona de
+         la pantalla, sin borrar lo que antes hab¡a en ella.
+
+         Los valores l¡mite aceptables son 1 para "fila_superior" y 24 para
+         "fila_inferior". Adem s, "fila_superior" siempre debe ser menor o
+         igual a "fila_inferior".
+
+%    Ej: borrar;
+%        describe;
+%        listaobj;
+%        ventana(posy() + 1, 24);
+%
+         Este ejemplo "protege" la descripci¢n de la localidad actual, hacien-
+         do que siempre se encuentre en la parte de arriba de la pantalla sin
+         que le afecten para nada la aparici¢n de mensajes o el "scroll".
+
+
+         Ver tambi‚n: ~cursor~  ~borrar~  ~posx~  ~posy~
+
+:fuente
+%    fuente(fichero)
+
+         carga una fuente de caracteres a partir del fichero dado como su
+         argumento. Tras ejecutar esta acci¢n, todos los caracteres que ya
+         hab¡an en pantalla, y los que aparezcan posteriormente, tendr n la
+         forma indicada por el fichero que contiene la fuente.
+
+         El fichero ocupar  4096 bytes exactamente, correspondiendo 16 bytes
+         por cada car cter de los 256 del c¢digo ASCII.
+
+%    Ej: fuente("THIN.FNT");
+
+         NOTAS: En el directorio FUENTES de la distribuci¢n est ndar de
+                PROMETEO se encuentran varios ejemplos de ficheros de fuentes
+                de caracteres.
+
+                Acci¢n s¢lo disponible a partir de la versi¢n 2.2.
+

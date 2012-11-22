@@ -1,0 +1,361 @@
+/* pcyacc.sk
+ *
+ * (c) Copyright 1989, Abraxas Software, Inc.
+ *
+ * Modificado por Pedro Carrillo Pacheco y Rafael Corchuelo Gil
+ * en Diciembre de 1.993
+ *
+ * Porciones (c) 1.993 Pedro Carrillo Pacheco y Rafael Corchuelo Gil
+ *
+ *
+ * 	Este m¢dulo es un esqueleto completo para PCYACC con una gesti¢n
+ * de errores sintacticos mejorada.
+ *
+ *	Las £nicas diferencias respecto a YACC son: 1) la definici¢n de
+ * 'YYERRORDRV', 2) la macro YY_DECL, 3) la posibilidad de volcar el  rbol
+ * parse a un fichero, 4) la macro YYLEX, 5) las variables yyholdtok
+ * e yyholdlhs, 6) la macro YYLVAL y 7) la macro LOOKAHEAD.
+ *
+ *	1) YYERRORDRV.
+ *
+ *	'YYERRORDRV' es una macro que contiene el nombre de la rutina de error
+ * a invocar cada vez que se produce un error sintactico.  Se utiliza para
+ * crear el siguiente prototipo:
+ *
+ *	void YYERRORDRV(int err, int tok);
+ *
+ *	+ err es tipo de mensaje de error.
+ *	  -1 significa que es un sintactico
+ *	  -2 significa que la pila se ha llenado
+ *	+ tok es el n£mero que identifica a uno de los tokens de la
+ *	      gram tica.
+ *
+ *	Cuando se produce un error sint ctico, es porque el a partir del
+ * estado actual no existe ninguna transici¢n con el £ltimo token le¡do.
+ * Se espera un token del conjunto K = {t1, t2, ..., tn}, pero el
+ * lookahead no pertenece a K.
+ *
+ *	En ese momento el parser llama a YYERRORDRV repetidas veces.  La
+ * primera con un mensaje de error en el par metro 'msg' y en 'tok' el
+ * lookahead, y las siguientes con 'msg' == 0 y 'tok' tomando los valores
+ * t1, t2, ..., tn.  Tras haber realizado la llamada n£mero (n+1), se
+ * vuelve a invocar con 'tok' == -1, para indicar que el conjunto K no
+ * tiene m s elementos.
+ *
+ *	Como se puede apreciar 'tok' == -1 implica necesariamente que ya
+ * no hay m s llamadas para el mismo error.
+ *
+ *	Por defecto el valor de 'YYERRORDRV' es 'yyerror'.
+ *
+ *
+ *	2) YY_DECL.
+ *
+ *	Tambi‚n se ha introducido la macro 'YY_DECL' que permite modificar
+ * la cabecera de yyparse.  Teniendo en cuenta que al usar esta macro se
+ * puede modificar el valor de retorno de 'yyparse()' tambi‚n se proporcionan
+ * las macros 'YYABORT' e 'YYACCEPT' que se invocan, respectivamente,
+ * cuando la entrada contiene errores o cuando la entrada es correcta.
+ *
+ *
+ *	3) Arbol parse
+ *
+ *	Se ha dotado a este reconocedor con la posibilidad de volcar el  rbol
+ * parse a un fichero.  Para ello es necesario compilar el fuente PCYACC
+ * con la opci¢n -t, para que genere las tablas necesarias.
+ *
+ *
+ *	4) YYLEX()
+ *
+ *	Esta macro debe devolver un valor entero que identifica el siguiente
+ * token en la entrada.  (Por defecto YYLEX() vale 'yylex()')
+ *
+ *
+ *	5) yyholdtok e yyholdlhs
+ *
+ *	'yyholdtok' es una variable entera que permite guardar al usuario un
+ * token de forma temporal.  El analizador sint ctico no da uso alguno a esta
+ * variable.  Igual ocurre con 'yyholdlhs' que es del mismo tipo que la pila
+ * sem ntica, y est  a disposici¢n del usuario.
+ *
+ *
+ *	6) YYLVAL
+ *
+ *	Esta macro debe contener una expresi¢n que sirva de interface
+ * entre el analizador l‚xico y el sint ctico.  (Por defecto YYLVAL
+ * vale 'yylval')
+ *
+ *	6) LOOKAHEAD
+ *
+ *	Esta macro permite consultar el token de lectura adelantada actual
+ * tambi‚n conocido como Look Ahead.
+ *
+ */
+
+#include <stdlib.h>
+#include <string.h>
+
+#ifdef YYDEBUG
+#  define D(x) x
+#else
+#  define D(x) ;
+#endif
+
+#ifndef YYLEX
+#  define YYLEX() yylex()
+#endif
+
+#ifndef YYLVAL
+#  define YYLVAL yylval
+#endif
+
+/* YYREDMAX determina el n£mero m ximo de entradas disponibles para guardar
+ * el  rbol parse.
+ *
+ */
+
+#ifndef YYREDMAX
+#define YYREDMAX 1000
+#endif
+
+static int redseq[YYREDMAX];  /* Array para guardar el  rbol parse */
+static int redcnt = 0;
+
+#define yyerrok		errfl = 0
+#define yyclearin	if (token == 0) YYABORT; else token = -1
+
+#define YYFLAG -1000
+#define YYERROR goto yyerrlab
+
+#ifndef YYACCEPT
+#define YYACCEPT return 0
+#endif
+
+#ifndef YYABORT
+#define YYABORT return 1
+#endif
+
+/* Esta macro contiene el tama¤o del stack de estados y valores */
+
+#ifndef YYMAXDEPTH
+#define YYMAXDEPTH	250
+#endif
+
+#ifndef YY_DECL
+#define YY_DECL int yyparse()
+#endif
+
+#ifndef YYERRORDRV
+#define YYERRORDRV yyerror
+#endif
+
+#define LOOKAHEAD (token)
+
+
+static int yyholdtok;           /* Temporal a disposici¢n del usuario */
+static YYSTYPE yyholdlhs;       /* Temporal a disposici¢n del usuario */
+static YYSTYPE yyv[YYMAXDEPTH]; /* Stack de valores */
+static int token = -1; 		/* Token de entrada */
+static int errct = 0;  		/* Contador de errores */
+static int errfl = 0;  		/* Flag de error */
+
+
+static void create_yy_ast(void)
+{
+  /* Esta rutina permite volcar en un fichero el  rbol parse
+   * que se ha recorrido para analizar el texto de entrada.
+   * Tan solo actua esta rutina si el flag 'yytflag' vale cierto.
+   * El flag, el nombre del fichero y las tablas necesarias para
+   * guardar el arbol parse son generados por PCYACC
+   *
+   */
+
+  if (yytflag) { /* Crear yy.ast si se ha solicitado */
+    int ti, tj, colon;
+
+    yytfilep = fopen(yytfilen, "w");
+    if (yytfilep == NULL) {
+      fprintf(stderr, "PCYACC: No se puede abrir: %s\n", yytfilen);
+      abort();
+    }
+    for (ti = redcnt - 1; ti >= 0; ti--) {
+      tj = svdprd[redseq[ti]];
+      colon = 1;
+      while (strcmp(svdnams[tj], "$EOP"))  {
+	 fprintf(yytfilep,  "%s%s", svdnams[tj++], colon ? ": " : " ");
+	 colon = 0;
+       }
+      fprintf(yytfilep,  "\n");
+    }
+    fclose(yytfilep);
+  }
+}
+
+
+YY_DECL
+{
+     static int yys[YYMAXDEPTH]; /* Stack de estados */
+     int yyj, yym;
+     YYSTYPE *yypvt; /* Tope del stack de valores */
+     int yystate,    /* Estado actual */
+	 *yyps,      /* Tope del stack de estados */
+	 yyn;        /* Informaci¢n sobre el n£mero de estados (interno) */
+     YYSTYPE *yypv;  /* Stack de valores */
+     int *yyxi;
+
+     D(printf("Estado 0\n"));
+
+     yystate = 0;
+     token = -1;
+     errct = 0;
+     errfl = 0;
+     yyps = yys - 1;
+     yypv = yyv - 1;
+
+yystack:    /* Apilar un estado y un valor en el stack */
+     if (++yyps > yys + YYMAXDEPTH) {
+       /* Construcci¢n sint ctica demasiado compleja */
+       YYERRORDRV(-2, -1);
+       YYABORT;
+     }
+     *yyps = yystate;
+     ++yypv;
+     *yypv = yyval;
+
+yynewstate:
+     yyn = yypact[yystate];
+
+     if (yyn <= YYFLAG)
+	  goto yydefault; /* Estado simple con tan s¢lo una acci¢n por defecto. */
+
+     if (token < 0) {		/* ¨No se ha le¡do el token de lookahead */
+	  if ((token = YYLEX()) < 0)
+	       token = 0;
+     }
+     yyn += token;
+     if (yyn < 0 || yyn >= YYLAST)	/* ¨No hay entrada en la tabla? */
+	  goto yydefault; /* Estado simple con tan s¢lo una acci¢n por defecto. */
+
+     if (yychk[yyn = yyact[yyn]] == token) {	/* ¨Es un shift v lido? */
+
+	  D(printf("shift [%d] & goto %d\n", token, yyn));
+
+	  token = -1;		/* Ya se ha le¡do el lookahead */
+	  yyval = YYLVAL;
+	  yystate = yyn;
+	  if (errfl > 0)	/* ¨Estamos a£n en estado de error? */
+	       --errfl;
+	  goto yystack;
+     }
+
+yydefault:       /* Estado simple con tan s¢lo una acci¢n por defecto. */
+     if ((yyn = yydef[yystate]) == -2) {
+	  if (token < 0) {	/* ¨No hay lookahead? */
+	       if ((token = YYLEX()) < 0)
+		    token = 0;
+	  }
+
+	  /* Buscar en la tabla de excepciones */
+	  for (yyxi = yyexca; *yyxi != -1 || yyxi[1] != yystate ; yyxi += 2)
+	       ;		/* Epsilon */
+	  while(*(yyxi += 2) >= 0) {
+	       if (*yyxi == token)
+		    break;
+	  }
+	  if ((yyn = yyxi[1]) < 0) {
+
+	       D(printf("accept\n"));
+
+	       create_yy_ast();
+
+	       YYACCEPT;   /* Ok.  Estado accept */
+	  }
+     }
+
+     if (yyn == 0) {		/* ¨Se ha producido un error? */
+	  switch(errfl) {
+	       case 0:   /* En efecto, hay un nuevo error */
+		    YYERRORDRV(-1, token);
+		    if ((yyn = yypact[yystate]) > YYFLAG && yyn < YYLAST) {
+			 register int x;
+
+			 for (x = (yyn > 0) ? yyn : 0; x < YYLAST; ++x) {
+			      if (yychk[yyact[x]] == x - yyn &&
+					x - yyn != YYERRCODE)
+				   YYERRORDRV(-1, x - yyn);
+			 }
+		    }
+		    YYERRORDRV(-1, -1);
+yyerrlab:
+		    ++errct;
+
+	  case 1:
+	  case 2: /* Error aun no recuperado ... Intentarlo de nuevo */
+		    errfl = 3;
+
+		    /* Encontrar un estado en el que la acci¢n "shift error" sea correcta */
+		    while (yyps >= yys) {
+			 yyn = yypact[*yyps] + YYERRCODE;
+			 if (yyn >= 0 && yyn < YYLAST &&
+					yychk[yyact[yyn]] == YYERRCODE){
+			      /* Simular la acci¢n "shift error" */
+			      yystate = yyact[yyn];
+
+			      D(printf("shift [error] & goto %d\n", yystate));
+
+			      goto yystack;
+			 }
+			 yyn = yypact[*yyps];
+			 /* El yyps no admite "shift error", desapilar */
+			 --yyps;
+			 --yypv;
+
+			D(printf("error: despilar estado %d, volviendo a estado %d\n", yyps[1], yyps[0]));
+		    }
+
+	    /* Ninguno de los estados en el stack admite "shift error".  Parar */
+yyabort:
+
+		    D(printf("PCYACC. Errores en el fuente\n"));
+
+		    create_yy_ast();
+
+		    YYABORT;
+
+	       case 3:  /* A£n no se puede hacer shift en token actual. */
+			/* Remendar la entrada. */
+
+		    D(printf("error: desechar el token [%d]\n", token));
+
+		    if (token == 0)	/* ¨ Es el final de la entrada? */
+			 goto yyabort;
+		    token = -1;
+		    goto yynewstate;   /* Volver al mismo estado */
+	  }
+     }
+
+     /* Reducir la producci¢n 'yyn' */
+     if (yytflag && redcnt<YYREDMAX)
+       redseq[redcnt++] = yyn;
+     yyps -= yyr2[yyn];
+     yypvt = yypv;
+     yypv -= yyr2[yyn];
+     yyval = yypv[1];
+     yym = yyn;
+     /* Buscar en la tabla de gotos el siguiente estado */
+     yyn = yyr1[yyn];
+     yyj = yypgo[yyn] + *yyps + 1;
+     if (yyj >= YYLAST || yychk[yystate = yyact[yyj]] != -yyn)
+	  yystate = yyact[yypgo[yyn]];
+
+     D(printf("reduce %d, vuelta al estado %d, goto %d\n", yym, *yyps, yystate));
+
+     switch (yym) {
+
+     /* Aqu¡ van las acciones sem nticas */
+
+	  $A
+
+     }
+     goto yystack;
+}
+

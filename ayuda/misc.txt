@@ -1,0 +1,93 @@
+@Otra informaci¢n de inter‚s
+:C¢digos especiales
+^C¢digos especiales
+
+     Las cadenas de caracteres en el lenguaje PROMETEO son m s flexibles de
+ lo que parece a simple vista. Adem s de presentar caracteres normales,
+ se permiten tambi‚n otros c¢digos que realizan tareas variadas. He aqu¡ un
+ resumen de todos ellos.
+
+
+%Tabuladores y saltos de l¡nea
+
+     \n : Efect£a un salto de l¡nea en la pantalla, dejando el cursor en la
+          primera columna de la fila siguiente a la actual.
+     \t : Mueve el cursor un tabulador a la derecha.
+
+
+%Banderas
+
+     Dentro de una cadena se puede indicar que aparezca el valor actual de una
+ cierta bandera. Eso es muy £til en mensajes del tipo "Has hecho X movidas",
+ donde X se sustituir¡a por el c¢digo para una bandera en el que se guarden
+ los turnos del jugador. El c¢digo es:
+
+     \bn : donde "n" es el n§ de una bandera v lida.
+
+     Ej: "Has hecho \b31 movidas" se sustituir¡a en el momento de presentar-
+         se al jugador por "Has hecho X movidas", donde X ser¡a el valor
+         de la bandera 31 (o sea, el n£mero de turnos del jugador; ver
+         ~Bandera 31~).
+
+
+     Ver tambi‚n: ~Banderas~
+
+
+%Colores de fondo y primer plano
+
+     Se puede cambiar el color de las letras y el fondo en un mensaje. Para
+ ello se usan ciertos c¢digos indicando que se cambie el color actual por
+ otro expresado por un n£mero. Los c¢digos son:
+
+     \0  : Negro             Para que el color sea "parpadeante", se debe
+     \1  : Azul              sumar 128 al n£mero correspondiente.
+     \2  : Verde             (Ej: Rojo parpadeante = 4 + 128 = 132).
+     \3  : Cyan
+     \4  : Rojo
+     \5  : Magenta
+     \6  : Marr¢n            Estos son los c¢digos para cambiar el color
+     \7  : Gris claro        del primer plano. Si se quiere cambiar el
+     \8  : Gris oscuro       color de fondo, simplemente hay que poner una
+     \9  : Azul claro        "f" min£scula entre la barra "\" y el n£mero.
+     \10 : Verde claro       (Ej: "\f12")
+     \11 : Cyan claro
+     \12 : Rojo claro
+     \13 : Magenta claro
+     \14 : Amarillo
+     \15 : Blanco
+
+
+     Ver tambi‚n: ~color~  ~fondo~
+
+
+%Miscel nea
+
+     Otros c¢digos son:
+
+     \\ : Se sustituye por una £nica barra "\". Por tanto, para escribir una
+          barra inclinada, hay que escribirla dos veces.
+
+     _  : Se sustituye por el nombre (y el posible adjetivo) del objeto que
+          ha sido referenciado por £ltima vez por el jugador. Se usa mucho
+          en los mensajes del sistema.
+
+        : Varios espacios en blanco juntos se reemplazan durante la compila-
+          ci¢n por un £nico espacio en blanco (no sab¡a d¢nde contar esto,
+          as¡ que lo he puesto aqu¡ mismo).
+
+:Teclas en AYUDA:?
+^Teclas de manejo en AYUDA
+
+        Esc     Salir de la pantalla actual o de la ayuda
+        Fin     Mueve el cursor a la £ltima l¡nea
+        Inicio  Mueve el cursor a la primera l¡nea
+        AvP g   Mueve cursor al principio de la p gina o a la p gina anterior
+        ReP g   Mueve cursor al final de la p gina o a la p gina siguiente
+        F1      Conmuta entre el modo "men£" y el modo "consulta" y viceversa
+        Alt-P   Escribe texto actual por la impresora
+        Alt-W   Escribe texto actual al fichero HelpPC.DAT
+        Alt-X   Salir de la ayuda sin borrar la pantalla actual
+        TAB     Ir a siguiente enlace hipertexto (tambi‚n con flecha-dcha.)
+        May-Tab Ir a enlace hipertexto anterior (tambi‚n con flecha-izqda.)
+        Intro   Activar el enlace hipertexto actual
+

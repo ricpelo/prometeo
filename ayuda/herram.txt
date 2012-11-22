@@ -1,0 +1,195 @@
+@Las herramientas de desarrollo
+:El preprocesador:PP.EXE
+^El preprocesador
+
+ El preprocesador es la herramienta que sustituye ciertos patrones por otros
+ en el c¢digo fuente de la aventura. Se usa para asignar nombres simb¢licos
+ a ciertas constantes o a banderas, pero sobre todo se usa tambi‚n para dar
+ nombre a las localidades de la aventura.
+
+     En efecto, para PROMETEO una localidad se referencia mediante un n£mero,
+ y en el momento en que tenemos muchas localidades, se puede hacer muy
+ tedioso trabajar con n£meros sin mucho significado.
+
+     La manera de usar el preprocesador es mediante la orden:
+
+%    C> PP <fichero_fuente[.PRO]>
+
+     o, en el caso de que se est‚n usando listas de fuentes,
+
+%    C> PP @<lista_fuentes[.PL]>
+
+ Los nombres de los ficheros pueden tener cualquier extensi¢n. Adem s, es
+ posible no indicar ning£n nombre, y en ese caso, el preprocesador se encar-
+ gar  de buscar un fichero con extensi¢n ."PRO" en el directorio actual para
+ preprocesarlo. En este caso, si hay varios ficheros con la misma extensi¢n
+ ".PRO" en el directorio, se tomar  el primero que el preprocesador se encuen-
+ tre (que no tiene por qu‚ ser necesariamente el que aparezca el primero con
+ la orden "DIR" del MS-DOS).
+
+     El preprocesador resolver  todas las macros existentes y sustiuir  los
+ nombres simb¢licos de las localidades por sus correspondientes n£meros.
+ Al acabar, almacenar  el fichero preprocesado en un fichero con el mismo
+ nombre pero con extensi¢n ".PPP".
+
+
+     Ver tambi‚n: ~#define~  ~#local~  ~#finlocal~
+%    Ejemplo: "PP PEPITO.PRO" producir  el fichero "PEPITO.PPP"
+
+
+     Ver tambi‚n: ~PC.EXE~  ~PR.EXE~
+
+:El compilador:PC.EXE
+^El compilador PC.EXE
+
+     PC.EXE es el compilador de PROMETEO. Traduce el c¢digo fuente de la
+ aventura a un formato directamente entendible por ~el m¢dulo run-time~.
+ El resultado es un fichero de extensi¢n ".GAM" que contendr  el c¢digo
+ objeto de la aventura.
+
+%    Ejemplo: "PC PEPITO.PRO" producir  el fichero objeto "PEPITO.GAM"
+
+     Incluso es posible ejecutar PC.EXE sin ning£n par metro adicional.
+ En ese caso, ‚l s¢lo se encarga de buscar un fichero de extensi¢n ".PRO"
+ en el directorio actual y lo compila en caso de que lo encuentre.
+
+     Otra forma de usar PC.EXE es incluyendo como argumento una "lista de
+ fuentes". Una lista de fuentes no es m s que un fichero de texto, donde
+ cada l¡nea indica un fichero fuente. PROMETEO tomara cada fichero fuente
+ inclu¡do en la lista y los compilar  juntos, generando un £nico fichero
+ objeto (cuyo nombre ser  el mismo que el que ten¡a la lista de fuentes).
+ Esto es bastante interesante en aventuras largas, ya que permite modular
+ el c¢digo y dividirlo en secciones que se depuran mejor por separado.
+
+     Para usar la lista de fuentes, se antepone al nombre el s¡mbolo "@".
+
+%    Ejemplo: "PC @FUENTES.PL" producira el fichero "FUENTES.GAM", generado
+%             al compilar cada fichero fuente indicado en "FUENTES.PL".
+
+
+     Ver tambi‚n: ~PP.EXE~  ~PR.EXE~
+:El m¢dulo run-time:PR.EXE
+^El m¢dulo run-time PR.EXE
+
+     PR.EXE es el m¢dulo run-time de PROMETEO. Es el encargado de leer el
+ c¢digo objeto de una aventura y ejecutar sus instrucciones una a una. El
+ jugador de la aventura no necesita el fichero fuente ni el compilador; tan
+ s¢lo necesita la aventura compilada y el m¢dulo run-time para poder ejecu-
+ tarla.
+
+     El programa PR.EXE puede distribuirse libremente sin coste alguno por
+ parte del escritor de aventuras, y Alpha Aventuras reh£sa a todo derecho
+ sobre las aventuras escritas con PROMETEO.
+
+%    Ejemplo: "PR PEPITO.GAM"
+
+     Incluso es posible ejecutar PR.EXE sin ning£n par metro adicional.
+ En ese caso, ‚l s¢lo se encarga de buscar un fichero de extensi¢n ".GAM"
+ en el directorio actual y lo ejecuta en caso de que lo encuentre.
+
+     Un consejo al distribuir las aventuras es renombrar el fichero PR.EXE
+ por otro que describa el nombre de la aventura; por ejemplo: "CAVERNA.EXE",
+ o similar. Adem s, usando la propiedad anterior, el jugador s¢lo tendr 
+ que escribir "CAVERNA" para jugar, ya que el m¢dulo run-time se encargar 
+ de buscar el fichero objeto en el directorio. (Coger  aquel que vea primero
+ en el directorio actual, as¡ que lo recomendable es tener un fichero
+ objeto por directorio. Al fin y al cabo, lo normal es tener una sola
+ aventura por directorio).
+
+
+     Ver tambi‚n: ~PP.EXE~  ~PC.EXE~
+:WAV2RAW.EXE
+^WAV2RAW
+
+     Para poder a¤adir efectos de sonido a las aventuras, previamente hay
+ que tener dichos sonidos almacenados en ficheros con formato WAV, y
+ grabados a 8 bits y 22050 Hz. PROMETEO almacena los sonidos en un solo
+ fichero, que es la "librer¡a de sonidos", y para ello es necesario traducir
+ los ficheros de formato WAV a otro formato propio: el RAW. WAV2RAW es la
+ herramienta que hace eso posible.
+
+%    Ejemplo: "WAV2RAW PEPITO.WAV"   ---> genera el fichero PEPITO.RAW
+
+     Una vez que tenemos todos los sonidos en ficheros RAW, el paso siguiente
+ es almacenarlos todos en una misma librer¡a llamada "SONIDOS.SND" (el
+ fichero debe llamarse as¡, pues as¡ lo busca PROMETEO). Para ello podemos
+ usar la herramienta ~SNDLIB.EXE~.
+
+
+     Ver tambi‚n: ~sonido~
+
+:SNDLIB.EXE
+^SNDLIB.EXE
+
+     SNDLIB.EXE es la herramienta para crear librer¡as de sonidos para
+ PROMETEO. En primer lugar, hay que tener los sonidos en ficheros RAW (ver
+ ~WAV2RAW~). Una vez que tenemos todos los ficheros de sonido, el proceso
+ de creaci¢n de la librer¡a consiste en indicar el nombre de la librer¡a
+ (que debe ser siempre SONIDOS.SND para que PROMETEO la sepa encontrar), y
+ decir a SNDLIB.EXE qu‚ queremos hacer: si introducir un nuevo sonido,
+ cambiar un sonido por otro, o sacar un sonido de la librer¡a.
+
+     Al insertar un sonido nuevo en la librer¡a, es necesario darle un
+ nombre (lo que SNDLIB le llama "Key"). Ese nombre servir  para poder refe-
+ renciar dicho sonido en el c¢digo fuente (la "Key" ser  el par metro de la
+ funci¢n ~sonido~).
+
+%    Ejemplo: "SNDLIB SONIDOS.SND + CHIRRIDOS.RAW CHIRRIDO"
+
+%    Almacena el fichero "CHIRRIDOS.RAW" dentro de la librer¡a "SONIDOS.SND",
+%    y le asigna el nombre "CHIRRIDO". Posteriormente, cuando queramos
+%    escuchar el sonido, en el c¢digo fuente escribiremos:
+
+%        sonido("CHIRRIDO");
+
+
+     Ver tambi‚n: ~sonido~
+:AYUDA.EXE:AYUDATSR.EXE
+^AYUDA.EXE / AYUDATSR.EXE
+
+     Es la herramienta de ayuda en l¡nea de PROMETEO (‚sta ayuda).
+     Hay dos versiones:
+
+%    AYUDA.EXE
+
+         Se ejecuta de forma independiente como otro programa m s. Si al
+         llamarlo se indica, a continuaci¢n en la l¡nea de ¢rdenes, una
+         cierta palabra, la ayuda buscar  informaci¢n acerca de esa
+         palabra (si dicha ayuda est  disponible).
+
+%    AYUDATSR.EXE
+
+         Es el m‚todo m s recomendable para usar la ayuda. El programa se
+         queda residente en memoria a la espera de que se le llame mediante
+         la pulsaci¢n de ciertas combinaciones de teclas (por defecto es
+         Ctrl-Shift Izquierdo-H). Adem s, si se le llama de esta forma cuando
+         el cursor de texto se encuentre sobre una palabra, la ayuda buscar 
+         autom ticamente la informaci¢n que posea sobre esa palabra.
+
+         Para que el programa funcione correctamente, hay que crear una
+         variable de entorno del sistema operativo indicando el directorio
+         en el que se encuentra el fichero "HELPPC.NDX" y los ficheros de
+         texto donde est  almacenado el manual. Esto se hace de la sgte.
+         manera:
+
+             "SET HLP=<directorio>"
+
+         donde <directorio> es el camino absoluto del directorio, desde el
+         directorio ra¡z, en el que se encuentran dichos ficheros.
+
+
+^Teclas de manejo
+
+        Esc     Salir de la pantalla actual o de la ayuda
+        Fin     Mueve el cursor a la £ltima l¡nea
+        Inicio  Mueve el cursor a la primera l¡nea
+        AvP g   Mueve cursor al principio de la p gina o a la p gina anterior
+        ReP g   Mueve cursor al final de la p gina o a la p gina siguiente
+        F1      Conmuta entre el modo "men£" y el modo "consulta" y viceversa
+        Alt-P   Escribe texto actual por la impresora
+        Alt-W   Escribe texto actual al fichero HelpPC.DAT
+        Alt-X   Salir de la ayuda sin borrar la pantalla actual
+        TAB     Ir a siguiente enlace hipertexto (tambi‚n con flecha-dcha.)
+        May-Tab Ir a enlace hipertexto anterior (tambi‚n con flecha-izqda.)
+        Intro   Activar el enlace hipertexto actual
+

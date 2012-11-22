@@ -1,0 +1,40 @@
+
+                         NOVEDADES DE LA VERSION 2.1
+                         ---------------------------
+
+  No hay muchas, la verdad (no he tenido mucho tiempo), pero creo que nunca
+  vienen mal:
+
+- C¢digo generado mas eficiente. Es mas compacto y ocupa menos espacio.
+
+- Gesti¢n mas eficiente de los mensajes. Las cadenas y mensajes se gestionan
+  mejor, puesto que todas las cadenas iguales se almacenan como una sola,
+  reduciendo as¡ el gasto extra de memoria.
+
+- Recuperaci¢n de errores durante el an lisis sint ctico del programa fuente.
+  A partir de esta versi¢n, el compilador no se detiene ante el primer error,
+  sino que sigue analizando el fuente en busca de m s posibles errores, lo
+  que lo hace mucho m s eficiente. Adem s, los mensajes de error son ahora
+  mucho m s explicativos que el simple "Error sint ctico" anterior.
+
+- Correcci¢n de algunos "bugs" menores (sobre todo, en los manuales y en
+  ficheros de ayuda), y algunas mejoras m s en el compilador.
+
+  Y... lo m s importante de todo:
+
+- PROMETEO pasa de ser shareware a ser FREEWARE o de DOMINIO PUBLICO. A
+  partir de ahora todas las versiones de PROMETEO seran versiones completas,
+  sin ning£n tipo de restricci¢n, permiti‚ndose la libre distribuci¢n y
+  copia de las mismas. En cualquier caso, siempre es bueno recordar que no
+  se permite la alteraci¢n total o parcial de ning£n componente de PROMETEO,
+  ni por supuesto se permite cambiar los ficheros de texto ni los copyright.
+  Es decir, es de dominio p£blico, pero sigue siendo una propiedad intelec-
+  tual protegida por los derechos de autor.
+
+
+
+                    ­­­ A DISFRUTARLO... Y SED BUENOS !!!
+
+
+
+                                   Ricardo P‚rez L¢pez - Alpha Aventuras

@@ -1,0 +1,573 @@
+@Las banderas de estado
+:Bandera 0
+%    Bandera 0
+
+         - Igual a 0 indica luz (se describe la localidad).
+         - Diferente a 0 indica oscuridad (no se describe la localidad).
+
+         A£n as¡, si el objeto n§ 0 (el primero que se describe, que
+         se considera fuente de luz) est  presente, se describir  la
+         localidad de todas formas.
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Objetos~
+:Bandera 1
+%    Bandera 1
+
+         Indica los objetos llevados (no puestos) por el jugador.
+
+
+     Ver tambi‚n: ~Resumen de banderas~
+:Bandera 2
+%    Bandera 2
+
+         Se decrementa autom ticamente cuando se describe la localidad.
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Bandera 3~  ~Bandera 4~
+:Bandera 3
+%    Bandera 3
+
+         Se decrementa autom ticamente cuando se describe la localidad
+         y est  oscuro (~bandera 0~ diferente de 0).
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Bandera 2~  ~Bandera 4~
+:Bandera 4
+%    Bandera 4
+
+         Se decrementa autom ticamente cuando se describe la localidad
+         y est  oscuro (~bandera 0~ diferente de 0) y el objeto 0 est 
+         ausente.
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Objetos~  ~Bandera 2~
+                  ~Bandera 3~
+:Banderas 5-8
+%    Banderas 5-8
+
+         Se decrementan con cada turno.
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Bandera 9~  ~Bandera 10~
+:Bandera 9
+%    Bandera 9
+
+         Se decrementa con cada turno si est  oscuro.
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Banderas 5-8~  ~Bandera 10~
+:Bandera 10
+%    Bandera 10
+
+         Se decrementa con cada turno si est  oscuro y el objeto 0
+         est  ausente.
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Banderas 5-8~  ~Bandera 9~
+:Bandera 11
+%    Bandera 11
+
+         Lleva el tiempo muerto (timeout). Timeout es una subrutina especial
+         que se activa cuando el jugador no teclea nada durante un cierto
+         tiempo. Ese tiempo (en segundos) se configura dando valor a esta
+         bandera.
+
+         Si la bandera tiene el valor 0, la subrutina Timeout nunca se
+         activar .
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Subrutinas~
+:Banderas 12-19
+%    Banderas 12-19
+
+         Est n libres para usar.
+
+
+     Ver tambi‚n: ~Resumen de banderas~
+:Bandera 20
+%    Bandera 20
+
+         Lleva la hora actual.
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Bandera 21~  ~Bandera 22~
+                  ~Bandera 23~
+:Bandera 21
+%    Bandera 21
+
+         Lleva los minutos de la hora actual.
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Bandera 20~  ~Bandera 22~
+                  ~Bandera 23~
+:Bandera 22
+%    Bandera 22
+
+         Lleva los segundos de la hora actual.
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Bandera 20~  ~Bandera 21~
+                  ~Bandera 23~
+:Bandera 23
+%    Bandera 23
+
+         Lleva las cent‚simas de segundo de la hora actual.
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Bandera 20~  ~Bandera 21~
+                  ~Bandera 22~
+:Banderas 24-28
+%    Banderas 24-28
+
+         Libres para usar.
+
+
+     Ver tambi‚n: ~Resumen de banderas~
+:Bandera 29
+%    Bandera 29
+
+         Lleva el control de los gr ficos de las localidades:
+
+         - Igual a 0 indica que aparece el gr fico cuando se describe
+           la localidad.
+         - Diferente de 0 indica que no aparece nunca ning£n gr fico.
+
+
+     Ver tambi‚n: ~Resumen de banderas~
+:Bandera 30
+%    Bandera 30
+
+         Lleva la puntuaci¢n.
+
+
+     Ver tambi‚n: ~Resumen de banderas~
+:Bandera 31
+%    Bandera 31
+
+         N£mero actual de turnos del jugador.
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~turnos~
+:Bandera 32
+%    Bandera 32
+
+         Libre para usar.
+
+
+     Ver tambi‚n: ~Resumen de banderas~
+:Bandera 33
+%    Bandera 33
+
+         El ~verbo~ de la sentencia actual del jugador.
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Bandera 34~  ~Bandera 35~
+                  ~Bandera 36~  ~Bandera 43~  ~Bandera 44~  ~Bandera 45~
+:Bandera 34
+%    Bandera 34
+
+         El primer ~nombre~ de la sentencia actual del jugador.
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Bandera 33~  ~Bandera 35~
+                  ~Bandera 36~  ~Bandera 43~  ~Bandera 44~  ~Bandera 45~
+:Bandera 35
+%    Bandera 35
+
+         El ~adjetivo~ del primer ~nombre~ de la sentencia actual
+         del jugador.
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Bandera 33~  ~Bandera 34~
+                  ~Bandera 36~  ~Bandera 43~  ~Bandera 44~  ~Bandera 45~
+:Bandera 36
+%    Bandera 36
+
+         El ~adverbio~ de la sentencia actual del jugador.
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Bandera 33~  ~Bandera 34~
+                  ~Bandera 35~  ~Bandera 43~  ~Bandera 44~  ~Bandera 45~
+:Bandera 37
+%    Bandera 37
+
+         El n£mero m ximo de objetos llevables (por defecto = 4).
+         Si el valor de la bandera es negativo, el jugador podr  llevar
+         infinitos objetos.
+
+
+     Ver tambi‚n: ~Resumen de banderas~
+:Bandera 38
+%    Bandera 38
+
+         La localidad actual del jugador.
+
+
+         Ver tambi‚n: ~esta?~  ~estamay?~  ~estamen?~  ~mueve~
+                      ~Resumen de banderas~
+:Bandera 39
+%    Bandera 39
+
+         Libre para usar.
+
+
+     Ver tambi‚n: ~Resumen de banderas~
+:Bandera 40
+%    Bandera 40
+
+         Controla el borrado de pantalla cuando se describe una
+         localidad:
+
+         0: Indica que hay borrado de pantalla, restituyendo la ventana de
+            texto a toda la pantalla.
+         1: Indica que hay borrado de la ventana de texto actual, sin cambiar
+            dicha ventana de texto.
+        >1: Indica que no hay borrado de pantalla y no cambia la ventana de
+            texto.
+
+
+     Ver tambi‚n: ~Resumen de banderas~
+:Bandera 41
+%    Bandera 41
+
+         Libre para usar.
+
+
+     Ver tambi‚n: ~Resumen de banderas~
+:Bandera 42
+%    Bandera 42
+
+         Lleva el mensaje con el que se contesta al input del jugador.
+
+         - Si es distinto de cero, indicar  el n§ de un mensaje del sistema,
+           que ser  el que pida la entrada del jugador.
+         - Si es igual a cero, el mensaje se seleccionar  de forma aleatoria
+           entre los mensajes del sistema 2 a 5, con una probabilidad de
+           0.30, 0.30, 0.30, 0.10, respectivamente.
+
+
+     Ver tambi‚n: ~Resumen de banderas~
+:Bandera 43
+%    Bandera 43
+
+         Lleva la ~preposici¢n~ de la sentencia actual del jugador.
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Bandera 33~  ~Bandera 34~
+                  ~Bandera 35~  ~Bandera 36~  ~Bandera 44~  ~Bandera 45~
+:Bandera 44
+%    Bandera 44
+
+         Lleva el segundo ~nombre~ de la sentencia actual del jugador.
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Bandera 33~  ~Bandera 34~
+                  ~Bandera 35~  ~Bandera 36~  ~Bandera 43~  ~Bandera 45~
+:Bandera 45
+%    Bandera 45
+
+         Lleva el ~adjetivo~ del segundo ~nombre~ de la sentencia actual
+         del jugador.
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Bandera 33~  ~Bandera 34~
+                  ~Bandera 35~  ~Bandera 36~  ~Bandera 43~  ~Bandera 44~
+:Banderas 46-47
+%    Banderas 46-47
+
+         Libres para usar.
+
+
+     Ver tambi‚n: ~Resumen de banderas~
+:Bandera 48
+%    Bandera 48
+
+         El ~verbo~ de la sentencia entre comillas en la sentencia actual
+         del jugador.
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Bandera 49~  ~Bandera 50~
+                  ~Int‚rprete~
+:Bandera 49
+%    Bandera 49
+
+         El ~nombre~ de la sentencia entre comillas en la sentencia actual
+         del jugador.
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Bandera 48~  ~Bandera 50~
+                  ~Int‚rprete~
+:Bandera 50
+%    Bandera 50
+
+         El ~adjetivo~ de la sentencia entre comillas en la sentencia actual
+         del jugador.
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Bandera 48~  ~Bandera 49~
+                  ~Int‚rprete~
+:Bandera 51
+%    Bandera 51
+
+         Indica la £ltima direcci¢n que ha tomado un personaje.
+         Por direcci¢n se entiende el c¢digo de un verbo que indica
+         direcci¢n (o sea, usado en las conexiones de una cierta
+         localidad). Se suele comprobar su valor tras llamar a la
+         sentencia "caminar". Si el personaje no se ha movido,
+         devuelve -1.
+
+
+     Ver tambi‚n: ~caminar~  ~Resumen de banderas~
+:Bandera 52
+%    Bandera 52
+
+         La fuerza del jugador (el m ximo peso de los objetos
+         llevados m s los puestos encima). Inicialmente es 10.
+         Si el valor de la bandera es negativo, el jugador tendr 
+         fuerza infinita.
+
+
+     Ver tambi‚n: ~Resumen de banderas~
+:Bandera 53
+%    Bandera 53
+
+         Es la bandera que indica c¢mo se imprimen los objetos del
+         Inventario y la descripci¢n de la localidad actual:
+
+         0: Se imprimen los objetos en una sola l¡nea formando
+            una frase, tanto en el inventario como en la descripci¢n.
+         1: El inventario se imprime en una l¡nea, y la descripci¢n
+            usa varias l¡neas.
+         2: El inventario se imprime en varias l¡neas, y la descrip-
+            ci¢n en una s¢la.
+         3: Tanto el inventario como la descripci¢n se imprimen en
+            varias l¡neas.
+
+
+     Ver tambi‚n: ~listobj~  ~inven~  ~Resumen de banderas~
+:Bandera 54
+%    Bandera 54
+
+         Lleva el n£mero de la localidad del objeto actualmente
+         referido.
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Localidades~  ~Objetos~
+:Bandera 55
+%    Bandera 55
+
+         Lleva el peso del objeto actualmente referido.
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Objetos~
+:Bandera 56
+%    Bandera 56
+
+         Igual a 1 si el objeto es un ~contenedor~.
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Objetos~
+:Bandera 57
+%    Bandera 57
+
+         Igual a 1 si el objeto es ~ropa~ (se puede llevar puesto encima).
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Objetos~
+:Bandera 58
+%    Bandera 58
+
+         El c¢digo del objeto actualmente referido.
+
+
+     Ver tambi‚n: ~Resumen de banderas~  ~Objetos~
+:Bandera 59
+%    Bandera 59
+
+         No se inicializa cuando se comienza una nueva partida
+         (mantiene su valor entre partidas).
+
+
+     Ver tambi‚n: ~Resumen de banderas~
+
+:Banderas:Bandera:Concepto de Bandera
+^Concepto de Bandera
+
+     Las banderas son el conjunto de indicadores cuyos valores determinan el
+ estado interno de la aventura. Cada bandera puede guardar un valor entero en
+ el intervalo de -32768 a 32767, valor que conforma el estado de dicha
+ bandera en un momento determinado. El conjunto de los estados de todas las
+ banderas es lo que determina el estado actual de la aventura.
+
+     Se referencian mediante un n£mero, por ejemplo, bandera 100, 37, 54,
+ etc. En el c¢digo fuente de la aventura, se hace referencia a ellas ante-
+ poniendo una "b" min£scula al n£mero de bandera, por ejemplo, "b35". Algunas
+ banderas tienen significados especiales, y otras est n libres para que el
+ escritor las utilice al describir la aventura. Entre las que poseen alg£n
+ significado especial, est n varias que mantienen valores cr¡ticos, como la
+ bandera 38 que lleva el n£mero de la localidad actual (sin la cual nos
+ encontrar¡amos completamente perdidos), o la bandera 52 que indica el n£mero
+ m ximo de objetos que puede llevar el jugador.
+
+     En la implementaci¢n actual de PROMETEO 2.2.1, existen un total de 512
+ banderas a usar por el programador de la aventura, contando, por supuesto,
+ las banderas que hemos indicado en el p rrafo anterior como "especiales".
+
+     Las banderas son las £nicas variables con las que cuenta el escritor
+ para describir las condiciones y las acciones necesarias. Por tanto, todo
+ valor temporal o auxiliar debe tambi‚n almacenarse en una bandera -esto
+ se hace para dejar expl¡cito el hecho de que toda sentencia provoca un
+ cambio de estado-. Todas las banderas se comportan como variables, as¡
+ que pueden asign rsele valores y hacer un test de su contenido en cualquier
+ momento.
+
+
+     Ver tambi‚n: ~Resumen de banderas~
+
+:Resumen de banderas
+^Resumen de banderas especiales
+
+ Bandera 0:      Igual a 0 indica luz (se describe la localidad).
+                 Diferente a 0 indica oscuridad (no se describe la localidad).
+                 A£n as¡, si el objeto n§ 0 (el primero que se describe, que
+                 se considera fuente de luz) est  presente, se describir  la
+                 localidad de todas formas.
+
+ Bandera 1:      Indica objetos llevados (no puestos).
+
+ Bandera 2:      Se decrementa autom ticamente cuando se describe la localidad.
+
+ Bandera 3:      Se decrementa autom ticamente cuando se describe la localidad
+                 y est  oscuro (bandera 0 diferente de 0).
+
+ Bandera 4:      Se decrementa autom ticamente cuando se describe la localidad
+                 y est  oscuro (bandera 0 diferente de 0) y el objeto 0 est 
+                 ausente.
+
+ Banderas 5-8:   Se decrementan con cada turno.
+
+ Bandera 9:      Se decrementa con cada turno si est  oscuro.
+
+ Bandera 10:     Se decrementa con cada turno si est  oscuro y el objeto 0
+                 est  ausente.
+
+ Bandera 11:     Lleva el tiempo muerto (timeout). Timeout es una subrutina
+                 especial que se activa cuando el jugador no teclea nada
+                 durante un cierto tiempo. Ese tiempo (en segundos) se
+                 configura dando valor a esta bandera.
+
+                 Si la bandera tiene el valor 0, la subrutina Timeout nunca se
+                 activar .
+
+ Banderas 12-19: Est n libres para usar.
+
+ Bandera 20:     Lleva la hora actual.
+
+ Bandera 21:     Lleva los minutos actuales.
+
+ Bandera 22:     Lleva los segundos actuales.
+
+ Bandera 23:     Lleva las cent‚simas de segundo.
+
+ Banderas 24-28: Libres para usar.
+
+ Bandera 29:     Lleva el control de los gr ficos de las localidades:
+                 Igual a 0 indica que aparece el gr fico cuando se describe
+                 la localidad.
+                 Diferente de 0 indica que no aparece nunca ning£n gr fico.
+
+ Bandera 30:     Lleva la puntuaci¢n.
+
+ Bandera 31:     N£mero actual de turnos del jugador.
+
+ Bandera 32:     Libre para usar.
+
+ Bandera 33:     El Verbo de la sentencia actual.
+
+ Bandera 34:     El primer Nombre de la sentencia actual.
+
+ Bandera 35:     El Adjetivo del primer Nombre.
+
+ Bandera 36:     El Adverbio de la sentencia actual.
+
+ Bandera 37:     El n£mero m ximo de objetos llevables.
+                 Por defecto = 4. Si su valor es negativo, se podr n llevar
+                 infinitos objetos.
+
+ Bandera 38:     La localidad actual.
+
+ Bandera 39:     Libre para usar.
+
+ Bandera 40:     Controla el borrado de pantalla cuando se describe una
+                 localidad.
+
+                 0: Indica que hay borrado de pantalla, restituyendo la
+                    ventana de texto a toda la pantalla.
+                 1: Indica que hay borrado de la ventana de texto actual, sin
+                    cambiar dicha ventana de texto.
+                >1: Indica que no hay borrado de pantalla y no cambia la
+                    ventana de texto.
+
+ Bandera 41:     Libre para usar.
+
+ Bandera 42:     Lleva el mensaje con el que se contesta al input del jugador
+                 (normalmente se selecciona de forma aleatoria entre los
+                 Mensajes del Sistema 2 a 5).
+
+ Bandera 43:     Lleva la Preposici¢n de la sentencia actual.
+
+ Bandera 44:     Lleva el Segundo Nombre de la sentencia actual.
+
+ Bandera 45:     Lleva el Adjetivo del Segundo Nombre.
+
+ Banderas 46-47: Libres para usar.
+
+ Bandera 48:     El verbo de la sentencia entre comillas.
+
+ Bandera 49:     El nombre de la sentencia entre comillas.
+
+ Bandera 50:     El adjetivo de la sentencia entre comillas.
+
+ Bandera 51:     Indica la £ltima direcci¢n que ha tomado un personaje.
+
+ Bandera 52:     La fuerza del jugador (el m ximo peso de los objetos
+                 llevados m s los puestos encima). Inicialmente es 10.
+                 Si su valor es negativo, el jugador tendr  fuerza infinita.
+
+ Bandera 53:     Es la bandera para imprimir los objetos del Inventario y
+                 la descripci¢n de la localidad actual.
+                 0: Se imprimen los objetos en una sola l¡nea formando
+                    una frase, tanto en el inventario como en la descripci¢n.
+                 1: El inventario se imprime en una l¡nea, y la descripci¢n
+                    usa varias l¡neas.
+                 2: El inventario se imprime en varias l¡neas, y la descrip-
+                    ci¢n en una s¢la.
+                 3: Tanto el inventario como la descripci¢n se imprimen en
+                 varias l¡neas.
+
+ Bandera 54:     Lleva el n£mero de la localidad del objeto actualmente
+                 referido.
+
+ Bandera 55:     Lleva el peso del objeto actualmente referido.
+
+ Bandera 56:     Igual a 1 si el objeto es un contenedor.
+
+ Bandera 57:     Igual a 1 si el objeto es una ropa (se puede llevar puesto
+                 encima).
+
+ Bandera 58:     El c¢digo del objeto actualmente referido.
+
+ Bandera 59:     No se inicializa cuando se comienza una nueva partida
+                 (mantiene su valor entre partidas).
+
+ El motivo por el que se dejan banderas libres -sin significado- de esa forma,
+ al parecer, tan caprichosa, es para mantener la compatibilidad con PAW, otro
+ producto generador de aventuras muy conocido. PAW usa dichas banderas para
+ otros prop¢sitos que no son aplicables en ‚ste trabajo. Debido a que muchos
+ escritores de aventuras usaron PAW durante bastante tiempo, se le considera
+ el est ndar "de facto" en el tema de los generadores de aventuras
+ conversacionales, y por ello se ha estimado conveniente mantener el
+ significado de las distintas banderas a expensas de no usar algunas.
+
+
+     Ver tambi‚n: ~Concepto de Bandera~
